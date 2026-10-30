@@ -8,6 +8,7 @@ if(id==='map'){const next=Object.keys(levels).find(key=>state.progress[key].clea
 const s=state[id],c=cfg(id);
 if(s?.solved)return state.progress[id].level<2?{target:'[data-level-next]',text:'Уровень решён. Нажми «Дальше».'}:{target:'[data-home]',text:'Все уровни этого места пройдены. Вернись на карту.'};
 if(s?.failed)return {target:extraIds.includes(id)?'[data-extra-reset]':`[data-reset="${id}"]`,text:'Попытка закончилась. Нажми ↻ и начни уровень заново.'};
+if(id==='sokoban')return warehouseHint();
 if(id==='hanoi'||id==='jugs')return extraTutorial(id);
 if(id==='lights'){const path=lightSolution(s.cells,c.n);return path?.length?{target:`[data-lamp="${path[0]}"]`,text:'Эта лампа входит в решение. Нажми её; подсказка пересчитается для нового положения.'}:{target:'[data-extra-reset]',text:'Начни сетку заново, чтобы попробовать другой путь.'};}
 if(id==='bridge'){const plan=bridgePath(s,c);if(!plan||plan.cost>c.limit-s.elapsed)return {target:'[data-extra-reset]',text:'На завершение уже не хватает времени. Начни заново: быстрые должны возвращать фонарь.'};const group=plan.path[0],unwanted=s.selected.find(i=>!group.includes(i));if(unwanted!==undefined)return {target:`[data-person="${unwanted}"]`,text:`Сними выбор с путешественника ${c.times[unwanted]} мин.`};const missing=group.find(i=>!s.selected.includes(i));if(missing!==undefined)return {target:`[data-person="${missing}"]`,text:`Выбери путешественника ${c.times[missing]} мин. Этот ход оставит достаточно времени до цели.`};return {target:'[data-bridge-cross]',text:`Переведи выбранных за ${Math.max(...group.map(i=>c.times[i]))} мин. Фонарь поедет вместе с ними.`};}
@@ -21,4 +22,15 @@ if(s.log.length>=c.limit)return {target:'[data-reset="scales"]',text:'Эти в�
 let chosen,best=Infinity;for(const plan of hintPlans(c.coins)){const groups=[-1,0,1].map(o=>pool.filter(h=>(plan.left.includes(h.coin)?-1:plan.right.includes(h.coin)?1:0)*h.delta===o).length),score=Math.max(...groups)*1000+groups.reduce((a,x)=>a+x*x,0);if(score<best){best=score;chosen=plan;}}
 const wanted=s.places.map((_,i)=>chosen.left.includes(i)?-1:chosen.right.includes(i)?1:0),i=wanted.findIndex((v,i)=>v!==s.places[i]);if(i<0)return {target:'[data-weigh]',text:'Раскладка готова. Взвесь: каждый исход сузит круг подозреваемых.'};const side=wanted[i]||s.places[i];return s.tray!==side?{target:`[data-tray="${side}"]`,text:`Выбери ${side===-1?'левую':'правую'} чашу для следующего сравнения.`}:{target:`[data-coin="${i}"]`,text:wanted[i]===0?`Сними монету ${i+1} с чаши повторным нажатием.`:`Положи монету ${i+1} на ${side===-1?'левую':'правую'} чашу.`};
 }
-function unifiedMap(){const canvas=q('[data-map-art]'),copy=()=>{const c=document.createElement('canvas');c.width=384;c.height=240;c.getContext('2d').drawImage(canvas,0,0);return c;};canvas.width=384;canvas.height=240;mapArt();const first=copy();extraMap();const second=copy(),narrow=root.getBoundingClientRect().width<600;canvas.width=narrow?384:768;canvas.height=narrow?480:240;const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage(first,0,0);ctx.drawImage(second,narrow?0:384,narrow?240:0);all('[data-enter]').forEach((el,i)=>{const page=i<4?0:1,k=i%4,col=k%2,row=Math.floor(k/2);el.hidden=false;el.style.left=(narrow?8+col*48:4+(page*2+col)*25)+'%';el.style.top=(narrow?6.5+row*22.5+page*50:13+row*45)+'%';el.style.width=(narrow?36:18)+'%';el.style.height=(narrow?17:34)+'%';});}
+function unifiedMap(){
+  const canvas=q('[data-map-art]'),copy=()=>{const c=document.createElement('canvas');c.width=384;c.height=240;c.getContext('2d').drawImage(canvas,0,0);return c;};
+  canvas.width=384;canvas.height=240;mapArt();const first=copy();extraMap();const second=copy();
+  const warehouse=document.createElement('canvas');warehouse.width=192;warehouse.height=120;
+  rects(warehouse,r=>{r(0,0,192,120,'#294b40');r(0,114,192,6,'#b4a17c');r(183,0,9,120,'#b4a17c');building(r,52,24,83,'#916f53','#d0b386');for(const [x,y] of [[69,54],[93,54],[81,31]]){r(x,y,22,22,'#614b35');r(x+2,y+2,18,18,'#ad8152');r(x+3,y+3,16,3,'#e0ba7b');r(x+3,y+14,16,3,'#e0ba7b');r(x+9,y+3,3,14,'#d2a56a');}});
+  const narrow=root.getBoundingClientRect().width<480,columns=narrow?2:3,rows=Math.ceil(9/columns);
+  canvas.width=192*columns;canvas.height=120*rows;const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.fillStyle='#294b40';ctx.fillRect(0,0,canvas.width,canvas.height);
+  all('[data-enter]').forEach((el,i)=>{const x=i%columns*192,y=Math.floor(i/columns)*120;
+    if(i===8)ctx.drawImage(warehouse,x,y);else{const source=i<4?first:second,k=i%4;ctx.drawImage(source,k%2*192,Math.floor(k/2)*120,192,120,x,y,192,120);}
+    el.hidden=false;el.style.left=(i%columns+.12)*100/columns+'%';el.style.top=(Math.floor(i/columns)+.16)*100/rows+'%';el.style.width=76/columns+'%';el.style.height=78/rows+'%';
+  });
+}

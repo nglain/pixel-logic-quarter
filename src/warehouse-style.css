@@ -1,0 +1,25 @@
+#logic-quarter .qt-warehouse-layout .qt-stage{height:auto;aspect-ratio:auto;min-height:0;padding:10px;background:#243647}
+#logic-quarter .sk-board{display:grid;grid-template-columns:repeat(var(--columns),minmax(0,1fr));gap:0}
+#logic-quarter .sk-wall{aspect-ratio:1;background:repeating-linear-gradient(0deg,#50616c 0 43%,#344958 43% 49%,#5e6e74 49% 92%,#344958 92%);border:1px solid #344958;box-shadow:inset 2px 2px #6e7c7a}
+#logic-quarter .sk-cell{position:relative;aspect-ratio:1;background:#293d49;border:1px solid #314651;border-radius:0;padding:0;min-width:0;box-shadow:none}
+#logic-quarter .sk-cell:hover:not(:disabled){background:#395363;filter:none}
+#logic-quarter .sk-goal{position:absolute;inset:25%;border:2px dashed #d9bc6e;background:#e6bf6522}
+#logic-quarter .sk-crate{position:absolute;inset:9%;background:linear-gradient(45deg,transparent 43%,#ecc486 43% 50%,#6b4e36 50% 55%,transparent 55%),#ac7d4c;border:3px solid #e2b16d;box-shadow:inset 2px 2px #644c35,2px 3px #172a36;pointer-events:none}
+#logic-quarter .sk-cell.goal .sk-crate{border-color:#a9dab3;background-color:#56846f}
+#logic-quarter .sk-person{position:absolute;left:27%;top:17%;width:46%;height:67%;pointer-events:none}
+#logic-quarter .sk-person i{position:absolute;top:0;left:22%;width:56%;height:36%;background:#edcf9e;box-shadow:0 -3px #b7d0c4}
+#logic-quarter .sk-person b{position:absolute;top:36%;left:8%;width:84%;height:53%;background:#8fbcbe;border-bottom:4px solid #2b485b;box-shadow:2px 2px #162d3f}
+#logic-quarter .sk-cell.player{background:#35515c}
+#logic-quarter .sk-cell.qt-teach{outline-offset:-3px;z-index:1}
+#logic-quarter .sk-cell:disabled{opacity:1}
+@media(max-width:600px){
+  #logic-quarter [data-extra].qt-warehouse-layout{grid-template-columns:1fr}
+  #logic-quarter .qt-warehouse-layout .qt-panel{grid-row:1;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:6px 8px}
+  #logic-quarter .qt-warehouse-layout .qt-stage{padding:0}
+  #logic-quarter .qt-warehouse-layout .sk-board{grid-template-columns:12px repeat(calc(var(--columns) - 2),minmax(0,1fr)) 12px;grid-template-rows:12px repeat(calc(var(--rows) - 2),44px) 12px}
+  #logic-quarter .qt-warehouse-layout .sk-cell,#logic-quarter .qt-warehouse-layout .sk-wall{aspect-ratio:auto}
+  #logic-quarter .qt-warehouse-layout .qt-status{flex-basis:auto}
+  #logic-quarter .qt-warehouse-layout .qt-reset{margin-left:auto}
+  #logic-quarter .qt-warehouse-layout .qt-status:empty{display:none}
+}
+@media(max-width:600px){#logic-quarter .qt-header{gap:6px}#logic-quarter .qt-level-name{display:none}#logic-quarter:not([data-place="map"]) .qt-catalog-link{display:none}#logic-quarter [data-undo]{padding:4px;min-width:29px}}
