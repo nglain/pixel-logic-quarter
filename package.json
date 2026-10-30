@@ -1,0 +1,19 @@
+{
+  "name": "pixel-logic-quarter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Минималистичный пиксельный сборник: 8 классических логических игр, 24 уровня и подсказки по текущему положению.",
+  "license": "MIT",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "start": "python3 -m http.server 8000",
+    "test": "npm run build && node tests/check-hints.cjs && node tests/check-classics.cjs && node tests/check-tutorial.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.57.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nglain/pixel-logic-quarter.git"
+  }
+}

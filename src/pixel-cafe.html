@@ -1,0 +1,179 @@
+<div id="lying-machines">
+  <div class="lm-head"><h2>Pixel Café</h2><details class="lm-help"><summary aria-label="Правила игры">?</summary><div class="lm-rules" data-rules></div></details></div>
+  <div class="lm-layout">
+  <div class="lm-scene" aria-label="Три автомата с неверными наклейками">
+    <div class="lm-sign" aria-hidden="true">TEA • COFFEE • MYSTERY</div>
+    <div class="lm-machines" data-machines></div>
+    <div class="lm-floor"></div>
+  </div>
+  <aside class="lm-panel" aria-label="Монеты и ответ">
+    <div class="lm-settings"><select class="form-select" data-case aria-label="Испытание"><option value="0">Все врут</option><option value="1">Одна верна</option><option value="2">Без гарантий</option></select><select class="form-select" data-budget aria-label="Число монет"><option value="1">1 ●</option><option value="2">2 ●</option><option value="3" selected>3 ●</option><option value="4">4 ●</option><option value="5">5 ●</option><option value="6">6 ●</option></select></div>
+    <div class="lm-wallet" aria-label="Кошелёк и потраченные монеты"><div><span class="text-small">Осталось <b data-left-count></b></span><div class="lm-coins" data-wallet></div></div><div><span class="text-small">Потрачено <b data-spent-count></b></span><div class="lm-coins" data-spent></div></div></div>
+    <div class="lm-guesses" data-guesses><div class="lm-fields" data-fields></div></div>
+    <div class="lm-panel-actions"><button class="btn btn-primary" data-check>Проверить</button><button class="btn" data-again aria-label="Новый раунд" title="Новый раунд">↻</button></div>
+    <button class="btn" data-next hidden>Дальше →</button>
+    <div class="lm-status" role="status" aria-live="polite" data-status></div>
+  </aside>
+  </div>
+  <div class="lm-storage" hidden><span data-token></span><span data-progress></span><div data-history></div><button data-options></button><button data-hint></button><button data-reveal></button><div data-options-panel></div><div data-detail></div></div>
+</div>
+
+<style>
+#lying-machines{--px-bg:#141c2c;--px-panel:#202e42;--px-edge:#0a1120;--px-text:#f4e8c9;--px-muted:#a8bdc9;--px-gold:#ffcf61;--px-mint:#94e0bc;background:var(--px-bg);color:var(--px-text);padding:24px;display:grid;gap:16px;font:14px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;border:4px solid var(--px-edge);box-shadow:inset 0 0 0 2px #354660}
+#lying-machines *{box-sizing:border-box}
+#lying-machines h2{font:500 24px/1.3 ui-monospace,monospace;margin:4px 0 0;color:var(--px-gold)}
+#lying-machines .text-small{font-size:12px}#lying-machines .text-muted{color:var(--px-muted)}
+#lying-machines .lm-head{display:flex;gap:12px;align-items:center;justify-content:space-between}
+#lying-machines .viz-badge{display:inline-block;border-radius:0;background:#2b3d4c;color:var(--px-text);padding:4px 8px;font-size:12px}
+#lying-machines .lm-wallet{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:12px;background:#1c283b;border:2px solid #3d5065;box-shadow:3px 3px 0 var(--px-edge)}
+#lying-machines .lm-wallet b{color:var(--px-gold);font-weight:500}
+#lying-machines .lm-coins{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:30px;margin-top:8px}
+#lying-machines .lm-coin{display:inline-block;position:relative;width:20px;height:23px;background:#e4a83c;border:3px solid #ffe399;box-shadow:3px 0 0 #94632e,0 3px 0 #94632e;clip-path:polygon(15% 0,85% 0,85% 13%,100% 13%,100% 87%,85% 87%,85% 100%,15% 100%,15% 87%,0 87%,0 13%,15% 13%)}
+#lying-machines .lm-coin:after{content:'';position:absolute;left:6px;top:2px;width:3px;height:12px;background:#fff0b0}
+#lying-machines .lm-coin.empty{opacity:.12}#lying-machines .lm-coin.spent{filter:saturate(.35);opacity:.75}
+#lying-machines .lm-spent-item{display:flex;align-items:center;gap:5px;color:var(--px-muted);font-size:12px}
+#lying-machines .lm-no-spend{color:var(--px-muted)}
+#lying-machines .viz-controls,#lying-machines .viz-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+#lying-machines .viz-controls{align-items:end}
+#lying-machines .form-label{display:grid;gap:6px;margin:0;min-width:0}
+#lying-machines .form-select{font:inherit;color:var(--px-text);background:var(--px-panel);border:2px solid #53657b;border-radius:0;padding:8px;max-width:100%;width:100%;box-shadow:2px 2px 0 var(--px-edge)}
+#lying-machines .form-select:disabled{opacity:.55}
+#lying-machines .btn{font:inherit;line-height:1.4;background:#2d4153;color:var(--px-text);border:2px solid #607285;border-radius:0;padding:8px 12px;box-shadow:3px 3px 0 var(--px-edge);cursor:pointer;white-space:normal;max-width:100%}
+#lying-machines .btn:hover{background:#395a69}#lying-machines .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--px-edge)}
+#lying-machines .btn-primary{background:#92d9b2;color:#132c2b;border-color:#c8f2cf}#lying-machines .btn-primary:hover{background:#b4eaca}
+#lying-machines .btn-ghost{background:#202e42;color:var(--px-muted)}
+#lying-machines button:focus-visible,#lying-machines select:focus-visible{outline:3px solid var(--px-gold);outline-offset:4px}
+#lying-machines .lm-rules{color:#d0dce0}
+#lying-machines .lm-scene{position:relative;overflow:hidden;padding:20px 12px 0;background:repeating-linear-gradient(0deg,transparent 0 30px,#31455c 30px 32px),#233349;border:4px solid var(--px-edge);box-shadow:inset 0 0 0 2px #405571}
+#lying-machines .lm-sign{margin:0 auto 14px;width:max-content;max-width:100%;padding:6px 12px;color:var(--px-gold);text-align:center;letter-spacing:2px;background:#111d30;box-shadow:3px 3px 0 #0a1120;font-size:12px}
+#lying-machines .lm-machines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;position:relative;z-index:1;max-width:650px;margin:auto}
+#lying-machines .lm-machine{text-align:center;min-width:0;position:relative}
+#lying-machines .lm-id{color:#ccdbdd;letter-spacing:1px;margin-bottom:6px}
+#lying-machines .lm-machine-hit{position:relative;display:block;width:100%;padding:0;border:0;border-radius:0;background:none;color:var(--px-text);font:inherit;cursor:pointer;transition:filter .1s}
+#lying-machines .lm-machine-hit:not(:disabled):hover{filter:brightness(1.16);transform:translateY(-2px)}
+#lying-machines .lm-machine-hit:disabled{cursor:default}
+#lying-machines canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
+#lying-machines .lm-sticker{position:absolute;top:16%;left:16%;width:67%;height:25%;display:flex;flex-direction:column;justify-content:center;color:#192e37;font-weight:500;line-height:1.3;font-size:clamp(11px,1.8vw,15px);transform:rotate(-2deg)}
+#lying-machines .lm-sticker .text-small{font-size:10px;color:#526b70}
+#lying-machines .lm-drink{position:absolute;top:62%;left:16%;width:62%;font-size:clamp(11px,2vw,17px);color:#fff0c0;text-shadow:2px 2px #172332}
+#lying-machines .lm-insert{position:absolute;bottom:10%;left:14%;width:71%;font-size:11px;line-height:1.2;color:#d8e5df}
+#lying-machines .lm-mini-cost{display:none}
+#lying-machines .lm-tally{display:block;color:#e6d9ba;background:#142337;padding:4px;margin-top:-2px;position:relative}
+#lying-machines .lm-floor{height:30px;background:repeating-linear-gradient(90deg,#3d4f5e 0 48px,#344555 48px 50px);border-top:4px solid #0e192b;margin-top:0}
+#lying-machines .lm-flying-coin{display:none;position:absolute;right:18%;top:48%;background:var(--px-gold);color:#714719;padding:1px 5px;font-size:12px;box-shadow:2px 2px 0 #724e29;pointer-events:none}
+#lying-machines .pouring .lm-flying-coin{display:block;animation:px-coin .8s steps(8,end) forwards}
+#lying-machines .lm-pour-line{position:absolute;top:45%;left:45%;height:14%;width:2%;background:#cbb58a;display:none;pointer-events:none}
+#lying-machines .pouring .lm-pour-line{display:block;animation:px-pour .7s steps(5,end) forwards}
+#lying-machines .lm-mouse-hint{color:var(--px-mint)}
+#lying-machines .lm-status{padding:10px 12px;background:#1e3040;border-left:4px solid var(--px-gold);min-height:44px}
+#lying-machines .lm-guesses{display:grid;gap:8px}#lying-machines .lm-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#lying-machines .lm-detail{border-left:2px solid #53657b;padding-left:12px;color:#c8d6de}#lying-machines .lm-options-list{display:grid;gap:8px;margin-top:10px}#lying-machines .lm-options-row{display:flex;flex-wrap:wrap;gap:12px}
+#lying-machines [hidden]{display:none!important}
+@keyframes px-coin{0%{transform:translate(-15px,-35px);opacity:1}65%{transform:translate(0,0);opacity:1}100%{transform:translate(0,8px);opacity:0}}
+@keyframes px-pour{0%{transform:scaleY(0)}25%,75%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@media(max-width:520px){#lying-machines{padding:14px;gap:12px}#lying-machines h2{font-size:20px}#lying-machines .lm-head{flex-wrap:wrap}#lying-machines .lm-machines{gap:3px}#lying-machines .lm-scene{padding:12px 2px 0}#lying-machines .lm-insert{font-size:10px;bottom:9%}#lying-machines .lm-sticker .text-small{display:none}#lying-machines .lm-id{letter-spacing:0;font-size:11px}#lying-machines .lm-tally{font-size:10px}#lying-machines .lm-fields{grid-template-columns:1fr}#lying-machines .lm-sign{letter-spacing:0}#lying-machines .lm-wallet{gap:8px;padding:8px}#lying-machines .lm-coins{gap:5px}}
+@media(prefers-reduced-motion:reduce){#lying-machines .pouring .lm-flying-coin,#lying-machines .pouring .lm-pour-line{animation:none;display:none}#lying-machines .lm-machine-hit{transition:none}}
+@media(max-width:520px){#lying-machines .lm-full-cost{display:none}#lying-machines .lm-mini-cost{display:inline}#lying-machines .lm-insert{white-space:nowrap}}
+#lying-machines{padding:16px;gap:12px;border:0;box-shadow:none}
+#lying-machines h2{font-size:18px;margin:0}
+#lying-machines .lm-layout{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px;align-items:start}
+#lying-machines .lm-panel{display:grid;gap:10px;padding:12px;background:#1c283b;border:1px solid #405571;min-width:0}
+#lying-machines .lm-settings{display:grid;grid-template-columns:minmax(0,1fr) 55px;gap:5px}
+#lying-machines .form-select{font-size:12px;padding:6px 2px;box-shadow:none;border-width:1px;min-width:0}
+#lying-machines .lm-wallet{display:grid;grid-template-columns:1fr;gap:5px;padding:0;background:none;border:0;box-shadow:none}
+#lying-machines .lm-coins{gap:5px;margin-top:3px;min-height:20px}
+#lying-machines .lm-coin{width:14px;height:16px;border-width:2px}
+#lying-machines .lm-coin:after{left:4px;top:1px;width:2px;height:9px}
+#lying-machines .lm-spent-item{gap:3px;font-size:11px}
+#lying-machines .lm-fields{grid-template-columns:1fr;gap:5px}
+#lying-machines .lm-fields label{display:grid;grid-template-columns:15px minmax(0,1fr);align-items:center;gap:3px;font-size:12px}
+#lying-machines .lm-panel-actions{display:grid;grid-template-columns:1fr 32px;gap:5px}
+#lying-machines .btn{padding:6px;font-size:12px;box-shadow:none;border-width:1px}
+#lying-machines .lm-status{padding:0;border:0;background:none;min-height:0;font-size:12px;color:var(--px-mint)}
+#lying-machines .lm-sign{display:none}
+#lying-machines .lm-scene{padding-top:18px;border-width:2px}
+#lying-machines .lm-machines{gap:5px}
+#lying-machines .lm-id{font-size:12px;letter-spacing:0}
+#lying-machines .lm-sticker{font-size:12px;overflow-wrap:anywhere}
+#lying-machines .lm-full-cost{display:none}
+#lying-machines .lm-mini-cost{display:inline}
+#lying-machines .form-label{color:var(--px-text)}
+#lying-machines .lm-tally{display:none}
+#lying-machines .lm-help{position:relative;font-size:12px}
+#lying-machines .lm-help summary{cursor:pointer;list-style:none;color:var(--px-muted);padding:0 6px}
+#lying-machines .lm-help .lm-rules{position:absolute;right:0;top:25px;z-index:5;width:240px;padding:12px;background:#202e42;border:1px solid #53657b;color:#f4e8c9}
+@media(max-width:600px){#lying-machines{padding:10px}#lying-machines .lm-layout{grid-template-columns:minmax(0,1fr) 155px;gap:8px}#lying-machines .lm-panel{padding:8px}#lying-machines .lm-machines{grid-template-columns:1fr;max-width:130px}#lying-machines .lm-scene{padding:10px 4px 0}#lying-machines .lm-insert{display:none}#lying-machines .lm-sticker{font-size:12px}#lying-machines .lm-machine-hit{max-width:110px;margin:auto}#lying-machines .lm-id{margin-bottom:0}#lying-machines .lm-sticker .text-small{display:none}#lying-machines .lm-drink{font-size:12px}}
+</style>
+<script>
+(()=>{
+const root=document.getElementById('lying-machines'),q=s=>root.querySelector(s);
+const names=['Чай','Кофе','Случайный'],short=['ЧАЙ','КОФЕ','ЧАЙ / КОФЕ'],letters=['А','Б','В'];
+const permutations=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+const cases=[
+{name:'Все наклейки врут',rule:'Все три наклейки неверны.',hint:'Найди наклейку «Чай / кофе». Если она врёт, внутри только один напиток. Проба из этого автомата особенно полезна.'},
+{name:'Одна говорит правду',rule:'Ровно одна наклейка верна. Две остальные врут.',hint:'До первой пробы возможны три расстановки. Подумай, какие две из них совместимы с напитком, который ты получил.'},
+{name:'Наклейкам веры нет',rule:'Наклейки могут быть верными или ложными — никаких гарантий.',hint:'Два разных напитка из одного автомата доказывают, что он случайный. Несколько одинаковых подряд этого не опровергают.'}
+];
+function allowed(labels,mode){return permutations.filter(v=>{const matches=v.filter((x,i)=>x===labels[i]).length;return mode===0?matches===0:mode===1?matches===1:true;});}
+function shuffle(v){const a=v.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fresh(mode=0,budget=3,previous){const labels=shuffle([0,1,2]),pool=allowed(labels,mode);return {version:2,revision:previous?.revision||0,mode,budget,labels,actual:pool[Math.floor(Math.random()*pool.length)].slice(),samples:[],guesses:['','',''],solved:false,revealed:false,hint:false,options:false,message:'',completed:previous?.completed||[],round:(previous?.round||0)+1};}
+function compatible(s){return s&&s.version===2&&Number.isInteger(s.mode)&&cases[s.mode]&&Number.isInteger(s.budget)&&s.budget>=1&&s.budget<=6&&Array.isArray(s.labels)&&s.labels.length===3&&new Set(s.labels).size===3&&s.labels.every(x=>[0,1,2].includes(x))&&Array.isArray(s.actual)&&allowed(s.labels,s.mode).some(v=>v.every((x,i)=>x===s.actual[i]))&&Array.isArray(s.samples)&&s.samples.length<=s.budget&&s.samples.every(x=>[0,1,2].includes(x.index)&&[0,1].includes(x.drink)&&(s.actual[x.index]===2||s.actual[x.index]===x.drink))&&Array.isArray(s.guesses)&&s.guesses.length===3&&Array.isArray(s.completed);}
+let state;
+function paintMachine(canvas,index,last){const ctx=canvas.getContext('2d');if(!ctx)return;ctx.imageSmoothingEnabled=false;const r=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(x,y,w,h);};const tones=[['#548d8c','#37666e','#82b7a9'],['#a0786c','#755660','#d4a080'],['#788aab','#505b7c','#aab9ca']][index];
+r(8,119,82,5,'#0b1829');r(17,114,8,10,'#101a28');r(72,114,8,10,'#101a28');r(12,6,70,111,'#101a28');r(8,10,78,103,'#101a28');r(12,10,70,103,tones[0]);r(76,12,8,101,tones[1]);r(14,10,62,4,tones[2]);r(12,14,4,95,tones[2]);r(19,20,54,34,'#152b39');r(21,22,50,30,'#f1dfaf');r(22,23,46,2,'#fff4d1');r(64,48,7,3,'#c0ae83');r(20,60,44,39,'#152635');r(23,62,38,34,'#0c1928');r(37,61,10,7,'#788a94');r(41,67,4,3,'#b0c0bb');r(28,95,33,3,'#697f89');r(34,81,18,14,'#ecdfc1');r(36,95,14,2,'#b2ac9c');r(35,79,16,3,'#fff2d1');if(last){r(36,82,14,5,last.drink===0?'#bf984d':'#714b37');r(37,76,2,3,'#b4c6b7');r(45,73,2,4,'#b4c6b7');}r(69,64,6,14,'#192838');r(71,66,2,10,'#090f1d');r(68,84,8,8,'#182c38');r(70,85,4,4,'#a0e6ac');r(20,103,54,7,tones[1]);r(23,105,46,1,tones[2]);}
+function candidates(){return allowed(state.labels,state.mode).filter(v=>state.samples.every(s=>v[s.index]===2||v[s.index]===s.drink));}
+function save(){state.revision=(state.revision||0)+1;const snapshot={modelContent:{puzzle:cases[state.mode].name,coins:state.budget,remaining:state.budget-state.samples.length,samples:state.samples.map(s=>({machine:letters[s.index],drink:s.drink===0?'Чай':'Кофе'})),possible:candidates().length,solved:state.solved,revealed:state.revealed,completed:state.completed},privateContent:{lyingMachines:JSON.parse(JSON.stringify(state))}};try{Promise.resolve(window.openai?.setWidgetState?.(snapshot)).catch(()=>{});}catch{}}
+function draw(){
+const closed=state.solved||state.revealed,left=state.budget-state.samples.length,variants=candidates();
+q('[data-case]').value=state.mode;q('[data-budget]').value=state.budget;
+q('[data-case]').disabled=state.samples.length>0&&!closed;q('[data-budget]').disabled=state.samples.length>0&&!closed;
+q('[data-token]').textContent=`Монеты: ${left} / ${state.budget}`;
+q('[data-left-count]').textContent=left;q('[data-spent-count]').textContent=state.samples.length;
+q('[data-wallet]').innerHTML=Array.from({length:state.budget},(_,i)=>`<span class="lm-coin ${i>=left?'empty':''}" aria-hidden="true"></span>`).join('');
+q('[data-spent]').innerHTML=state.samples.length?state.samples.map((s,i)=>`<span class="lm-spent-item"><span class="lm-coin spent" aria-hidden="true"></span><span>${letters[s.index]}</span></span>`).join(''):'<span class="lm-no-spend">—</span>';
+q('[data-rules]').textContent=`${cases[state.mode].rule} Внутри: один автомат с чаем, один с кофе и один случайный (50/50). Одна монета — одна проба.`;
+q('[data-progress]').textContent=`Раунд ${state.round} · Доказано испытаний: ${state.completed.length} / 3`;
+q('[data-machines]').innerHTML=letters.map((l,i)=>{const samples=state.samples.filter(s=>s.index===i),last=samples[samples.length-1];return `<div class="lm-machine ${last?'sampled':''} ${closed?'solved':''}" data-machine="${i}"><div class="lm-id text-small">АВТОМАТ ${l}</div><button class="lm-machine-hit" data-pour="${i}" aria-label="Взять пробу из автомата ${l} за одну монету" ${closed||left===0?'disabled':''}><canvas width="96" height="128" data-art="${i}" aria-hidden="true"></canvas><span class="lm-sticker"><span class="text-small">${closed?'ВНУТРИ':'НАКЛЕЙКА'}</span><span>${short[closed?state.actual[i]:state.labels[i]]}</span></span><span class="lm-drink">${last?(last.drink===0?'ЧАЙ':'КОФЕ'):'?'}</span><span class="lm-insert"><span class="lm-full-cost">${closed?'РАСКРЫТО':left?'НАЖМИ · 1 МОНЕТА':'НЕТ МОНЕТ'}</span><span class="lm-mini-cost">${closed?'ОТКР.':left?'−1 ●':'0 ●'}</span></span><span class="lm-flying-coin" aria-hidden="true">−1</span><span class="lm-pour-line" aria-hidden="true"></span></button><span class="text-small lm-tally">Чай ${samples.filter(s=>s.drink===0).length} · Кофе ${samples.filter(s=>s.drink===1).length}</span></div>`;}).join('');
+root.querySelectorAll('[data-art]').forEach(c=>{const i=Number(c.dataset.art),last=state.samples.filter(s=>s.index===i).at(-1);paintMachine(c,i,last);});
+const message=state.message;
+q('[data-status]').textContent=state.solved?'Верно!':state.revealed?'Автоматы открыты.':message.includes('противоречат условию')?'Проверь наклейки.':message.includes('противоречит полученным')?'Не совпадает с пробами.':message.includes('ровно один раз')?'Типы не повторяются.':message.includes('Выбери содержимое')?'Заполни А, Б и В.':message.includes('Твоя версия возможна')?`Ещё ${variants.length} варианта.`:state.samples.length?`${letters[state.samples.at(-1).index]} → ${state.samples.at(-1).drink===0?'чай':'кофе'}${left===0?' · монеты кончились':''}`:'Нажми на автомат.';
+q('[data-history]').innerHTML=state.samples.map((s,i)=>`<span class="viz-badge">${i+1}. ${letters[s.index]} → ${s.drink===0?'чай':'кофе'}</span>`).join('');
+q('[data-fields]').innerHTML=letters.map((l,i)=>`<label class="form-label">${l}<select class="form-select" data-guess="${i}" ${closed?'disabled':''}><option value="">Что внутри?</option>${names.map((n,j)=>`<option value="${j}" ${state.guesses[i]===String(j)?'selected':''}>${n}</option>`).join('')}</select></label>`).join('');
+q('[data-check]').hidden=closed;q('[data-hint]').hidden=closed;q('[data-reveal]').hidden=closed;
+q('[data-hint]').textContent=state.hint?'Скрыть подсказку':'Подсказка';
+q('[data-options]').textContent=state.options?'Скрыть варианты':'Какие варианты остались?';
+q('[data-options-panel]').hidden=!state.options;
+q('[data-options-panel]').innerHTML=`<div>Совместимых расстановок: ${variants.length}${variants.length===1?' — вывод однозначен.':'. Пока есть неопределённость.'}</div><div class="lm-options-list">${variants.map(v=>`<div class="lm-options-row text-small">${v.map((x,i)=>`<span>${letters[i]}: ${names[x]}</span>`).join('')}</div>`).join('')}</div>`;
+q('[data-detail]').hidden=!state.hint&&!closed;
+q('[data-detail]').textContent=closed?(state.solved?`Расстановка доказана всеми наблюдениями. Потрачено монет: ${state.samples.length} из ${state.budget}.`: `Автоматы открыты, испытание не засчитано. Совместимых с пробами расстановок: ${variants.length}. В случайном автомате несколько одинаковых напитков подряд возможны — это ещё не доказательство.`):cases[state.mode].hint;
+q('[data-next]').hidden=!closed||state.mode===2;
+}
+root.addEventListener('click',e=>{
+const p=e.target.closest('[data-pour]');
+if(p&&!state.solved&&!state.revealed&&state.samples.length<state.budget){const index=Number(p.dataset.pour),a=state.actual[index],drink=a===2?Math.floor(Math.random()*2):a;state.samples.push({index,drink});state.message=`Автомат ${letters[index]} выдал ${drink===0?'чай':'кофе'}. Осталось монет: ${state.budget-state.samples.length}.`;draw();q(`[data-machine="${index}"]`).classList.add('pouring');save();}
+if(e.target.closest('[data-hint]')){state.hint=!state.hint;draw();save();}
+if(e.target.closest('[data-options]')){state.options=!state.options;draw();save();}
+if(e.target.closest('[data-again]')){state=fresh(state.mode,state.budget,state);draw();save();}
+if(e.target.closest('[data-next]')&&(state.solved||state.revealed)&&state.mode<2){state=fresh(state.mode+1,state.budget,state);draw();save();}
+if(e.target.closest('[data-reveal]')&&!state.solved){state.revealed=true;state.message='Содержимое открыто. Это разбор раунда, без зачёта.';draw();save();}
+if(e.target.closest('[data-check]')&&!state.solved&&!state.revealed){const possible=candidates(),g=state.guesses.map(Number);
+if(state.guesses.some(x=>x===''))state.message='Выбери содержимое всех трёх автоматов.';
+else if(new Set(g).size!==3)state.message='Каждый тип встречается ровно один раз.';
+else if(!allowed(state.labels,state.mode).some(v=>v.every((x,i)=>x===g[i])))state.message='Эти подписи противоречат условию о наклейках.';
+else if(!possible.some(v=>v.every((x,i)=>x===g[i])))state.message='Эта расстановка противоречит полученным напиткам.';
+else if(possible.length>1)state.message=`Твоя версия возможна, но остаётся ${possible.length} расстановок. Пока не доказано.${state.samples.length<state.budget?' Возьми ещё пробу.':' Монет больше нет: можно разобрать раунд или начать новый.'}`;
+else{state.solved=true;state.message='Доказано! Все три автомата определены однозначно.';if(!state.completed.includes(state.mode))state.completed.push(state.mode);}
+draw();save();}
+});
+root.addEventListener('change',e=>{
+if(e.target.matches('[data-guess]')){state.guesses[Number(e.target.dataset.guess)]=e.target.value;state.message='';save();}
+if(e.target.matches('[data-case],[data-budget]')){if(state.samples.length&&!state.solved&&!state.revealed)return;state=fresh(Number(q('[data-case]').value),Number(q('[data-budget]').value),state);draw();save();}
+});
+const initial=window.openai?.widgetState?.privateContent?.lyingMachines;
+if(compatible(initial))state=initial;
+else if(initial?.version===1&&Array.isArray(initial.actual)&&allowed([0,1,2],0).some(v=>v.every((x,i)=>x===initial.actual[i]))){state=fresh();state.labels=[0,1,2];state.actual=initial.actual;state.samples=initial.sample?[initial.sample]:[];state.guesses=initial.guesses||['','',''];state.message='Предыдущая проба сохранена. Теперь можно брать дополнительные пробы.';}
+else state=fresh();
+draw();
+window.addEventListener('openai:set_globals',e=>{const s=e.detail?.globals?.widgetState?.privateContent?.lyingMachines;if(compatible(s)&&(s.revision||0)>(state.revision||0)){state=s;draw();}});
+})();
+</script>

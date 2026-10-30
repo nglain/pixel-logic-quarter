@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Квартал загадок</title>
+<style>html,body{margin:0;background:#0c1521;color:#f2e5c6}body{padding:20px}button,select{font:inherit}@media(max-width:600px){body{padding:6px}}</style>
+<script>
+(()=>{let saved=null;try{saved=JSON.parse(localStorage.getItem('pixel-quarter-v1'));if(!saved)saved=JSON.parse(localStorage.getItem('pixel-cafe-save-v2'));}catch{}window.openai={widgetState:saved,setWidgetState:async s=>{window.openai.widgetState=s;try{localStorage.setItem('pixel-quarter-v1',JSON.stringify(s))}catch{}}};})();
+</script></head><body><div id="logic-quarter">
+  <header class="qt-header"><button data-home aria-label="Вернуться в квартал" hidden>←</button><h2 data-heading>Квартал загадок</h2><span class="qt-level" data-level></span><button class="qt-main" data-level-next hidden>Дальше →</button><button data-hint-toggle aria-pressed="false">Подсказка</button><details class="qt-help"><summary aria-label="Правила">?</summary><div data-help></div></details></header>
+  <div class="qt-guide" data-guide role="status" aria-live="polite"></div>
+  <section data-view="map" class="qt-map" aria-label="Карта квартала">
+    <canvas width="384" height="240" data-map-art aria-hidden="true"></canvas>
+    <button class="qt-place" data-enter="cafe" style="left:8%;top:13%;width:36%;height:34%"><span>Кафе</span></button>
+    <button class="qt-place" data-enter="safe" style="left:56%;top:13%;width:36%;height:34%"><span>Сейф</span></button>
+    <button class="qt-place" data-enter="scales" style="left:8%;top:58%;width:36%;height:34%"><span>Весы</span></button>
+    <button class="qt-place" data-enter="river" style="left:56%;top:58%;width:36%;height:34%"><span>Переправа</span></button>
+    <button class="qt-place" data-enter="hanoi" style="left:8%;top:13%;width:36%;height:34%" hidden><span>Башня</span></button>
+    <button class="qt-place" data-enter="jugs" style="left:56%;top:13%;width:36%;height:34%" hidden><span>Кувшины</span></button>
+    <button class="qt-place" data-enter="bridge" style="left:8%;top:58%;width:36%;height:34%" hidden><span>Мост</span></button>
+    <button class="qt-place" data-enter="lights" style="left:56%;top:58%;width:36%;height:34%" hidden><span>Свет погас</span></button>
+  </section>
+  <section data-view="cafe" hidden><div id="lying-machines">
+  <div class="lm-head"><h2>Pixel Café</h2><details class="lm-help"><summary aria-label="Правила игры">?</summary><div class="lm-rules" data-rules></div></details></div>
+  <div class="lm-layout">
+  <div class="lm-scene" aria-label="Три автомата с неверными наклейками">
+    <div class="lm-sign" aria-hidden="true">TEA • COFFEE • MYSTERY</div>
+    <div class="lm-machines" data-machines></div>
+    <div class="lm-floor"></div>
+  </div>
+  <aside class="lm-panel" aria-label="Монеты и ответ">
+    <div class="lm-settings"><select class="form-select" data-case aria-label="Испытание"><option value="0">Все врут</option><option value="1">Одна верна</option><option value="2">Без гарантий</option></select><select class="form-select" data-budget aria-label="Число монет"><option value="1">1 ●</option><option value="2">2 ●</option><option value="3" selected>3 ●</option><option value="4">4 ●</option><option value="5">5 ●</option><option value="6">6 ●</option></select></div>
+    <div class="lm-wallet" aria-label="Кошелёк и потраченные монеты"><div><span class="text-small">Осталось <b data-left-count></b></span><div class="lm-coins" data-wallet></div></div><div><span class="text-small">Потрачено <b data-spent-count></b></span><div class="lm-coins" data-spent></div></div></div>
+    <div class="lm-guesses" data-guesses><div class="lm-fields" data-fields></div></div>
+    <div class="lm-panel-actions"><button class="btn btn-primary" data-check>Проверить</button><button class="btn" data-again aria-label="Новый раунд" title="Новый раунд">↻</button></div>
+    <button class="btn" data-next hidden>Дальше →</button>
+    <div class="lm-status" role="status" aria-live="polite" data-status></div>
+  </aside>
+  </div>
+  <div class="lm-storage" hidden><span data-token></span><span data-progress></span><div data-history></div><button data-options></button><button data-hint></button><button data-reveal></button><div data-options-panel></div><div data-detail></div></div>
+</div>
+
+<style>
+#lying-machines{--px-bg:#141c2c;--px-panel:#202e42;--px-edge:#0a1120;--px-text:#f4e8c9;--px-muted:#a8bdc9;--px-gold:#ffcf61;--px-mint:#94e0bc;background:var(--px-bg);color:var(--px-text);padding:24px;display:grid;gap:16px;font:14px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;border:4px solid var(--px-edge);box-shadow:inset 0 0 0 2px #354660}
+#lying-machines *{box-sizing:border-box}
+#lying-machines h2{font:500 24px/1.3 ui-monospace,monospace;margin:4px 0 0;color:var(--px-gold)}
+#lying-machines .text-small{font-size:12px}#lying-machines .text-muted{color:var(--px-muted)}
+#lying-machines .lm-head{display:flex;gap:12px;align-items:center;justify-content:space-between}
+#lying-machines .viz-badge{display:inline-block;border-radius:0;background:#2b3d4c;color:var(--px-text);padding:4px 8px;font-size:12px}
+#lying-machines .lm-wallet{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:12px;background:#1c283b;border:2px solid #3d5065;box-shadow:3px 3px 0 var(--px-edge)}
+#lying-machines .lm-wallet b{color:var(--px-gold);font-weight:500}
+#lying-machines .lm-coins{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-height:30px;margin-top:8px}
+#lying-machines .lm-coin{display:inline-block;position:relative;width:20px;height:23px;background:#e4a83c;border:3px solid #ffe399;box-shadow:3px 0 0 #94632e,0 3px 0 #94632e;clip-path:polygon(15% 0,85% 0,85% 13%,100% 13%,100% 87%,85% 87%,85% 100%,15% 100%,15% 87%,0 87%,0 13%,15% 13%)}
+#lying-machines .lm-coin:after{content:'';position:absolute;left:6px;top:2px;width:3px;height:12px;background:#fff0b0}
+#lying-machines .lm-coin.empty{opacity:.12}#lying-machines .lm-coin.spent{filter:saturate(.35);opacity:.75}
+#lying-machines .lm-spent-item{display:flex;align-items:center;gap:5px;color:var(--px-muted);font-size:12px}
+#lying-machines .lm-no-spend{color:var(--px-muted)}
+#lying-machines .viz-controls,#lying-machines .viz-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+#lying-machines .viz-controls{align-items:end}
+#lying-machines .form-label{display:grid;gap:6px;margin:0;min-width:0}
+#lying-machines .form-select{font:inherit;color:var(--px-text);background:var(--px-panel);border:2px solid #53657b;border-radius:0;padding:8px;max-width:100%;width:100%;box-shadow:2px 2px 0 var(--px-edge)}
+#lying-machines .form-select:disabled{opacity:.55}
+#lying-machines .btn{font:inherit;line-height:1.4;background:#2d4153;color:var(--px-text);border:2px solid #607285;border-radius:0;padding:8px 12px;box-shadow:3px 3px 0 var(--px-edge);cursor:pointer;white-space:normal;max-width:100%}
+#lying-machines .btn:hover{background:#395a69}#lying-machines .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--px-edge)}
+#lying-machines .btn-primary{background:#92d9b2;color:#132c2b;border-color:#c8f2cf}#lying-machines .btn-primary:hover{background:#b4eaca}
+#lying-machines .btn-ghost{background:#202e42;color:var(--px-muted)}
+#lying-machines button:focus-visible,#lying-machines select:focus-visible{outline:3px solid var(--px-gold);outline-offset:4px}
+#lying-machines .lm-rules{color:#d0dce0}
+#lying-machines .lm-scene{position:relative;overflow:hidden;padding:20px 12px 0;background:repeating-linear-gradient(0deg,transparent 0 30px,#31455c 30px 32px),#233349;border:4px solid var(--px-edge);box-shadow:inset 0 0 0 2px #405571}
+#lying-machines .lm-sign{margin:0 auto 14px;width:max-content;max-width:100%;padding:6px 12px;color:var(--px-gold);text-align:center;letter-spacing:2px;background:#111d30;box-shadow:3px 3px 0 #0a1120;font-size:12px}
+#lying-machines .lm-machines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;position:relative;z-index:1;max-width:650px;margin:auto}
+#lying-machines .lm-machine{text-align:center;min-width:0;position:relative}
+#lying-machines .lm-id{color:#ccdbdd;letter-spacing:1px;margin-bottom:6px}
+#lying-machines .lm-machine-hit{position:relative;display:block;width:100%;padding:0;border:0;border-radius:0;background:none;color:var(--px-text);font:inherit;cursor:pointer;transition:filter .1s}
+#lying-machines .lm-machine-hit:not(:disabled):hover{filter:brightness(1.16);transform:translateY(-2px)}
+#lying-machines .lm-machine-hit:disabled{cursor:default}
+#lying-machines canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges}
+#lying-machines .lm-sticker{position:absolute;top:16%;left:16%;width:67%;height:25%;display:flex;flex-direction:column;justify-content:center;color:#192e37;font-weight:500;line-height:1.3;font-size:clamp(11px,1.8vw,15px);transform:rotate(-2deg)}
+#lying-machines .lm-sticker .text-small{font-size:10px;color:#526b70}
+#lying-machines .lm-drink{position:absolute;top:62%;left:16%;width:62%;font-size:clamp(11px,2vw,17px);color:#fff0c0;text-shadow:2px 2px #172332}
+#lying-machines .lm-insert{position:absolute;bottom:10%;left:14%;width:71%;font-size:11px;line-height:1.2;color:#d8e5df}
+#lying-machines .lm-mini-cost{display:none}
+#lying-machines .lm-tally{display:block;color:#e6d9ba;background:#142337;padding:4px;margin-top:-2px;position:relative}
+#lying-machines .lm-floor{height:30px;background:repeating-linear-gradient(90deg,#3d4f5e 0 48px,#344555 48px 50px);border-top:4px solid #0e192b;margin-top:0}
+#lying-machines .lm-flying-coin{display:none;position:absolute;right:18%;top:48%;background:var(--px-gold);color:#714719;padding:1px 5px;font-size:12px;box-shadow:2px 2px 0 #724e29;pointer-events:none}
+#lying-machines .pouring .lm-flying-coin{display:block;animation:px-coin .8s steps(8,end) forwards}
+#lying-machines .lm-pour-line{position:absolute;top:45%;left:45%;height:14%;width:2%;background:#cbb58a;display:none;pointer-events:none}
+#lying-machines .pouring .lm-pour-line{display:block;animation:px-pour .7s steps(5,end) forwards}
+#lying-machines .lm-mouse-hint{color:var(--px-mint)}
+#lying-machines .lm-status{padding:10px 12px;background:#1e3040;border-left:4px solid var(--px-gold);min-height:44px}
+#lying-machines .lm-guesses{display:grid;gap:8px}#lying-machines .lm-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#lying-machines .lm-detail{border-left:2px solid #53657b;padding-left:12px;color:#c8d6de}#lying-machines .lm-options-list{display:grid;gap:8px;margin-top:10px}#lying-machines .lm-options-row{display:flex;flex-wrap:wrap;gap:12px}
+#lying-machines [hidden]{display:none!important}
+@keyframes px-coin{0%{transform:translate(-15px,-35px);opacity:1}65%{transform:translate(0,0);opacity:1}100%{transform:translate(0,8px);opacity:0}}
+@keyframes px-pour{0%{transform:scaleY(0)}25%,75%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@media(max-width:520px){#lying-machines{padding:14px;gap:12px}#lying-machines h2{font-size:20px}#lying-machines .lm-head{flex-wrap:wrap}#lying-machines .lm-machines{gap:3px}#lying-machines .lm-scene{padding:12px 2px 0}#lying-machines .lm-insert{font-size:10px;bottom:9%}#lying-machines .lm-sticker .text-small{display:none}#lying-machines .lm-id{letter-spacing:0;font-size:11px}#lying-machines .lm-tally{font-size:10px}#lying-machines .lm-fields{grid-template-columns:1fr}#lying-machines .lm-sign{letter-spacing:0}#lying-machines .lm-wallet{gap:8px;padding:8px}#lying-machines .lm-coins{gap:5px}}
+@media(prefers-reduced-motion:reduce){#lying-machines .pouring .lm-flying-coin,#lying-machines .pouring .lm-pour-line{animation:none;display:none}#lying-machines .lm-machine-hit{transition:none}}
+@media(max-width:520px){#lying-machines .lm-full-cost{display:none}#lying-machines .lm-mini-cost{display:inline}#lying-machines .lm-insert{white-space:nowrap}}
+#lying-machines{padding:16px;gap:12px;border:0;box-shadow:none}
+#lying-machines h2{font-size:18px;margin:0}
+#lying-machines .lm-layout{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:12px;align-items:start}
+#lying-machines .lm-panel{display:grid;gap:10px;padding:12px;background:#1c283b;border:1px solid #405571;min-width:0}
+#lying-machines .lm-settings{display:grid;grid-template-columns:minmax(0,1fr) 55px;gap:5px}
+#lying-machines .form-select{font-size:12px;padding:6px 2px;box-shadow:none;border-width:1px;min-width:0}
+#lying-machines .lm-wallet{display:grid;grid-template-columns:1fr;gap:5px;padding:0;background:none;border:0;box-shadow:none}
+#lying-machines .lm-coins{gap:5px;margin-top:3px;min-height:20px}
+#lying-machines .lm-coin{width:14px;height:16px;border-width:2px}
+#lying-machines .lm-coin:after{left:4px;top:1px;width:2px;height:9px}
+#lying-machines .lm-spent-item{gap:3px;font-size:11px}
+#lying-machines .lm-fields{grid-template-columns:1fr;gap:5px}
+#lying-machines .lm-fields label{display:grid;grid-template-columns:15px minmax(0,1fr);align-items:center;gap:3px;font-size:12px}
+#lying-machines .lm-panel-actions{display:grid;grid-template-columns:1fr 32px;gap:5px}
+#lying-machines .btn{padding:6px;font-size:12px;box-shadow:none;border-width:1px}
+#lying-machines .lm-status{padding:0;border:0;background:none;min-height:0;font-size:12px;color:var(--px-mint)}
+#lying-machines .lm-sign{display:none}
+#lying-machines .lm-scene{padding-top:18px;border-width:2px}
+#lying-machines .lm-machines{gap:5px}
+#lying-machines .lm-id{font-size:12px;letter-spacing:0}
+#lying-machines .lm-sticker{font-size:12px;overflow-wrap:anywhere}
+#lying-machines .lm-full-cost{display:none}
+#lying-machines .lm-mini-cost{display:inline}
+#lying-machines .form-label{color:var(--px-text)}
+#lying-machines .lm-tally{display:none}
+#lying-machines .lm-help{position:relative;font-size:12px}
+#lying-machines .lm-help summary{cursor:pointer;list-style:none;color:var(--px-muted);padding:0 6px}
+#lying-machines .lm-help .lm-rules{position:absolute;right:0;top:25px;z-index:5;width:240px;padding:12px;background:#202e42;border:1px solid #53657b;color:#f4e8c9}
+@media(max-width:600px){#lying-machines{padding:10px}#lying-machines .lm-layout{grid-template-columns:minmax(0,1fr) 155px;gap:8px}#lying-machines .lm-panel{padding:8px}#lying-machines .lm-machines{grid-template-columns:1fr;max-width:130px}#lying-machines .lm-scene{padding:10px 4px 0}#lying-machines .lm-insert{display:none}#lying-machines .lm-sticker{font-size:12px}#lying-machines .lm-machine-hit{max-width:110px;margin:auto}#lying-machines .lm-id{margin-bottom:0}#lying-machines .lm-sticker .text-small{display:none}#lying-machines .lm-drink{font-size:12px}}
+</style>
+</section>
+  <section data-view="safe" class="qt-layout" hidden>
+    <div class="qt-stage qt-vault"><canvas width="288" height="224" data-safe-art aria-hidden="true"></canvas><div class="qt-dials" data-dials></div><span class="qt-vault-light" data-safe-light></span></div>
+    <aside class="qt-panel"><span class="qt-small" data-safe-count></span><button class="qt-main" data-safe-check>Открыть</button><div class="qt-log" data-safe-log aria-label="История кодов"></div><div class="qt-status" data-safe-status role="status" aria-live="polite"></div><button class="qt-reset" data-reset="safe" aria-label="Новый сейф">↻</button></aside>
+  </section>
+  <section data-view="scales" class="qt-layout" hidden>
+    <div class="qt-stage qt-balance"><canvas width="288" height="224" data-scale-art aria-hidden="true"></canvas><div data-coins class="qt-coins"></div></div>
+    <aside class="qt-panel"><span class="qt-small" data-scale-count></span><div class="qt-row"><button data-tray="-1" aria-label="Класть на левую чашу">← Чаша</button><button data-tray="1" aria-label="Класть на правую чашу">Чаша →</button></div><button class="qt-main" data-weigh>Взвесить</button><button data-accuse>Назвать монету</button><div data-scale-log class="qt-log"></div><div data-scale-status class="qt-status" role="status" aria-live="polite"></div><button class="qt-reset" data-reset="scales" aria-label="Новые монеты">↻</button></aside>
+  </section>
+  <section data-view="river" class="qt-layout" hidden>
+    <div class="qt-stage qt-river"><canvas width="288" height="224" data-river-art aria-hidden="true"></canvas><div data-river-actors></div><button class="qt-boat" data-cross aria-label="Переплыть на другой берег"><canvas width="66" height="42" data-boat-art aria-hidden="true"></canvas><span>Плыть →</span></button></div>
+    <aside class="qt-panel"><span class="qt-small" data-river-count></span><div class="qt-passenger" data-passenger></div><div data-river-status class="qt-status" role="status" aria-live="polite"></div><button class="qt-reset" data-reset="river" aria-label="Начать переправу заново">↻</button></aside>
+  </section>
+  <section data-extra class="qt-layout" hidden aria-label="Игровая сцена"></section>
+</div>
+<style>
+#logic-quarter{--qbg:#141e2d;--qpanel:#1d2c3e;--qtext:#f2e5c6;--qmuted:#a8bec8;--qgold:#ffce68;--qmint:#9be0bc;background:var(--qbg);color:var(--qtext);font:14px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;padding:16px;max-width:900px;margin:auto}
+#logic-quarter *{box-sizing:border-box}#logic-quarter [hidden]{display:none!important}
+#logic-quarter h2{font:500 18px/1.3 ui-monospace,monospace;margin:0;color:var(--qgold)}
+#logic-quarter .qt-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}#logic-quarter .qt-help{margin-left:auto;position:relative;font-size:12px}
+#logic-quarter .qt-header{flex-wrap:wrap;gap:8px}
+#logic-quarter .qt-guide{font-size:12px;color:var(--qtext);margin:0 0 12px;max-width:640px}
+#logic-quarter .qt-level{font-size:12px;color:var(--qmuted)}
+#logic-quarter .qt-teach{outline:3px solid #ffcf68!important;outline-offset:4px;filter:drop-shadow(0 0 5px #ffcf6866);position:relative;z-index:2}
+#logic-quarter .qt-teach[data-actor],#logic-quarter .qt-teach[data-cross],#logic-quarter .qt-teach[data-coin]{position:absolute}
+#logic-quarter .qt-coin.qt-teach{background:#ffe4a1;color:#49351f;box-shadow:inset 0 0 0 2px #fff3cf}
+#logic-quarter .qt-guide{min-height:0}
+#logic-quarter [data-level-next]{font-size:12px;padding:5px 8px}
+#logic-quarter #lying-machines .lm-settings,#logic-quarter #lying-machines [data-next]{display:none!important}
+#logic-quarter .qt-help summary{list-style:none;cursor:pointer;padding:4px 8px}#logic-quarter .qt-help>div{position:absolute;right:0;top:30px;background:#20334a;border:1px solid #50657a;width:250px;padding:12px;z-index:10}
+#logic-quarter button,#logic-quarter select{font:inherit;color:var(--qtext);background:#293e50;border:1px solid #536d80;border-radius:0;padding:7px;cursor:pointer;min-width:0}
+#logic-quarter button:hover:not(:disabled){filter:brightness(1.2)}#logic-quarter button:focus-visible{outline:2px solid var(--qgold);outline-offset:3px}#logic-quarter button:disabled{opacity:.45;cursor:default}
+#logic-quarter button[aria-pressed="true"]{background:#486c71;border-color:var(--qmint)}
+#logic-quarter canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+#logic-quarter .qt-map{position:relative;background:#263c37}#logic-quarter .qt-place{position:absolute;border:0;background:none;padding:0;display:flex;justify-content:center;align-items:flex-end;padding-bottom:2px}
+#logic-quarter .qt-place span{background:#142131;color:var(--qtext);padding:3px 10px;box-shadow:2px 2px #0c1522;font-size:14px}
+#logic-quarter .qt-place:hover span,#logic-quarter .qt-place:focus-visible span{color:var(--qgold);transform:translateY(-2px)}#logic-quarter .qt-place.done span:after{content:' · ★';color:var(--qgold)}
+#logic-quarter .qt-layout{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:12px;align-items:start}
+#logic-quarter .qt-stage{position:relative;min-width:0;background:#24364a;border:2px solid #405670}
+#logic-quarter .qt-panel{display:grid;gap:10px;padding:12px;background:var(--qpanel);border:1px solid #405670;min-width:0;font-size:12px}
+#logic-quarter .qt-main{background:var(--qmint);color:#15332e;border-color:#bfeccd}
+#logic-quarter .qt-small{font-size:12px;color:var(--qmuted)}#logic-quarter .qt-status{color:var(--qmint);font-size:12px;overflow-wrap:anywhere}
+#logic-quarter .qt-reset{justify-self:end;width:30px;padding:3px}#logic-quarter .qt-log{display:grid;gap:5px;font-size:12px}#logic-quarter .qt-attempt{display:flex;justify-content:space-between;gap:6px}#logic-quarter .qt-feedback{color:var(--qgold)}
+#logic-quarter .qt-dials{position:absolute;left:29%;top:33%;width:42%;display:flex;justify-content:center;gap:6px}#logic-quarter .qt-dials button{width:33%;font-size:clamp(18px,4vw,32px);padding:4px 0;background:#102234;border:2px solid #779298;color:#f8e7ad}
+#logic-quarter .qt-vault-light{position:absolute;left:47%;top:22%;width:6%;height:3%;background:#e7a76e}#logic-quarter .qt-vault-light.open{background:var(--qmint)}
+#logic-quarter .qt-row{display:flex;gap:5px}#logic-quarter .qt-row button{flex:1;padding:5px 2px;font-size:11px}
+#logic-quarter .qt-coin{position:absolute;width:11%;aspect-ratio:1;border:2px solid #ffe5a0;background:#bf873a;color:#fff0bb;padding:0;font-size:clamp(11px,2vw,17px);box-shadow:2px 2px #7b552d;clip-path:polygon(15% 0,85% 0,100% 15%,100% 85%,85% 100%,15% 100%,0 85%,0 15%)}
+#logic-quarter .qt-coin:disabled{opacity:1}
+#logic-quarter .qt-coin.suspect{background:var(--qmint);color:#14352c}
+#logic-quarter .qt-actor{position:absolute;width:20%;padding:0;background:none;border:0;transition:left .35s steps(8,end)}#logic-quarter .qt-actor span{display:block;font-size:11px;color:#f6e9c7;white-space:nowrap;text-shadow:1px 1px #162836}
+#logic-quarter .qt-actor:disabled{opacity:.65}#logic-quarter .qt-actor.selected{filter:drop-shadow(0 0 3px #ffdc84)}
+#logic-quarter .qt-boat{position:absolute;top:43%;width:25%;background:none;border:0;padding:0;transition:left .4s steps(10,end)}#logic-quarter .qt-boat span{font-size:11px;white-space:nowrap;color:#f5e2af}
+#logic-quarter #lying-machines{padding:0;max-width:none}#logic-quarter #lying-machines .lm-head{display:none}#logic-quarter #lying-machines .lm-layout{grid-template-columns:minmax(0,1fr) 170px}
+@media(max-width:600px){#logic-quarter{padding:10px}#logic-quarter .qt-layout{grid-template-columns:minmax(0,1fr) 136px;gap:8px}#logic-quarter .qt-panel{padding:8px;gap:8px}#logic-quarter .qt-stage{min-height:230px}#logic-quarter .qt-stage>canvas{height:230px;object-fit:fill}#logic-quarter .qt-dials{left:17%;width:66%;gap:3px}#logic-quarter .qt-dials button{font-size:18px}#logic-quarter .qt-map .qt-place span{font-size:11px;padding:2px 5px}#logic-quarter #lying-machines .lm-layout{grid-template-columns:minmax(0,1fr) 136px;gap:8px}#logic-quarter .qt-actor{width:29%}#logic-quarter .qt-actor span{font-size:10px}#logic-quarter .qt-boat{width:30%}#logic-quarter .qt-coin{width:15%}}
+@media(prefers-reduced-motion:reduce){#logic-quarter .qt-actor,#logic-quarter .qt-boat{transition:none}}
+#logic-quarter [data-hint-toggle]{margin-left:auto;font-size:12px;padding:4px 8px}
+#logic-quarter .qx-stage{width:100%;aspect-ratio:288/224;min-height:230px}
+#logic-quarter .qx-rods{position:absolute;inset:12% 4% 10%;display:flex;gap:4px;border-bottom:8px solid #a0865c}
+#logic-quarter .qx-rod{position:relative;flex:1;border:0;background:none;padding:0}
+#logic-quarter .qx-pole{position:absolute;left:47%;bottom:0;width:6%;height:90%;background:#c9b77e;box-shadow:3px 0 #6e6d5b}
+#logic-quarter .qx-disk{position:absolute;left:50%;transform:translateX(-50%);height:10%;border:2px solid #172b3e;box-shadow:0 2px #112335}
+#logic-quarter .qx-rod-name{position:absolute;top:105%;left:0;width:100%;font-size:12px;color:#c3d1cd}
+#logic-quarter .qx-jugs{position:absolute;inset:5% 9% 10%;display:flex;align-items:stretch;gap:15%}
+#logic-quarter .qx-jug{position:relative;flex:1;background:none;border:0;padding:0}
+#logic-quarter .qx-jug-vessel{position:absolute;bottom:12%;left:0;width:100%;border:5px solid #b3c5bd;border-top:0;box-shadow:3px 3px #10263b;background:#182e43}
+#logic-quarter .qx-water{position:absolute;bottom:0;left:0;right:0;background:repeating-linear-gradient(0deg,#548da3 0 16px,#77aabd 16px 18px);transition:height .2s steps(5)}
+#logic-quarter .qx-jug-vessel b{position:absolute;left:0;right:0;bottom:15%;font-size:20px;color:#f7e5b6;text-shadow:1px 2px #152a3b;font-weight:500}
+#logic-quarter .qx-cap{position:absolute;bottom:0;left:0;right:0;font-size:12px}
+#logic-quarter .qx-person{position:absolute;width:20%;height:18%;padding:0;background:none;border:0;display:flex;align-items:center;justify-content:end;flex-direction:column;font-size:11px}
+#logic-quarter .qx-head{display:block;width:12px;height:12px;background:#ebd2a2;box-shadow:0 -4px #9bb7ba}
+#logic-quarter .qx-body{display:block;width:18px;height:18px;background:#9fbdc2;box-shadow:3px 0 #657e91}
+#logic-quarter .qx-torch{position:absolute;width:4px;height:26px;background:#a48050;box-shadow:0 -8px #ffd474,3px -4px #f6a65a}
+#logic-quarter .qx-person.qt-teach{position:absolute}
+#logic-quarter .qx-lamps{display:grid;gap:8px;padding:10%;width:100%;aspect-ratio:1}
+#logic-quarter .qx-lamp{aspect-ratio:1;padding:10%;background:#172b3f;border:3px solid #536c7a;box-shadow:3px 3px #112133}
+#logic-quarter .qx-lamp span{display:block;width:100%;height:100%;background:#314459;box-shadow:inset 3px 3px #203346}
+#logic-quarter .qx-lamp.on span{background:#e9c778;box-shadow:inset 4px 4px #ffe3a0,0 0 12px #e7c77544}
+@media(max-width:600px){#logic-quarter .qx-person{width:24%;font-size:10px}#logic-quarter .qx-lamps{padding:10px;gap:5px}#logic-quarter .qx-lamp{border-width:2px}#logic-quarter .qx-jugs{gap:15%;left:7%;right:7%}#logic-quarter .qx-jug-vessel b{font-size:15px}}
+@media(prefers-reduced-motion:reduce){#logic-quarter .qx-water{transition:none}}
+@media(max-width:600px){#logic-quarter [data-extra]{grid-template-columns:minmax(0,1fr) 118px}#logic-quarter .qx-stage{aspect-ratio:auto;height:230px;min-height:0}}
+</style>
+<script>
+(()=>{
+const root=document.getElementById('logic-quarter'),q=s=>root.querySelector(s),all=s=>[...root.querySelectorAll(s)];
+const titles={map:'Квартал загадок',cafe:'Кафе',safe:'Сейф',scales:'Весы',river:'Переправа'};
+const help={map:'Нажми на здание. Звезда означает решённую задачу. В любое место можно вернуться.',cafe:'Нажми на автомат: одна проба стоит монету. Выбери содержимое А, Б и В. Условие о наклейках выбирается справа.',safe:'Три разные цифры от 0 до 5. Нажимай на цифры, затем «Открыть». ● — цифра на своём месте, ○ — есть в коде, но в другом месте. Всего 8 попыток.',scales:'Из 9 монет одна тяжелее. Два взвешивания. Выбери чашу стрелкой и нажимай на монеты. На чашах должно быть поровну монет. Чтобы дать ответ, нажми «Назвать монету», затем саму монету.',river:'Нажми на пассажира, затем на лодку. Фермер перевозит только одного. Без фермера волк съест козу, а коза — капусту. Можно плыть одному.'};
+const clone=s=>JSON.parse(JSON.stringify(s)),pick=n=>Math.floor(Math.random()*n);
+
+const levels={
+cafe:[{mode:0,budget:3,name:'Неверные наклейки'},{mode:1,budget:3,name:'Одна правдивая'},{mode:2,budget:6,name:'Без гарантий'}],
+safe:[{digits:2,max:3,limit:6,name:'Две цифры'},{digits:3,max:5,limit:8,name:'Три цифры'},{digits:4,max:5,limit:10,name:'Четыре цифры'}],
+scales:[{coins:3,limit:1,unknown:false,name:'Три монеты'},{coins:9,limit:2,unknown:false,name:'Девять монет'},{coins:9,limit:3,unknown:true,name:'Легче или тяжелее?'}],
+river:[{active:[2,3],limit:0,name:'Коза и капуста'},{active:[1,2,3],limit:0,name:'Волк, коза, капуста'},{active:[1,2,3],limit:7,name:'Ровно семь рейсов'}]
+};
+const extraIds=['hanoi','jugs','bridge','lights'];
+Object.assign(titles,{hanoi:'Ханойская башня',jugs:'Кувшины',bridge:'Мост и фонарь',lights:'Свет погас'});
+Object.assign(levels,{
+hanoi:[{disks:2,name:'Два диска'},{disks:3,name:'Три диска'},{disks:4,name:'Четыре диска'}],
+jugs:[{caps:[2,3],target:1,name:'Один литр'},{caps:[3,5],target:4,name:'Четыре литра'},{caps:[4,7],target:5,name:'Пять литров'}],
+bridge:[{times:[1,2],limit:2,name:'Вдвоём'},{times:[1,2,5],limit:8,name:'Трое'},{times:[1,2,5,10],limit:17,name:'Семнадцать минут'}],
+lights:[{n:2,press:[0],name:'Четыре лампы'},{n:3,press:[0,4,8],name:'Девять ламп'},{n:4,press:[0,3,5,10,12],name:'Шестнадцать ламп'}]
+});
+function toggleLights(cells,n,i){for(const j of [i,i-n,i+n,...(i%n?[i-1]:[]),...(i%n<n-1?[i+1]:[])])if(j>=0&&j<cells.length)cells[j]=1-cells[j];}
+function newExtra(id,level=0){const c=levels[id][level],base={solved:false,failed:false,message:'',moves:0};
+if(id==='hanoi')return {...base,rods:[Array.from({length:c.disks},(_,i)=>c.disks-i),[],[]],selected:null};
+if(id==='jugs')return {...base,amounts:[0,0],selected:0};
+if(id==='bridge')return {...base,sides:c.times.map(()=>0),torch:0,selected:[],elapsed:0};
+const cells=Array(c.n*c.n).fill(0);for(const i of c.press)toggleLights(cells,c.n,i);return {...base,cells};}
+function extraValid(s){return extraIds.every(id=>{const p=s.progress[id],a=s[id];if(!p||!a||!Number.isInteger(p.level)||p.level<0||p.level>2||!Number.isInteger(p.cleared)||p.cleared<p.level||p.cleared>3)return false;const c=levels[id][p.level];
+if(id==='hanoi')return a.rods?.length===3&&a.rods.every(r=>Array.isArray(r)&&r.every((x,i)=>Number.isInteger(x)&&x>=1&&x<=c.disks&&(i===0||r[i-1]>x)))&&a.rods.flat().length===c.disks&&new Set(a.rods.flat()).size===c.disks&&[null,0,1,2].includes(a.selected);
+if(id==='jugs')return a.amounts?.length===2&&a.amounts.every((x,i)=>Number.isInteger(x)&&x>=0&&x<=c.caps[i])&&[0,1].includes(a.selected);
+if(id==='bridge')return a.sides?.length===c.times.length&&a.sides.every(x=>x===0||x===1)&&[0,1].includes(a.torch)&&Array.isArray(a.selected)&&a.selected.length<=2&&a.selected.every(i=>Number.isInteger(i)&&i>=0&&i<c.times.length)&&Number.isFinite(a.elapsed)&&a.elapsed>=0;
+return a.cells?.length===c.n*c.n&&a.cells.every(x=>x===0||x===1);});}
+function extraGuide(id){const c=cfg(id);return id==='hanoi'?`Перенеси ${c.disks} диска на правую стойку. Нажми стойку с диском, затем стойку назначения. Большой диск нельзя класть на маленький.`:id==='jugs'?`Получи ровно ${c.target} л в одном кувшине. Объёмы: ${c.caps.join(' и ')} л. Выбери кувшин, затем наполни, опустоши или перелей в другой до полного.`:id==='bridge'?`Переведи всех через мост за ${c.limit} мин. Выбери одного или двух на берегу с фонарём, затем «Идти». Время перехода — скорость медленного. Фонарь нужно переносить обратно.`:'Погаси все лампы. Нажатие переключает саму лампу и её соседей сверху, снизу, слева и справа. По диагонали лампы не меняются.';}
+function findPath(initial,goal,neighbors){const queue=[[initial,[]]],seen=new Set([JSON.stringify(initial)]);for(let head=0;head<queue.length;head++){const [s,path]=queue[head];if(goal(s))return path;for(const [next,action] of neighbors(s)){const key=JSON.stringify(next);if(!seen.has(key)){seen.add(key);queue.push([next,[...path,action]]);}}}return [];}
+function hanoiPath(rods,n){return findPath(rods,r=>r[2].length===n,r=>{const out=[];for(let from=0;from<3;from++)for(let to=0;to<3;to++)if(from!==to&&r[from].length&&(!r[to].length||r[from].at(-1)<r[to].at(-1))){const next=clone(r);next[to].push(next[from].pop());out.push([next,{from,to}]);}return out;});}
+function jugPath(amounts,c){return findPath(amounts,a=>a.includes(c.target),a=>{const out=[];for(let from=0;from<2;from++)for(const action of ['fill','empty','pour']){const next=a.slice(),to=1-from;if(action==='fill')next[from]=c.caps[from];if(action==='empty')next[from]=0;if(action==='pour'){const n=Math.min(next[from],c.caps[to]-next[to]);next[from]-=n;next[to]+=n;}if(next.some((x,i)=>x!==a[i]))out.push([next,{from,action}]);}return out;});}
+function extraTutorial(id){const s=state[id],c=cfg(id);
+if(id==='hanoi'){const step=hanoiPath(s.rods,c.disks)[0];if(!step)return null;if(s.selected===null)return {target:`[data-rod="${step.from}"]`,text:'Перенеси башню направо. Нажми подсвеченную стойку, чтобы взять верхний диск.'};if(s.selected!==step.from)return {target:`[data-rod="${s.selected}"]`,text:'Нажми выбранную стойку ещё раз, чтобы отпустить диск.'};return {target:`[data-rod="${step.to}"]`,text:'Теперь нажми подсвеченную стойку — диск переместится на неё.'};}
+if(id==='jugs'){const step=jugPath(s.amounts,c)[0];if(!step)return null;if(s.selected!==step.from)return {target:`[data-jug="${step.from}"]`,text:`Нужно получить ${c.target} л. Выбери кувшин ${c.caps[step.from]} л.`};return {target:`[data-jug-action="${step.action}"]`,text:step.action==='fill'?`Наполни выбранный кувшин до ${c.caps[step.from]} л.`:step.action==='empty'?'Вылей воду из выбранного кувшина.':'Перелей воду в другой кувшин. Когда он заполнится, лишняя вода останется в первом.'};}
+if(id==='bridge'){const i=[0,1].find(x=>!s.selected.includes(x));return i===undefined?{target:'[data-bridge-cross]',text:'Оба выбраны. Нажми «Идти»: вместе они пройдут за 2 минуты.'}:{target:`[data-person="${i}"]`,text:s.selected.length?'Выбери второго: по мосту можно идти вдвоём.':'Переведи обоих за 2 минуты. Нажми первого путешественника.'};}
+return {target:'[data-lamp="0"]',text:'Погаси все лампы. Нажми верхнюю левую: переключатся она сама и соседние лампы.'};}
+function extraMap(){rects(q('[data-map-art]'),r=>{r(0,0,384,240,'#294b40');for(let i=0;i<60;i++)r((i*97)%384,(i*43)%240,3,2,'#3b624b');r(0,114,384,15,'#b4a17c');r(183,0,17,240,'#b4a17c');building(r,52,24,83,'#917a80','#bda99a');r(61,80,64,4,'#d0b47c');for(let i=0;i<3;i++)r(73+i*20,45,3,37,'#f0d89b');r(62,74,25,5,'#90bab0');r(65,68,19,5,'#dbad74');r(69,62,11,5,'#a6b9d1');building(r,247,24,83,'#688f98','#abc6c1');r(260,52,19,28,'#264456');r(290,45,24,35,'#31576c');r(262,63,15,15,'#6eafc5');r(292,55,20,23,'#82bfd0');r(40,145,107,62,'#326f88');r(42,146,17,61,'#709154');r(130,146,17,61,'#709154');r(58,173,72,8,'#b99563');for(let i=0;i<7;i++)r(58+i*11,173,2,8,'#6e6550');r(57,164,3,10,'#ebcf7b');r(54,159,9,6,'#ffe3a0');building(r,247,145,83,'#6c7c91','#adbcbb');for(let i=0;i<4;i++){r(265+i%2*22,170+Math.floor(i/2)*16,16,12,i===2?'#263a50':'#f5d177');r(269+i%2*22,172+Math.floor(i/2)*16,4,3,'#fff0ab');}});}
+function extraRender(){const id=state.view,s=state[id],c=cfg(id),closed=s.solved||s.failed;
+let art='',controls='';
+if(id==='hanoi'){art=`<div class="qx-rods">${s.rods.map((rod,i)=>`<button class="qx-rod" data-rod="${i}" aria-label="Стойка ${i+1}, диски ${rod.join(',')||'нет'}" aria-pressed="${s.selected===i}" ${closed?'disabled':''}><span class="qx-pole"></span>${rod.map((d,k)=>`<span class="qx-disk" style="width:${24+d*14}%;bottom:${8+k*12}%;background:${['','#9bcab3','#edc180','#8faaca','#c598ae'][d]}"></span>`).join('')}<span class="qx-rod-name">${i===2?'Цель':'Ⅰ'.repeat(i+1)}</span></button>`).join('')}</div>`;controls=`<span class="qt-small">Ходов: ${s.moves}</span>`;}
+if(id==='jugs'){art=`<div class="qx-jugs">${s.amounts.map((v,i)=>`<button class="qx-jug" data-jug="${i}" aria-label="Кувшин ${c.caps[i]} л, воды ${v} л" aria-pressed="${s.selected===i}" ${closed?'disabled':''}><span class="qx-jug-vessel" style="height:${52+c.caps[i]*5}%"><span class="qx-water" style="height:${v/c.caps[i]*100}%"></span><b>${v} л</b></span><span class="qx-cap">${c.caps[i]} л</span></button>`).join('')}</div>`;controls=`<span class="qt-small">Цель: ${c.target} л</span><button data-jug-action="fill" ${closed?'disabled':''}>Наполнить</button><button data-jug-action="empty" ${closed?'disabled':''}>Вылить</button><button data-jug-action="pour" ${closed?'disabled':''}>Перелить ${s.selected===0?'→':'←'}</button><span class="qt-small">Действий: ${s.moves}</span>`;}
+if(id==='bridge'){art=`<canvas width="288" height="224" data-bridge-art aria-hidden="true"></canvas>${c.times.map((t,i)=>`<button class="qx-person" data-person="${i}" style="left:${s.sides[i]?75:5}%;top:${8+i*20}%" aria-label="Путешественник ${t} мин" aria-pressed="${s.selected.includes(i)}" ${closed||s.sides[i]!==s.torch?'disabled':''}><span class="qx-head"></span><span class="qx-body"></span><span>${t} мин</span></button>`).join('')}<span class="qx-torch" style="left:${s.torch?72:23}%;top:47%" aria-label="Фонарь"></span>`;controls=`<span class="qt-small">Время: ${s.elapsed} / ${c.limit} мин</span><button class="qt-main" data-bridge-cross ${closed?'disabled':''}>Идти ${s.torch?'←':'→'}</button><span class="qt-small">Выбрано: ${s.selected.length} / 2</span>`;}
+if(id==='lights'){art=`<div class="qx-lamps" style="grid-template-columns:repeat(${c.n},1fr)">${s.cells.map((v,i)=>`<button class="qx-lamp ${v?'on':''}" data-lamp="${i}" aria-label="Лампа ${Math.floor(i/c.n)+1}, ${i%c.n+1}: ${v?'горит':'погашена'}" ${closed?'disabled':''}><span></span></button>`).join('')}</div>`;controls=`<span class="qt-small">Горит: ${s.cells.filter(Boolean).length} / ${s.cells.length}</span><span class="qt-small">Нажатий: ${s.moves}</span>`;}
+q('[data-extra]').innerHTML=`<div class="qt-stage qx-stage">${art}</div><aside class="qt-panel">${controls}<div class="qt-status" data-extra-status role="status" aria-live="polite">${s.solved?'Решено!':s.failed?'Время вышло. Попробуй ещё раз.':s.message||''}</div><button class="qt-reset" data-extra-reset aria-label="Начать уровень заново">↻</button></aside>`;
+if(id==='bridge')rects(q('[data-bridge-art]'),r=>{r(0,0,288,224,'#24384c');r(77,0,135,224,'#1c304b');for(let i=0;i<28;i++)r(85+(i*37)%120,(i*29)%224,5,1,'#334e6a');r(0,0,77,224,'#41604a');r(212,0,76,224,'#41604a');r(62,111,166,17,'#a98c61');for(let i=0;i<18;i++)r(62+i*10,111,2,17,'#695b49');r(65,105,160,3,'#c4ad7e');});
+}
+function extraAction(b){const id=state.view;if(!extraIds.includes(id))return false;const s=state[id],c=cfg(id);
+if(b.hasAttribute('data-extra-reset')){state[id]=newExtra(id,state.progress[id].level);render();persist();return true;}
+if(s.solved||s.failed)return false;
+let handled=false;
+if(b.hasAttribute('data-rod')){handled=true;const to=Number(b.dataset.rod);if(s.selected===null){if(s.rods[to].length)s.selected=to;else s.message='Эта стойка пуста.';}else if(s.selected===to)s.selected=null;else{const disk=s.rods[s.selected].at(-1);if(s.rods[to].length&&s.rods[to].at(-1)<disk)s.message='Большой диск нельзя класть на маленький.';else{s.rods[to].push(s.rods[s.selected].pop());s.selected=null;s.moves++;s.message='';s.solved=s.rods[2].length===c.disks;}}}
+if(b.hasAttribute('data-jug')){handled=true;s.selected=Number(b.dataset.jug);s.message='';}
+if(b.hasAttribute('data-jug-action')){handled=true;const from=s.selected,to=1-from,a=s.amounts.slice(),action=b.dataset.jugAction;if(action==='fill')a[from]=c.caps[from];if(action==='empty')a[from]=0;if(action==='pour'){const n=Math.min(a[from],c.caps[to]-a[to]);a[from]-=n;a[to]+=n;}if(a.every((v,i)=>v===s.amounts[i]))s.message='Вода не изменилась.';else{s.amounts=a;s.moves++;s.message='';s.solved=a.includes(c.target);}}
+if(b.hasAttribute('data-person')){handled=true;const i=Number(b.dataset.person);if(s.sides[i]!==s.torch)return true;if(s.selected.includes(i))s.selected=s.selected.filter(x=>x!==i);else if(s.selected.length<2)s.selected.push(i);else s.message='На мосту не больше двух.';}
+if(b.hasAttribute('data-bridge-cross')){handled=true;if(!s.selected.length)s.message='Выбери одного или двух.';else{const time=Math.max(...s.selected.map(i=>c.times[i]));s.elapsed+=time;s.torch=1-s.torch;for(const i of s.selected)s.sides[i]=s.torch;s.selected=[];s.moves++;s.failed=s.elapsed>c.limit;s.solved=!s.failed&&s.sides.every(x=>x===1);s.message='';}}
+if(b.hasAttribute('data-lamp')){handled=true;toggleLights(s.cells,c.n,Number(b.dataset.lamp));s.moves++;s.solved=s.cells.every(x=>x===0);}
+if(handled){if(s.solved)complete(id);render();persist();}return handled;
+}
+
+const hintPlansCache={};
+function hintPlans(n){if(hintPlansCache[n])return hintPlansCache[n];const out=[];for(let mask=1;mask<3**n;mask++){let k=mask,left=[],right=[];for(let i=0;i<n;i++){const v=k%3;k=Math.floor(k/3);if(v===1)left.push(i);if(v===2)right.push(i);}if(left.length&&left.length===right.length&&left[0]<right[0])out.push({left,right});}return hintPlansCache[n]=out;}
+function lightSolution(cells,n){const count=cells.length,rows=Array.from({length:count},(_,i)=>{const row=Array(count+1).fill(0);for(let j=0;j<count;j++)if(i===j||Math.abs(Math.floor(i/n)-Math.floor(j/n))+Math.abs(i%n-j%n)===1)row[j]=1;row[count]=cells[i];return row;});let pivot=0;const cols=[];for(let col=0;col<count;col++){const found=rows.findIndex((r,i)=>i>=pivot&&r[col]);if(found<0)continue;[rows[found],rows[pivot]]=[rows[pivot],rows[found]];for(let i=0;i<count;i++)if(i!==pivot&&rows[i][col])for(let j=col;j<=count;j++)rows[i][j]^=rows[pivot][j];cols.push(col);pivot++;}for(let i=pivot;i<count;i++)if(!rows[i].slice(0,count).some(Boolean)&&rows[i][count])return null;const answer=Array(count).fill(0);cols.forEach((col,i)=>answer[col]=rows[i][count]);return answer.flatMap((v,i)=>v?[i]:[]);}
+function bridgePath(s,c){const queue=[{sides:s.sides.slice(),torch:s.torch,cost:0,path:[]}],best=new Map();while(queue.length){queue.sort((a,b)=>a.cost-b.cost);const item=queue.shift(),key=item.sides.join('')+':'+item.torch;if(best.has(key)&&best.get(key)<=item.cost)continue;best.set(key,item.cost);if(item.sides.every(v=>v===1))return item;const available=item.sides.flatMap((v,i)=>v===item.torch?[i]:[]),groups=available.map(i=>[i]);for(let i=0;i<available.length;i++)for(let j=i+1;j<available.length;j++)groups.push([available[i],available[j]]);for(const group of groups){const sides=item.sides.slice(),torch=1-item.torch;for(const i of group)sides[i]=torch;queue.push({sides,torch,cost:item.cost+Math.max(...group.map(i=>c.times[i])),path:[...item.path,group]});}}return null;}
+function riverPath(s,c){return findPath(s.sides,a=>[0,...c.active].every(i=>a[i]===1),a=>{const out=[];for(const passenger of [null,...c.active.filter(i=>a[i]===a[0])]){const next=a.slice();next[0]=1-next[0];if(passenger)next[passenger]=next[0];if(c.active.includes(1)&&next[1]===next[2]&&next[1]!==next[0])continue;if(next[2]===next[3]&&next[2]!==next[0])continue;out.push([next,passenger]);}return out;});}
+function generalHint(){const id=state.view;
+if(id==='map'){const next=Object.keys(levels).find(key=>state.progress[key].cleared<3)||'cafe';return {target:`[data-enter="${next}"]`,text:`Нажми «${titles[next]}». Реши текущий уровень — откроется следующий.`};}
+const s=state[id],c=cfg(id);
+if(s?.solved)return state.progress[id].level<2?{target:'[data-level-next]',text:'Уровень решён. Нажми «Дальше».'}:{target:'[data-home]',text:'Все уровни этого места пройдены. Вернись на карту.'};
+if(s?.failed)return {target:extraIds.includes(id)?'[data-extra-reset]':`[data-reset="${id}"]`,text:'Попытка закончилась. Нажми ↻ и начни уровень заново.'};
+if(id==='hanoi'||id==='jugs')return extraTutorial(id);
+if(id==='lights'){const path=lightSolution(s.cells,c.n);return path?.length?{target:`[data-lamp="${path[0]}"]`,text:'Эта лампа входит в решение. Нажми её; подсказка пересчитается для нового положения.'}:{target:'[data-extra-reset]',text:'Начни сетку заново, чтобы попробовать другой путь.'};}
+if(id==='bridge'){const plan=bridgePath(s,c);if(!plan||plan.cost>c.limit-s.elapsed)return {target:'[data-extra-reset]',text:'На завершение уже не хватает времени. Начни заново: быстрые должны возвращать фонарь.'};const group=plan.path[0],unwanted=s.selected.find(i=>!group.includes(i));if(unwanted!==undefined)return {target:`[data-person="${unwanted}"]`,text:`Сними выбор с путешественника ${c.times[unwanted]} мин.`};const missing=group.find(i=>!s.selected.includes(i));if(missing!==undefined)return {target:`[data-person="${missing}"]`,text:`Выбери путешественника ${c.times[missing]} мин. Этот ход оставит достаточно времени до цели.`};return {target:'[data-bridge-cross]',text:`Переведи выбранных за ${Math.max(...group.map(i=>c.times[i]))} мин. Фонарь поедет вместе с ними.`};}
+if(id==='river'){const path=riverPath(s,c);if(!path.length||c.limit&&path.length>c.limit-s.trips)return {target:'[data-reset="river"]',text:'В оставшийся лимит уже не уложиться. Начни заново и береги обратные рейсы.'};const passenger=path[0];if(s.passenger!==passenger){if(passenger===null)return {target:`[data-actor="${s.passenger}"]`,text:'Высади пассажира: в этом рейсе фермеру нужно вернуться одному.'};return {target:`[data-actor="${passenger}"]`,text:`Возьми ${['','','козу','капусту'][passenger]||'волка'}: после перехода опасная пара не останется без фермера.`};}return {target:'[data-cross]',text:passenger?'Плыви с выбранным пассажиром.':'Переплыви один, чтобы забрать оставшихся.'};}
+if(id==='safe'){const pool=[];function codes(a){if(a.length===c.digits){if(s.log.every(log=>{const bulls=log.code.filter((v,i)=>v===a[i]).length,cows=log.code.filter(v=>a.includes(v)).length-bulls;return bulls===log.bulls&&cows===log.cows;}))pool.push(a);return;}for(let v=0;v<=c.max;v++)if(!a.includes(v))codes([...a,v]);}codes([]);const candidate=pool.find(a=>!s.log.some(log=>log.code.every((v,i)=>v===a[i])));if(!candidate)return {target:'[data-reset="safe"]',text:'Начни новую попытку и сравнивай каждую подсказку с предыдущими.'};const i=candidate.findIndex((v,i)=>v!==s.digits[i]);return i<0?{target:'[data-safe-check]',text:`Этот код совместим со всеми ответами сейфа. Проверь его; возможных кодов: ${pool.length}.`}:{target:`[data-digit="${i}"]`,text:`Попробуй ${candidate.join(' ')}: этот вариант не противоречит ответам сейфа. Нажимай цифру ${i+1}, пока не появится ${candidate[i]}.`};}
+if(id==='cafe'){if(!s)return {target:'[data-pour="0"]',text:'Купи первую пробу, чтобы получить информацию.'};const pool=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]].filter(v=>{const matches=v.filter((x,i)=>x===s.labels[i]).length;return (c.mode===0?matches===0:c.mode===1?matches===1:true)&&s.samples.every(a=>v[a.index]===2||v[a.index]===a.drink);});if(pool.length===1){const i=pool[0].findIndex((v,i)=>String(v)!==s.guesses[i]);return i<0?{target:'[data-check]',text:'Ответ однозначен и подписи выбраны. Нажми «Проверить».'}:{target:`[data-guess="${i}"]`,text:`По наклейкам и пробам в автомате ${['А','Б','В'][i]} — ${['чай','кофе','случайный напиток'][pool[0][i]]}. Выбери эту подпись.`};}if(s.samples.length>=s.budget)return {target:'[data-again]',text:`Осталось ${pool.length} вариантов, монеты кончились. Повтори раунд: одинаковые пробы не всегда дают новую информацию.`};let index=0,best=Infinity;for(let i=0;i<3;i++){const score=Math.max(...[0,1].map(d=>pool.filter(v=>v[i]===2||v[i]===d).length));if(score<best){best=score;index=i;}}return {target:`[data-pour="${index}"]`,text:`Возьми пробу из ${['А','Б','В'][index]}: она лучше всего различает оставшиеся варианты. Пока их ${pool.length}.`};}
+// Scales: derive hypotheses only from the visible weighing history.
+let pool=[];for(let coin=0;coin<c.coins;coin++)for(const delta of c.unknown?[-1,1]:[1])if(s.log.every(a=>(a.left.includes(coin)?-1:a.right.includes(coin)?1:0)*delta===a.result))pool.push({coin,delta});
+const coinIds=[...new Set(pool.map(a=>a.coin))];if(coinIds.length===1)return s.answerMode?{target:`[data-coin="${coinIds[0]}"]`,text:`Результаты однозначно указывают на монету ${coinIds[0]+1}. Нажми на неё.`}:{target:'[data-accuse]',text:'Монета уже определена по взвешиваниям. Нажми «Назвать монету».'};
+if(s.log.length>=c.limit)return {target:'[data-reset="scales"]',text:'Эти взвешивания оставили несколько вариантов. Повтори уровень, чтобы сравнения различали монеты.'};if(s.answerMode)return {target:'[data-accuse]',text:'Пока возможны разные монеты. Вернись к взвешиванию этой кнопкой.'};
+let chosen,best=Infinity;for(const plan of hintPlans(c.coins)){const groups=[-1,0,1].map(o=>pool.filter(h=>(plan.left.includes(h.coin)?-1:plan.right.includes(h.coin)?1:0)*h.delta===o).length),score=Math.max(...groups)*1000+groups.reduce((a,x)=>a+x*x,0);if(score<best){best=score;chosen=plan;}}
+const wanted=s.places.map((_,i)=>chosen.left.includes(i)?-1:chosen.right.includes(i)?1:0),i=wanted.findIndex((v,i)=>v!==s.places[i]);if(i<0)return {target:'[data-weigh]',text:'Раскладка готова. Взвесь: каждый исход сузит круг подозреваемых.'};const side=wanted[i]||s.places[i];return s.tray!==side?{target:`[data-tray="${side}"]`,text:`Выбери ${side===-1?'левую':'правую'} чашу для следующего сравнения.`}:{target:`[data-coin="${i}"]`,text:wanted[i]===0?`Сними монету ${i+1} с чаши повторным нажатием.`:`Положи монету ${i+1} на ${side===-1?'левую':'правую'} чашу.`};
+}
+function unifiedMap(){const canvas=q('[data-map-art]'),copy=()=>{const c=document.createElement('canvas');c.width=384;c.height=240;c.getContext('2d').drawImage(canvas,0,0);return c;};canvas.width=384;canvas.height=240;mapArt();const first=copy();extraMap();const second=copy(),narrow=root.getBoundingClientRect().width<600;canvas.width=narrow?384:768;canvas.height=narrow?480:240;const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.drawImage(first,0,0);ctx.drawImage(second,narrow?0:384,narrow?240:0);all('[data-enter]').forEach((el,i)=>{const page=i<4?0:1,k=i%4,col=k%2,row=Math.floor(k/2);el.hidden=false;el.style.left=(narrow?8+col*48:4+(page*2+col)*25)+'%';el.style.top=(narrow?6.5+row*22.5+page*50:13+row*45)+'%';el.style.width=(narrow?36:18)+'%';el.style.height=(narrow?17:34)+'%';});}
+
+function newSafe(level=0){const c=levels.safe[level],a=Array.from({length:c.max+1},(_,i)=>i);for(let i=a.length-1;i>0;i--){const j=pick(i+1);[a[i],a[j]]=[a[j],a[i]];}return {secret:a.slice(0,c.digits),digits:a.slice(0,c.digits).map((_,i)=>i),log:[],solved:false,failed:false,message:''};}
+function newScale(level=0){const c=levels.scales[level];return {heavy:pick(c.coins),delta:c.unknown?(pick(2)?1:-1):1,places:Array(c.coins).fill(0),tray:-1,log:[],answerMode:false,solved:false,failed:false,message:'Выбери чашу и монеты.'};}
+function newRiver(){return {sides:[0,0,0,0],passenger:null,trips:0,solved:false,failed:false,message:'Выбери пассажира.'};}
+function fresh(){return {version:2,revision:0,view:'map',mapPage:0,done:[],...Object.fromEntries(extraIds.map(id=>[id,newExtra(id)])),progress:Object.fromEntries(Object.keys(levels).map(id=>[id,{level:0,cleared:0}])),safe:newSafe(),scales:newScale(),river:newRiver(),cafe:null};}
+function valid(s){return s?.version===2&&titles[s.view]&&s.progress&&['cafe','safe','scales','river'].every(id=>Number.isInteger(s.progress[id]?.level)&&s.progress[id].level>=0&&s.progress[id].level<3&&Number.isInteger(s.progress[id].cleared)&&s.progress[id].cleared>=s.progress[id].level&&s.progress[id].cleared<=3)&&Array.isArray(s.done)&&s.safe?.secret?.length===levels.safe[s.progress.safe.level].digits&&s.safe.secret.every(x=>Number.isInteger(x)&&x>=0&&x<=levels.safe[s.progress.safe.level].max)&&new Set(s.safe.secret).size===s.safe.secret.length&&s.safe.digits?.length===s.safe.secret.length&&s.safe.digits.every(x=>Number.isInteger(x)&&x>=0&&x<=levels.safe[s.progress.safe.level].max)&&Array.isArray(s.safe.log)&&s.safe.log.length<=10&&Number.isInteger(s.scales?.heavy)&&s.scales.heavy>=0&&s.scales.heavy<levels.scales[s.progress.scales.level].coins&&[-1,1].includes(s.scales.delta)&&s.scales.places?.length===levels.scales[s.progress.scales.level].coins&&s.scales.places.every(x=>[-1,0,1].includes(x))&&Array.isArray(s.scales.log)&&s.scales.log.length<=3&&s.river?.sides?.length===4&&s.river.sides.every(x=>x===0||x===1)&&[null,1,2,3].includes(s.river.passenger)&&extraValid(s);}
+const rawSaved=window.openai?.widgetState?.privateContent?.quarter;
+const saved=rawSaved?clone(rawSaved):null;
+if(saved?.version===2&&saved.progress){for(const id of extraIds){if(!saved.progress[id])saved.progress[id]={level:0,cleared:0};if(!saved[id])saved[id]=newExtra(id,saved.progress[id].level);}saved.mapPage=saved.mapPage===1?1:0;}
+let hintRequested=false;
+let state=valid(saved)?clone(saved):fresh();
+if(saved?.version===1){state.legacy=clone(saved);state.revision=saved.revision||0;for(const id of ['cafe','safe','scales','river'])if(saved.done?.includes(id)||saved[id]?.solved){state.progress[id]={level:1,cleared:1};if(id==='safe')state.safe=newSafe(1);if(id==='scales')state.scales=newScale(1);}}
+const oldCafe=window.openai?.widgetState?.privateContent?.lyingMachines;
+if(!saved&&oldCafe?.solved)state.progress.cafe={level:1,cleared:1};
+function cfg(id=state.view){return levels[id][state.progress[id].level];}
+function persist(){state.revision++;try{Promise.resolve(window.openai?.setWidgetState?.({modelContent:{game:'Квартал загадок',place:titles[state.view],levels:state.progress,solved:state.done,attempts:state.safe.log.length,weighings:state.scales.log.length,trips:state.river.trips},privateContent:{quarter:clone(state)}})).catch(()=>{});}catch{}}
+function complete(id){const p=state.progress[id];p.cleared=Math.max(p.cleared,p.level+1);if(p.cleared===3&&!state.done.includes(id))state.done.push(id);}
+function currentSolved(){return state.view!=='map'&&!!state[state.view]?.solved;}
+function guide(){const id=state.view;if(id==='map')return 'Нажми на здание. В каждом — три уровня; следующий откроется после решения.';const c=cfg();if(currentSolved())return state.progress[id].level<2?'Решено! Нажми «Дальше», чтобы открыть следующий уровень.':'Все три уровня пройдены. Стрелка ← вернёт в квартал.';
+if(extraIds.includes(id))return extraGuide(id);
+if(id==='cafe'){const a=state.cafe,condition=['Все наклейки неверны.','Ровно одна наклейка верна.','Наклейки ничего не гарантируют.'][c.mode];return !a?.samples.length?`Узнай, что в каждом автомате. ${condition} Нажми на автомат — проба стоит одну монету.`:'Сравни пробы с условием. Справа выбери чай, кофе или случайный для А, Б и В, затем «Проверить».';}
+if(id==='safe'&&state.safe.failed)return 'Попытки закончились. Код открыт справа. Нажми ↻ для повтора.';
+if(id==='safe')return `Открой сейф: ${c.digits} разные цифры 0–${c.max}. Нажимай на цифры, затем «Открыть». ● — на месте, ○ — есть, но в другом месте.`;
+if(id==='scales'){const a=state.scales;if(a.solved||a.failed)return 'Нажми ↻ для повтора или ← для выхода.';if(a.answerMode)return 'Теперь нажми на монету, которую считаешь фальшивой.';const goal=c.unknown?'одна легче или тяжелее':'одна тяжелее';return a.places.some(x=>x!==0)?'Стрелкой выбери другую чашу, положи столько же монет и нажми «Взвесить».':`Найди фальшивую из ${c.coins} за ${c.limit} взвешивания: ${goal}. Выбери ← чашу и нажми на монеты.`;}
+const a=state.river;if(a.failed)return 'Не оставляй опасную пару без фермера. Нажми ↻, чтобы начать заново.';return a.passenger?'Пассажир в лодке. Нажми на лодку, чтобы переплыть.':a.trips?'Нажми на пассажира на своём берегу или плыви один.':`Перевези ${c.active.length===2?'козу и капусту':'волка, козу и капусту'}${c.limit?' за 7 рейсов':''}. Козу нельзя оставлять с капустой${c.active.includes(1)?', а волка — с козой':''}. Нажми на пассажира, затем на лодку.`;}
+function tutorial(){
+const id=state.view;if(id==='map'||state.progress[id].level!==0)return null;
+if(currentSolved())return {target:'[data-level-next]',text:'Готово! Нажми «Дальше». На следующих уровнях подсветки уже не будет.'};
+const s=state[id];if(extraIds.includes(id))return extraTutorial(id);if(s?.failed)return {target:`[data-reset="${id}"]`,text:'Не получилось. Нажми ↻ и попробуй ещё раз.'};
+if(id==='cafe'){
+const mixed=all('.lm-sticker > span:last-child').findIndex(el=>el.textContent==='ЧАЙ / КОФЕ');
+const possible=s?[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]].filter(v=>v.every((x,i)=>x!==s.labels[i])&&s.samples.every(a=>v[a.index]===2||v[a.index]===a.drink)):[];
+if(!s?.samples.length||possible.length>1)return {target:`[data-pour="${mixed<0?0:mixed}"]`,text:'Все наклейки врут. Нажми автомат «ЧАЙ / КОФЕ»: одна проба стоит одну монету.'};
+const i=s.guesses.findIndex(x=>x==='');if(i>=0)return {target:`[data-guess="${i}"]`,text:`Проба взята. Выбери содержимое автомата ${['А','Б','В'][i]}. Случайный выдаёт то чай, то кофе.`};
+return {target:'[data-check]',text:'Все подписи выбраны. Нажми «Проверить» — узнаем, согласуются ли они с пробой и условием.'};
+}
+if(id==='safe'){
+if(new Set(s.digits).size<s.digits.length)return {target:'[data-digit="1"]',text:'Цифры должны различаться. Нажми вторую цифру, чтобы изменить её.'};
+const previous=s.log.at(-1)?.code||[0,1],changed=s.digits.some((x,i)=>x!==previous[i]);
+if(changed)return {target:'[data-safe-check]',text:'Нажми «Открыть», чтобы проверить код. ● — цифра на месте, ○ — есть, но в другой позиции.'};
+return {target:'[data-digit="0"]',text:s.log.length?'Сравни ● и ○ справа. Нажми цифру, чтобы изменить код, затем проверь ещё раз.':'Открой сейф с двумя разными цифрами 0–3. Нажми подсвеченную цифру: она изменится.'};
+}
+if(id==='scales'){
+if(s.log.length&&!s.answerMode)return {target:'[data-accuse]',text:'Взвешивание закончено. Нажми «Назвать монету», чтобы дать ответ.'};
+if(s.log.length){const a=s.log[0],coin=a.result<0?a.left[0]:a.result>0?a.right[0]:s.places.findIndex((_,i)=>!a.left.includes(i)&&!a.right.includes(i));return {target:`[data-coin="${coin}"]`,text:a.result===0?'Вес одинаковый: тяжёлая монета осталась на столе. Нажми на неё — это ответ.':`${a.result<0?'Левая':'Правая'} чаша тяжелее. Нажми на её монету — это ответ.`};}
+if(s.answerMode)return {target:'[data-accuse]',text:'Сначала проверим монеты на весах. Нажми эту кнопку ещё раз, чтобы вернуться к раскладке.'};
+const left=s.places.flatMap((x,i)=>x===-1?[i]:[]),right=s.places.flatMap((x,i)=>x===1?[i]:[]),free=s.places.findIndex(x=>x===0);
+if(!left.length&&!right.length)return s.tray===-1?{target:'[data-coin="0"]',text:'Одна из трёх монет тяжелее. Нажми монету 1, чтобы положить её на левую чашу.'}:{target:'[data-tray="-1"]',text:'Сначала выбери левую чашу.'};
+if(!left.length||!right.length){const side=!left.length?-1:1;return s.tray!==side?{target:`[data-tray="${side}"]`,text:`Теперь выбери ${side===-1?'левую':'правую'} чашу стрелкой.`}:{target:`[data-coin="${free}"]`,text:'Нажми свободную монету: она встанет на выбранную чашу.'};}
+if(left.length!==right.length){const side=left.length>right.length?-1:1,coin=(side===-1?left:right).at(-1);return s.tray!==side?{target:`[data-tray="${side}"]`,text:'На чашах нужно поровну монет. Выбери чашу, где монет больше.'}:{target:`[data-coin="${coin}"]`,text:'Нажми лишнюю монету ещё раз: она вернётся на стол.'};}
+return {target:'[data-weigh]',text:'На чашах по одной монете. Нажми «Взвесить» и сравни их вес.'};
+}
+if(s.passenger)return {target:'[data-cross]',text:'Пассажир выбран. Нажми на лодку, чтобы перевезти его.'};
+if(s.sides[0]===1)return {target:'[data-cross]',text:'Теперь верни фермера одного. Нажми на пустую лодку.'};
+const actor=cfg('river').active.find(i=>s.sides[i]===0);return {target:`[data-actor="${actor}"]`,text:s.trips?'Остался второй пассажир. Нажми на него, затем на лодку.':'Перевези козу и капусту. Нажми на козу: она сядет в лодку.'};
+}
+function syncGuide(){q('[data-level]').textContent=state.view==='map'?'':`${state.progress[state.view].level+1} / 3 · ${cfg().name}`;q('[data-level-next]').hidden=state.view==='map'||state.progress[state.view]?.cleared<=state.progress[state.view]?.level||state.progress[state.view]?.level>=2;q('[data-help]').textContent=state.view==='map'?help.map:guide()+(state.view==='river'?' Без фермера нельзя оставлять козу с капустой или волка с козой. Можно плыть одному.':state.view==='scales'?' Нажатие на уже выбранную монету снимает её с чаши. Ответ даётся кнопкой «Назвать монету».':'');all('.qt-teach').forEach(el=>{el.classList.remove('qt-teach');el.removeAttribute('data-tutorial-target');});q('[data-hint-toggle]').textContent=hintRequested?'Скрыть подсказку':'Подсказка';q('[data-hint-toggle]').setAttribute('aria-pressed',String(hintRequested));const step=hintRequested?generalHint():tutorial();q('[data-guide]').hidden=!step;q('[data-guide]').textContent=step?.text||'';if(step){const target=q(step.target);if(target&&!target.disabled){target.classList.add('qt-teach');target.setAttribute('data-tutorial-target','');}}}
+root._townApi={readCafe:()=>state.cafe,cafeConfig:()=>[cfg('cafe').mode,cfg('cafe').budget],saveCafe:s=>{state.cafe=clone(s.privateContent.lyingMachines);if(state.cafe.solved)complete('cafe');syncGuide();persist();}};
+function rects(canvas,fn){const c=canvas.getContext('2d');if(!c)return; c.clearRect(0,0,canvas.width,canvas.height);c.imageSmoothingEnabled=false;fn((x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(x,y,w,h);},c);}
+function building(r,x,y,w,color,roof){r(x+4,y+66,w,5,'#172c2c');r(x,y+17,w,50,color);r(x-4,y+12,w+8,9,roof);r(x+3,y+21,w-6,3,'#e0bb83');for(let k=0;k<2;k++){r(x+10+k*35,y+30,20,20,'#183340');r(x+12+k*35,y+32,16,15,'#efce80');r(x+19+k*35,y+31,2,18,'#815e4b');}r(x+w/2-7,y+48,14,19,'#233744');}
+function mapArt(){rects(q('[data-map-art]'),r=>{r(0,0,384,240,'#294b40');for(let i=0;i<70;i++){const x=(i*97)%384,y=(i*43)%240;r(x,y,3,2,i%3?'#345b48':'#486747');}r(0,114,384,15,'#b4a17c');r(183,0,17,240,'#b4a17c');for(let i=0;i<28;i++)r(i*17,120,6,1,'#d0bc91');building(r,52,24,83,'#578786','#bad4bd');for(let i=0;i<7;i++)r(48+i*13,44,13,9,i%2?'#eed9a6':'#a76e64');building(r,247,24,83,'#768798','#a8b8b7');r(270,51,37,28,'#344b61');r(283,58,9,9,'#e5cc85');building(r,52,145,83,'#a78065','#d0b18a');r(90,167,4,27,'#e5c879');r(73,173,39,3,'#e5c879');r(72,184,15,3,'#f1dca3');r(101,184,15,3,'#f1dca3');r(230,141,124,70,'#377988');for(let i=0;i<12;i++)r(236+(i*19)%110,148+(i*13)%56,9,2,'#5a9ca4');r(227,141,19,70,'#709154');r(336,141,20,70,'#709154');r(247,174,88,10,'#a48056');for(let i=0;i<8;i++)r(247+i*12,174,2,10,'#4a4c3c');for(const [x,y] of [[20,40],[155,60],[21,160],[365,50],[157,189]]){r(x,y+9,4,10,'#725c43');r(x-7,y-3,18,17,'#48734b');r(x-3,y-8,10,10,'#63935a');}});}
+function safeArt(){rects(q('[data-safe-art]'),r=>{r(0,0,288,224,'#23364b');r(43,195,210,8,'#122134');r(50,25,188,172,'#122336');r(54,28,180,165,'#788f9b');r(62,36,164,148,'#b0bab0');r(68,42,152,137,'#526e80');r(76,50,136,121,'#617e8d');for(const [x,y] of [[68,43],[211,43],[68,170],[211,170]])r(x,y,6,6,'#d9d9be');r(89,69,111,48,'#233b50');r(129,133,30,6,'#d4d2b6');r(140,121,7,30,'#d4d2b6');r(142,131,3,10,'#7e8d91');if(state.safe.solved){r(78,48,131,123,'#14283b');r(82,150,108,12,'#e7ba59');r(99,138,75,12,'#ffe293');r(80,43,22,139,'#7a9199');}});}
+function scaleArt(){const s=state.scales,last=s.log.at(-1),tilt=last?last.result:0;rects(q('[data-scale-art]'),r=>{r(0,0,288,224,'#263a4c');r(10,190,268,20,'#5c5148');r(132,82,24,89,'#ceb777');r(116,168,56,9,'#e9cf86');r(140,61,8,30,'#f1daa0');for(let i=0;i<18;i++)r(55+i*10,84+Math.round((i-8.5)*tilt/1.2),11,5,'#dfc68a');r(56,88-tilt*7,2,41,'#b7bdba');r(99,88-tilt*7,2,41,'#b7bdba');r(46,130-tilt*7,65,7,'#e7cf90');r(187,88+tilt*7,2,41,'#b7bdba');r(230,88+tilt*7,2,41,'#b7bdba');r(177,130+tilt*7,65,7,'#e7cf90');});}
+function actorArt(canvas,kind){rects(canvas,r=>{if(kind===1){r(5,19,28,12,'#9ba8ad');r(24,12,13,15,'#bac4c1');r(24,8,4,7,'#bac4c1');r(33,8,4,7,'#bac4c1');r(34,18,3,3,'#1c2c3b');r(9,29,4,7,'#83949b');r(27,29,4,7,'#83949b');r(1,15,10,5,'#8fa1a6');}else if(kind===2){r(8,20,24,12,'#e8d9b4');r(26,13,10,13,'#f4e9cb');r(26,7,3,8,'#bba37b');r(34,7,3,8,'#bba37b');r(33,17,2,2,'#21343e');r(12,30,3,6,'#c4b68e');r(28,30,3,6,'#c4b68e');}else{r(10,16,25,18,'#8dbb6a');r(6,21,9,10,'#628e59');r(15,12,15,8,'#b2cd7b');r(22,17,3,16,'#4b7d50');r(12,24,20,2,'#c3d991');}});}
+function riverArt(){rects(q('[data-river-art]'),r=>{r(0,0,288,224,'#46814e');r(75,0,138,224,'#316f88');r(69,0,7,224,'#a2ac71');r(213,0,7,224,'#a2ac71');for(let i=0;i<40;i++)r(82+(i*31)%123,(i*29)%224,11,2,i%2?'#4c92a3':'#3c829a');r(46,121,35,18,'#a48862');r(207,121,35,18,'#a48862');for(let i=0;i<4;i++){r(47+i*9,121,2,18,'#5e6650');r(208+i*9,121,2,18,'#5e6650');}});rects(q('[data-boat-art]'),r=>{r(1,25,64,9,'#a57a4d');r(8,34,51,5,'#795c42');r(8,22,51,4,'#dfb879');r(27,8,10,10,'#edd7ac');r(25,5,14,4,'#d9ad62');r(26,18,12,10,'#a7bccc');r(39,20,22,3,'#dab679');});}
+function render(){all('[data-view]').forEach(el=>el.hidden=el.dataset.view!==state.view);q('[data-heading]').textContent=titles[state.view];q('[data-home]').hidden=state.view==='map';q('[data-help]').textContent=help[state.view];all('[data-enter]').forEach(el=>{el.classList.toggle('done',state.done.includes(el.dataset.enter));el.querySelector('span').textContent=({hanoi:'Башня',bridge:'Мост',lights:'Лампы'}[el.dataset.enter]||titles[el.dataset.enter])+' '+state.progress[el.dataset.enter].cleared+'/3';});q('[data-extra]').hidden=!extraIds.includes(state.view);if(extraIds.includes(state.view))extraRender();if(state.view==='map')unifiedMap();if(state.view==='safe')renderSafe();if(state.view==='scales')renderScale();if(state.view==='river')renderRiver();if(state.view==='cafe')q('#lying-machines')._setCafeLevel?.(...root._townApi.cafeConfig(),false);syncGuide();}
+function renderSafe(){const s=state.safe,c=cfg('safe');safeArt();q('[data-dials]').innerHTML=s.digits.map((v,i)=>`<button data-digit="${i}" aria-label="Цифра ${i+1}: ${v}. Нажать, чтобы изменить" ${s.solved||s.failed?'disabled':''}>${v}</button>`).join('');q('[data-safe-count]').textContent=`Попытки ${s.log.length} / ${c.limit}`;q('[data-safe-check]').disabled=s.solved||s.failed;q('[data-safe-log]').innerHTML=s.log.map(a=>`<div class="qt-attempt"><span>${a.code.join(' ')}</span><span class="qt-feedback" aria-label="На месте ${a.bulls}, не на месте ${a.cows}">${'●'.repeat(a.bulls)}${'○'.repeat(a.cows)}${!a.bulls&&!a.cows?'—':''}</span></div>`).join('');q('[data-safe-status]').textContent=s.solved?'Сейф открыт!':s.failed?`Код был ${s.secret.join(' ')}. Ещё раз?`:s.message||'● на месте · ○ есть';q('[data-safe-light]').classList.toggle('open',s.solved);syncGuide();}
+function renderScale(){const s=state.scales,c=cfg('scales');scaleArt();q('[data-scale-count]').textContent=`Взвешивания ${s.log.length} / ${c.limit}`;all('[data-tray]').forEach(b=>{b.setAttribute('aria-pressed',String(Number(b.dataset.tray)===s.tray&&!s.answerMode));b.disabled=s.solved||s.failed||s.log.length>=cfg('scales').limit;});q('[data-weigh]').disabled=s.log.length>=cfg('scales').limit||s.solved||s.failed;q('[data-accuse]').disabled=s.solved||s.failed;q('[data-accuse]').setAttribute('aria-pressed',String(s.answerMode));q('[data-coins]').innerHTML=s.places.map((v,i)=>{let x,y;const index=s.places.slice(0,i).filter(a=>a===v).length;if(v===0){x=9+(index%5)*18;y=69+Math.floor(index/5)*14;}else{x=(v===-1?10:56)+(index%3)*13;y=46-Math.floor(index/3)*14;}return `<button class="qt-coin ${s.solved&&s.heavy===i?'suspect':''}" style="left:${x}%;top:${y}%" data-coin="${i}" aria-label="Монета ${i+1}${v===-1?', левая чаша':v===1?', правая чаша':''}" ${s.solved||s.failed?'disabled':''}>${i+1}</button>`;}).join('');q('[data-scale-log]').innerHTML=s.log.map(a=>`<div>${a.left.map(x=>x+1).join('')} ${a.result<0?'&gt;':a.result>0?'&lt;':'='} ${a.right.map(x=>x+1).join('')}</div>`).join('');q('[data-scale-status]').textContent=s.solved?`Верно: монета ${s.heavy+1}!`:s.failed?`Фальшивая — ${s.heavy+1}. Ещё раз?`:s.answerMode?'Нажми на фальшивую монету.':s.message;syncGuide();}
+function renderRiver(){const s=state.river,names=['','Волк','Коза','Капуста'];riverArt();q('[data-river-actors]').innerHTML=cfg('river').active.map(i=>{const selected=s.passenger===i,side=s.sides[i],x=selected?(side===0?25:49):(side===0?2:71),y=selected?38:6+(i-1)*27;return `<button class="qt-actor ${selected?'selected':''}" data-actor="${i}" style="left:${x}%;top:${y}%" ${s.solved||s.failed||s.sides[i]!==s.sides[0]?'disabled':''} aria-label="${names[i]}${selected?', в лодке':''}"><canvas width="44" height="38" data-actor-art="${i}" aria-hidden="true"></canvas><span>${names[i]}</span></button>`;}).join('');all('[data-actor-art]').forEach(c=>actorArt(c,Number(c.dataset.actorArt)));q('[data-cross]').style.left=s.sides[0]===0?'24%':'51%';q('[data-cross]').disabled=s.solved||s.failed;q('[data-cross] span').textContent=s.sides[0]===0?'Плыть →':'← Плыть';q('[data-river-count]').textContent=`Переправ: ${s.trips}${cfg('river').limit?' / '+cfg('river').limit:''}`;q('[data-passenger]').textContent=s.passenger?`В лодке: ${names[s.passenger].toLowerCase()}`:'В лодке: фермер';q('[data-river-status]').textContent=s.solved?'Все на другом берегу!':s.failed?s.message:s.message||'Выбери пассажира.';syncGuide();}
+root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+if(b.hasAttribute('data-hint-toggle')){hintRequested=!hintRequested;syncGuide();return;}
+if(extraAction(b))return;
+if(b.hasAttribute('data-home')){hintRequested=false;state.view='map';q('.qt-help').open=false;render();persist();return;}
+if(b.dataset.enter){hintRequested=false;state.view=b.dataset.enter;q('.qt-help').open=false;render();persist();return;}
+if(b.hasAttribute('data-level-next')){const id=state.view;if(id==='map'||state.progress[id].cleared<=state.progress[id].level||state.progress[id].level>=2)return;hintRequested=false;state.progress[id].level++;if(extraIds.includes(id))state[id]=newExtra(id,state.progress[id].level);if(id==='safe')state.safe=newSafe(state.progress.safe.level);if(id==='scales')state.scales=newScale(state.progress.scales.level);if(id==='river')state.river=newRiver();if(id==='cafe')q('#lying-machines')._setCafeLevel(...root._townApi.cafeConfig(),true);render();persist();return;}
+if(b.dataset.reset){state[b.dataset.reset]=b.dataset.reset==='safe'?newSafe(state.progress.safe.level):b.dataset.reset==='scales'?newScale(state.progress.scales.level):newRiver();render();persist();return;}
+if(b.hasAttribute('data-digit')){const s=state.safe;if(s.solved||s.failed)return;s.digits[Number(b.dataset.digit)]=(s.digits[Number(b.dataset.digit)]+1)%(cfg('safe').max+1);s.message='';renderSafe();persist();}
+if(b.hasAttribute('data-safe-check')){const s=state.safe;if(s.solved||s.failed)return;if(new Set(s.digits).size<s.secret.length){s.message='Цифры должны различаться.';}else{const bulls=s.digits.filter((v,i)=>v===s.secret[i]).length,cows=s.digits.filter(v=>s.secret.includes(v)).length-bulls;s.log.push({code:s.digits.slice(),bulls,cows});s.solved=bulls===s.secret.length;s.failed=!s.solved&&s.log.length>=cfg('safe').limit;s.message='';if(s.solved)complete('safe');}renderSafe();persist();}
+if(b.hasAttribute('data-tray')){const s=state.scales;if(s.solved||s.failed||s.log.length>=cfg('scales').limit)return;s.tray=Number(b.dataset.tray);s.answerMode=false;renderScale();persist();}
+if(b.hasAttribute('data-accuse')){const s=state.scales;if(s.solved||s.failed)return;s.answerMode=!s.answerMode;renderScale();persist();}
+if(b.hasAttribute('data-coin')){const s=state.scales;if(s.solved||s.failed)return;const i=Number(b.dataset.coin);if(s.answerMode){s.solved=i===s.heavy;s.failed=!s.solved;if(s.solved)complete('scales');}else if(s.log.length<cfg('scales').limit){s.places[i]=s.places[i]===s.tray?0:s.tray;s.message='';}renderScale();persist();}
+if(b.hasAttribute('data-weigh')){const s=state.scales;if(s.solved||s.failed||s.log.length>=cfg('scales').limit)return;const left=s.places.flatMap((v,i)=>v===-1?[i]:[]),right=s.places.flatMap((v,i)=>v===1?[i]:[]);if(!left.length||left.length!==right.length)s.message='Положи поровну монет на обе чаши.';else{const result=(left.includes(s.heavy)?-1:right.includes(s.heavy)?1:0)*s.delta;s.log.push({left,right,result});s.message=result===0?'Равновесие.':result<0?'Левая тяжелее.':'Правая тяжелее.';if(s.log.length===cfg('scales').limit)s.answerMode=true;}renderScale();persist();}
+if(b.hasAttribute('data-actor')){const s=state.river,i=Number(b.dataset.actor);if(s.solved||s.failed||s.sides[i]!==s.sides[0])return;s.passenger=s.passenger===i?null:i;s.message='';renderRiver();persist();}
+if(b.hasAttribute('data-cross')){const s=state.river;if(s.solved||s.failed)return;s.sides[0]=1-s.sides[0];if(s.passenger)s.sides[s.passenger]=s.sides[0];s.passenger=null;s.trips++;if(cfg('river').active.includes(1)&&s.sides[1]===s.sides[2]&&s.sides[1]!==s.sides[0]){s.failed=true;s.message='Волк съел козу.';}else if(s.sides[2]===s.sides[3]&&s.sides[2]!==s.sides[0]){s.failed=true;s.message='Коза съела капусту.';}else if([0,...cfg('river').active].every(i=>s.sides[i]===1)){s.solved=true;complete('river');}if(!s.solved&&!s.failed&&cfg('river').limit&&s.trips>=cfg('river').limit){s.failed=true;s.message='Лимит рейсов исчерпан.';}s.message=s.failed?s.message:'';renderRiver();persist();}
+});
+window.addEventListener('openai:set_globals',e=>{const s=e.detail?.globals?.widgetState?.privateContent?.quarter;if(valid(s)&&s.revision>state.revision){state=clone(s);render();}});
+window.addEventListener('resize',()=>{if(state.view==='map')unifiedMap();});
+render();
+})();
+</script>
+<script>
+(()=>{
+const root=document.getElementById('lying-machines'),q=s=>root.querySelector(s),bridge=root.closest('#logic-quarter')._townApi;
+const names=['Чай','Кофе','Случайный'],short=['ЧАЙ','КОФЕ','ЧАЙ / КОФЕ'],letters=['А','Б','В'];
+const permutations=[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+const cases=[
+{name:'Все наклейки врут',rule:'Все три наклейки неверны.',hint:'Найди наклейку «Чай / кофе». Если она врёт, внутри только один напиток. Проба из этого автомата особенно полезна.'},
+{name:'Одна говорит правду',rule:'Ровно одна наклейка верна. Две остальные врут.',hint:'До первой пробы возможны три расстановки. Подумай, какие две из них совместимы с напитком, который ты получил.'},
+{name:'Наклейкам веры нет',rule:'Наклейки могут быть верными или ложными — никаких гарантий.',hint:'Два разных напитка из одного автомата доказывают, что он случайный. Несколько одинаковых подряд этого не опровергают.'}
+];
+function allowed(labels,mode){return permutations.filter(v=>{const matches=v.filter((x,i)=>x===labels[i]).length;return mode===0?matches===0:mode===1?matches===1:true;});}
+function shuffle(v){const a=v.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function fresh(mode=0,budget=3,previous){const labels=shuffle([0,1,2]),pool=allowed(labels,mode);return {version:2,revision:previous?.revision||0,mode,budget,labels,actual:pool[Math.floor(Math.random()*pool.length)].slice(),samples:[],guesses:['','',''],solved:false,revealed:false,hint:false,options:false,message:'',completed:previous?.completed||[],round:(previous?.round||0)+1};}
+function compatible(s){return s&&s.version===2&&Number.isInteger(s.mode)&&cases[s.mode]&&Number.isInteger(s.budget)&&s.budget>=1&&s.budget<=6&&Array.isArray(s.labels)&&s.labels.length===3&&new Set(s.labels).size===3&&s.labels.every(x=>[0,1,2].includes(x))&&Array.isArray(s.actual)&&allowed(s.labels,s.mode).some(v=>v.every((x,i)=>x===s.actual[i]))&&Array.isArray(s.samples)&&s.samples.length<=s.budget&&s.samples.every(x=>[0,1,2].includes(x.index)&&[0,1].includes(x.drink)&&(s.actual[x.index]===2||s.actual[x.index]===x.drink))&&Array.isArray(s.guesses)&&s.guesses.length===3&&Array.isArray(s.completed);}
+let state;
+function paintMachine(canvas,index,last){const ctx=canvas.getContext('2d');if(!ctx)return;ctx.imageSmoothingEnabled=false;const r=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(x,y,w,h);};const tones=[['#548d8c','#37666e','#82b7a9'],['#a0786c','#755660','#d4a080'],['#788aab','#505b7c','#aab9ca']][index];
+r(8,119,82,5,'#0b1829');r(17,114,8,10,'#101a28');r(72,114,8,10,'#101a28');r(12,6,70,111,'#101a28');r(8,10,78,103,'#101a28');r(12,10,70,103,tones[0]);r(76,12,8,101,tones[1]);r(14,10,62,4,tones[2]);r(12,14,4,95,tones[2]);r(19,20,54,34,'#152b39');r(21,22,50,30,'#f1dfaf');r(22,23,46,2,'#fff4d1');r(64,48,7,3,'#c0ae83');r(20,60,44,39,'#152635');r(23,62,38,34,'#0c1928');r(37,61,10,7,'#788a94');r(41,67,4,3,'#b0c0bb');r(28,95,33,3,'#697f89');r(34,81,18,14,'#ecdfc1');r(36,95,14,2,'#b2ac9c');r(35,79,16,3,'#fff2d1');if(last){r(36,82,14,5,last.drink===0?'#bf984d':'#714b37');r(37,76,2,3,'#b4c6b7');r(45,73,2,4,'#b4c6b7');}r(69,64,6,14,'#192838');r(71,66,2,10,'#090f1d');r(68,84,8,8,'#182c38');r(70,85,4,4,'#a0e6ac');r(20,103,54,7,tones[1]);r(23,105,46,1,tones[2]);}
+function candidates(){return allowed(state.labels,state.mode).filter(v=>state.samples.every(s=>v[s.index]===2||v[s.index]===s.drink));}
+function save(){state.revision=(state.revision||0)+1;const snapshot={modelContent:{puzzle:cases[state.mode].name,coins:state.budget,remaining:state.budget-state.samples.length,samples:state.samples.map(s=>({machine:letters[s.index],drink:s.drink===0?'Чай':'Кофе'})),possible:candidates().length,solved:state.solved,revealed:state.revealed,completed:state.completed},privateContent:{lyingMachines:JSON.parse(JSON.stringify(state))}};try{Promise.resolve(bridge.saveCafe(snapshot)).catch(()=>{});}catch{}}
+function draw(){
+const closed=state.solved||state.revealed,left=state.budget-state.samples.length,variants=candidates();
+q('[data-case]').value=state.mode;q('[data-budget]').value=state.budget;
+q('[data-case]').disabled=state.samples.length>0&&!closed;q('[data-budget]').disabled=state.samples.length>0&&!closed;
+q('[data-token]').textContent=`Монеты: ${left} / ${state.budget}`;
+q('[data-left-count]').textContent=left;q('[data-spent-count]').textContent=state.samples.length;
+q('[data-wallet]').innerHTML=Array.from({length:state.budget},(_,i)=>`<span class="lm-coin ${i>=left?'empty':''}" aria-hidden="true"></span>`).join('');
+q('[data-spent]').innerHTML=state.samples.length?state.samples.map((s,i)=>`<span class="lm-spent-item"><span class="lm-coin spent" aria-hidden="true"></span><span>${letters[s.index]}</span></span>`).join(''):'<span class="lm-no-spend">—</span>';
+q('[data-rules]').textContent=`${cases[state.mode].rule} Внутри: один автомат с чаем, один с кофе и один случайный (50/50). Одна монета — одна проба.`;
+q('[data-progress]').textContent=`Раунд ${state.round} · Доказано испытаний: ${state.completed.length} / 3`;
+q('[data-machines]').innerHTML=letters.map((l,i)=>{const samples=state.samples.filter(s=>s.index===i),last=samples[samples.length-1];return `<div class="lm-machine ${last?'sampled':''} ${closed?'solved':''}" data-machine="${i}"><div class="lm-id text-small">АВТОМАТ ${l}</div><button class="lm-machine-hit" data-pour="${i}" aria-label="Взять пробу из автомата ${l} за одну монету" ${closed||left===0?'disabled':''}><canvas width="96" height="128" data-art="${i}" aria-hidden="true"></canvas><span class="lm-sticker"><span class="text-small">${closed?'ВНУТРИ':'НАКЛЕЙКА'}</span><span>${short[closed?state.actual[i]:state.labels[i]]}</span></span><span class="lm-drink">${last?(last.drink===0?'ЧАЙ':'КОФЕ'):'?'}</span><span class="lm-insert"><span class="lm-full-cost">${closed?'РАСКРЫТО':left?'НАЖМИ · 1 МОНЕТА':'НЕТ МОНЕТ'}</span><span class="lm-mini-cost">${closed?'ОТКР.':left?'−1 ●':'0 ●'}</span></span><span class="lm-flying-coin" aria-hidden="true">−1</span><span class="lm-pour-line" aria-hidden="true"></span></button><span class="text-small lm-tally">Чай ${samples.filter(s=>s.drink===0).length} · Кофе ${samples.filter(s=>s.drink===1).length}</span></div>`;}).join('');
+root.querySelectorAll('[data-art]').forEach(c=>{const i=Number(c.dataset.art),last=state.samples.filter(s=>s.index===i).at(-1);paintMachine(c,i,last);});
+const message=state.message;
+q('[data-status]').textContent=state.solved?'Верно!':state.revealed?'Автоматы открыты.':message.includes('противоречат условию')?'Проверь наклейки.':message.includes('противоречит полученным')?'Не совпадает с пробами.':message.includes('ровно один раз')?'Типы не повторяются.':message.includes('Выбери содержимое')?'Заполни А, Б и В.':message.includes('Твоя версия возможна')?`Ещё ${variants.length} варианта.`:state.samples.length?`${letters[state.samples.at(-1).index]} → ${state.samples.at(-1).drink===0?'чай':'кофе'}${left===0?' · монеты кончились':''}`:'Нажми на автомат.';
+q('[data-history]').innerHTML=state.samples.map((s,i)=>`<span class="viz-badge">${i+1}. ${letters[s.index]} → ${s.drink===0?'чай':'кофе'}</span>`).join('');
+q('[data-fields]').innerHTML=letters.map((l,i)=>`<label class="form-label">${l}<select class="form-select" data-guess="${i}" ${closed?'disabled':''}><option value="">Что внутри?</option>${names.map((n,j)=>`<option value="${j}" ${state.guesses[i]===String(j)?'selected':''}>${n}</option>`).join('')}</select></label>`).join('');
+q('[data-check]').hidden=closed;q('[data-hint]').hidden=closed;q('[data-reveal]').hidden=closed;
+q('[data-hint]').textContent=state.hint?'Скрыть подсказку':'Подсказка';
+q('[data-options]').textContent=state.options?'Скрыть варианты':'Какие варианты остались?';
+q('[data-options-panel]').hidden=!state.options;
+q('[data-options-panel]').innerHTML=`<div>Совместимых расстановок: ${variants.length}${variants.length===1?' — вывод однозначен.':'. Пока есть неопределённость.'}</div><div class="lm-options-list">${variants.map(v=>`<div class="lm-options-row text-small">${v.map((x,i)=>`<span>${letters[i]}: ${names[x]}</span>`).join('')}</div>`).join('')}</div>`;
+q('[data-detail]').hidden=!state.hint&&!closed;
+q('[data-detail]').textContent=closed?(state.solved?`Расстановка доказана всеми наблюдениями. Потрачено монет: ${state.samples.length} из ${state.budget}.`: `Автоматы открыты, испытание не засчитано. Совместимых с пробами расстановок: ${variants.length}. В случайном автомате несколько одинаковых напитков подряд возможны — это ещё не доказательство.`):cases[state.mode].hint;
+q('[data-next]').hidden=!closed||state.mode===2;
+}
+root.addEventListener('click',e=>{
+const p=e.target.closest('[data-pour]');
+if(p&&!state.solved&&!state.revealed&&state.samples.length<state.budget){const index=Number(p.dataset.pour),a=state.actual[index],drink=a===2?Math.floor(Math.random()*2):a;state.samples.push({index,drink});state.message=`Автомат ${letters[index]} выдал ${drink===0?'чай':'кофе'}. Осталось монет: ${state.budget-state.samples.length}.`;draw();q(`[data-machine="${index}"]`).classList.add('pouring');save();}
+if(e.target.closest('[data-hint]')){state.hint=!state.hint;draw();save();}
+if(e.target.closest('[data-options]')){state.options=!state.options;draw();save();}
+if(e.target.closest('[data-again]')){state=fresh(state.mode,state.budget,state);draw();save();}
+if(e.target.closest('[data-next]')&&(state.solved||state.revealed)&&state.mode<2){state=fresh(state.mode+1,state.budget,state);draw();save();}
+if(e.target.closest('[data-reveal]')&&!state.solved){state.revealed=true;state.message='Содержимое открыто. Это разбор раунда, без зачёта.';draw();save();}
+if(e.target.closest('[data-check]')&&!state.solved&&!state.revealed){const possible=candidates(),g=state.guesses.map(Number);
+if(state.guesses.some(x=>x===''))state.message='Выбери содержимое всех трёх автоматов.';
+else if(new Set(g).size!==3)state.message='Каждый тип встречается ровно один раз.';
+else if(!allowed(state.labels,state.mode).some(v=>v.every((x,i)=>x===g[i])))state.message='Эти подписи противоречат условию о наклейках.';
+else if(!possible.some(v=>v.every((x,i)=>x===g[i])))state.message='Эта расстановка противоречит полученным напиткам.';
+else if(possible.length>1)state.message=`Твоя версия возможна, но остаётся ${possible.length} расстановок. Пока не доказано.${state.samples.length<state.budget?' Возьми ещё пробу.':' Монет больше нет: можно разобрать раунд или начать новый.'}`;
+else{state.solved=true;state.message='Доказано! Все три автомата определены однозначно.';if(!state.completed.includes(state.mode))state.completed.push(state.mode);}
+draw();save();}
+});
+root.addEventListener('change',e=>{
+if(e.target.matches('[data-guess]')){state.guesses[Number(e.target.dataset.guess)]=e.target.value;state.message='';save();}
+if(e.target.matches('[data-case],[data-budget]')){if(state.samples.length&&!state.solved&&!state.revealed)return;state=fresh(Number(q('[data-case]').value),Number(q('[data-budget]').value),state);draw();save();}
+});
+const initial=bridge.readCafe();
+if(compatible(initial))state=initial;
+else if(initial?.version===1&&Array.isArray(initial.actual)&&allowed([0,1,2],0).some(v=>v.every((x,i)=>x===initial.actual[i]))){state=fresh();state.labels=[0,1,2];state.actual=initial.actual;state.samples=initial.sample?[initial.sample]:[];state.guesses=initial.guesses||['','',''];state.message='Предыдущая проба сохранена. Теперь можно брать дополнительные пробы.';}
+else state=fresh();
+root._setCafeLevel=(mode,budget,reset=false)=>{if(reset||state.mode!==mode||state.budget!==budget){state=fresh(mode,budget,state);draw();save();}else draw();};
+root._setCafeLevel(...bridge.cafeConfig(),false);
+window.addEventListener('openai:set_globals',e=>{const s=e.detail?.globals?.widgetState?.privateContent?.lyingMachines;if(compatible(s)&&(s.revision||0)>(state.revision||0)){state=s;draw();}});
+})();
+</script>
+
+</body></html>
