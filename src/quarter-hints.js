@@ -4,10 +4,11 @@ function lightSolution(cells,n){const count=cells.length,rows=Array.from({length
 function bridgePath(s,c){const queue=[{sides:s.sides.slice(),torch:s.torch,cost:0,path:[]}],best=new Map();while(queue.length){queue.sort((a,b)=>a.cost-b.cost);const item=queue.shift(),key=item.sides.join('')+':'+item.torch;if(best.has(key)&&best.get(key)<=item.cost)continue;best.set(key,item.cost);if(item.sides.every(v=>v===1))return item;const available=item.sides.flatMap((v,i)=>v===item.torch?[i]:[]),groups=available.map(i=>[i]);for(let i=0;i<available.length;i++)for(let j=i+1;j<available.length;j++)groups.push([available[i],available[j]]);for(const group of groups){const sides=item.sides.slice(),torch=1-item.torch;for(const i of group)sides[i]=torch;queue.push({sides,torch,cost:item.cost+Math.max(...group.map(i=>c.times[i])),path:[...item.path,group]});}}return null;}
 function riverPath(s,c){return findPath(s.sides,a=>[0,...c.active].every(i=>a[i]===1),a=>{const out=[];for(const passenger of [null,...c.active.filter(i=>a[i]===a[0])]){const next=a.slice();next[0]=1-next[0];if(passenger)next[passenger]=next[0];if(c.active.includes(1)&&next[1]===next[2]&&next[1]!==next[0])continue;if(next[2]===next[3]&&next[2]!==next[0])continue;out.push([next,passenger]);}return out;});}
 function generalHint(){const id=state.view;
-if(id==='map'){const next=Object.keys(levels).find(key=>state.progress[key].cleared<3)||'cafe';return {target:`[data-enter="${next}"]`,text:`Нажми «${titles[next]}». Реши текущий уровень — откроется следующий.`};}
+if(id==='map'){const next=lifeNext()||'cafe';return {target:`[data-enter="${next}"]`,text:`Нажми «${titles[next]}». Реши текущий уровень — откроется следующий.`};}
 const s=state[id],c=cfg(id);
 if(s?.solved)return state.progress[id].level<2?{target:'[data-level-next]',text:'Уровень решён. Нажми «Дальше».'}:{target:'[data-home]',text:'Все уровни этого места пройдены. Вернись на карту.'};
 if(s?.failed)return {target:extraIds.includes(id)?'[data-extra-reset]':`[data-reset="${id}"]`,text:'Попытка закончилась. Нажми ↻ и начни уровень заново.'};
+if(adventureIds.includes(id))return adventureHint();
 if(id==='sokoban')return warehouseHint();
 if(id==='hanoi'||id==='jugs')return extraTutorial(id);
 if(id==='lights'){const path=lightSolution(s.cells,c.n);return path?.length?{target:`[data-lamp="${path[0]}"]`,text:'Эта лампа входит в решение. Нажми её; подсказка пересчитается для нового положения.'}:{target:'[data-extra-reset]',text:'Начни сетку заново, чтобы попробовать другой путь.'};}
@@ -27,10 +28,11 @@ function unifiedMap(){
   canvas.width=384;canvas.height=240;mapArt();const first=copy();extraMap();const second=copy();
   const warehouse=document.createElement('canvas');warehouse.width=192;warehouse.height=120;
   rects(warehouse,r=>{r(0,0,192,120,'#294b40');r(0,114,192,6,'#b4a17c');r(183,0,9,120,'#b4a17c');building(r,52,24,83,'#916f53','#d0b386');for(const [x,y] of [[69,54],[93,54],[81,31]]){r(x,y,22,22,'#614b35');r(x+2,y+2,18,18,'#ad8152');r(x+3,y+3,16,3,'#e0ba7b');r(x+3,y+14,16,3,'#e0ba7b');r(x+9,y+3,3,14,'#d2a56a');}});
-  const narrow=root.getBoundingClientRect().width<480,columns=narrow?2:3,rows=Math.ceil(9/columns);
+  const width=root.getBoundingClientRect().width,columns=width<400?3:width<650?4:5,rows=Math.ceil(Object.keys(levels).length/columns);
   canvas.width=192*columns;canvas.height=120*rows;const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.fillStyle='#294b40';ctx.fillRect(0,0,canvas.width,canvas.height);
   all('[data-enter]').forEach((el,i)=>{const x=i%columns*192,y=Math.floor(i/columns)*120;
-    if(i===8)ctx.drawImage(warehouse,x,y);else{const source=i<4?first:second,k=i%4;ctx.drawImage(source,k%2*192,Math.floor(k/2)*120,192,120,x,y,192,120);}
+    if(i>=9){adMapArt(ctx,x,y,adventureIds[i-9]);}else if(i===8)ctx.drawImage(warehouse,x,y);else{const source=i<4?first:second,k=i%4;ctx.drawImage(source,k%2*192,Math.floor(k/2)*120,192,120,x,y,192,120);}
+    lifeMapDecorate(ctx,x,y,el.dataset.enter);
     el.hidden=false;el.style.left=(i%columns+.12)*100/columns+'%';el.style.top=(Math.floor(i/columns)+.16)*100/rows+'%';el.style.width=76/columns+'%';el.style.height=78/rows+'%';
   });
 }

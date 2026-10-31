@@ -1,0 +1,61 @@
+// Presentation follows confirmed progress; it never grants or delays a game result.
+const lifeStories={
+cafe:['Бариста ждёт правильные подписи.','В кафе подали первый горячий чай.','У стойки больше не путают заказы.','Кафе принимает ночных гостей.'],
+safe:['У смотрителя потерялся код.','Смотритель достал ключ от улицы.','В сейфе нашлась карта квартала.','Все тайники смотрителя открыты.'],
+scales:['Монетчик проверяет сдачу.','Честные монеты вернулись в кассу.','Лавки могут выдавать сдачу.','Монетчик закончил ночную проверку.'],
+river:['Паромщик собирает пассажиров.','Первая компания добралась домой.','Все пассажиры в безопасности.','Последний паром успел до ночи.'],
+hanoi:['Строитель собирает новую башню.','У башни появился первый этаж.','Строитель поднял материалы выше.','На башне зажёгся маяк.'],
+jugs:['Садовнику нужна точная порция воды.','Первые цветы получили воду.','Садовник полил дальние клумбы.','Весь сад готов к празднику.'],
+bridge:['Путешественники ждут у моста.','Первые гости перешли мост.','На другом берегу стало люднее.','Все гости успели на праздник.'],
+lights:['Фонарщик готовит ночное небо.','Один двор готов к тихой ночи.','Фонарщик проверил соседнюю улицу.','Все фонари слушаются мастера.'],
+sokoban:['Кладовщик освобождает проход.','Первый груз доставлен на место.','Проход к лавкам свободен.','Все праздничные припасы на месте.'],
+detective:['Детектив ищет ночного посетителя.','Посетитель найден по улике.','Улики сложились в одну историю.','Детектив закрыл последнее дело.'],
+experiment:['Механик настраивает вывеску.','Первая вывеска заработала.','Связанные лампы загорелись как нужно.','Механик запустил всю вывеску.'],
+prediction:['Сигнальщик направляет луч.','Первый сигнал достиг нужной стороны.','Луч прошёл через два зеркала.','Сигнальная линия готова к ночи.'],
+repair:['У робота перепутана команда.','Первый робот снова на маршруте.','Почтовый робот добрался до цели.','Все сломанные программы починены.'],
+program:['Почтальону нужен маршрут робота.','Робот доставил первую посылку.','Дальний адрес получил посылку.','Робот знает сложный маршрут.'],
+escape:['Смотритель заперт в комнате.','Ключ нашёлся, дверь открыта.','Смотритель разгадал комнатный код.','Последняя дверь квартала открыта.'],
+clock:['Часовщик готовит точный сигнал.','Часовщик отмерил первую минуту.','Сигнал прозвучит точно вовремя.','Часы готовы открыть праздник.'],
+ice:['Курьер везёт посылку по льду.','Посылка остановилась у адресата.','Курьер обогнул ледяные преграды.','Последний ледяной маршрут пройден.'],
+twins:['Близнецам нужно встретиться у звёзд.','Оба близнеца дошли до своих звёзд.','Даже стены не помешали встрече.','Зеркальный двор ожил.'],
+observation:['Сосед ищет нужное окно.','Нужная комната найдена.','Два наблюдения сложились в ответ.','Все окна квартала знакомы.'],
+information:['Свидетели видели разные детали.','Первый предмет опознан.','Два рассказа дали точный ответ.','Свидетели восстановили всю картину.'],
+trade:['Лавочник собирает полезный обмен.','Первый обмен состоялся.','Нужный ключ появился в лавке.','Лавочник приготовил всё к празднику.'],
+timeline:['Архивариус перепутал события.','Первая история восстановлена.','События снова идут по порядку.','Летопись квартала закончена.'],
+impossible:['Архитектор выбирает рабочий проект.','Нерабочий проект отложен.','Архитектор заметил пересечение.','Все проекты прошли проверку.'],
+tool:['Мастер переносит единственную лестницу.','Первый разрыв позади.','Мастер дошёл до дальней площадки.','Одна лестница связала весь маршрут.'],
+creator:['Изобретатель ждёт твою загадку.','Первая авторская загадка решена.','В мастерской появилась новая идея.','Твоя мастерская готова принимать гостей.']};
+let lifeView='',lifeAwardPending=null,lifeToastTimer=0;
+const lifeReduced=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+function lifeTotal(){return Object.values(state.progress).reduce((n,p)=>n+p.cleared,0);}
+function lifeNext(){const ids=Object.keys(levels),min=Math.min(...ids.map(id=>state.progress[id].cleared));return min===3?null:ids.find(id=>state.progress[id].cleared===min);}
+function lifeChapter(){const n=Math.min(...Object.values(state.progress).map(p=>p.cleared));return ['Первые огни','Мастерские просыпаются','Готовим ночной праздник','Праздник в квартале'][n];}
+function lifeStage(){return state.view==='cafe'?q('.lm-scene'):extraIds.includes(state.view)?q('[data-extra] .qt-stage'):q('[data-view="'+state.view+'"] .qt-stage');}
+function lifeAnimate(node,frames,options={}){if(!node||lifeReduced()||typeof node.animate!=='function')return;try{return node.animate(frames,{duration:220,easing:'ease-out',...options});}catch{}}
+function lifeAward(id){lifeAwardPending={id,level:state.progress[id].cleared,total:lifeTotal()};queueMicrotask(lifeCelebrate);}
+function lifeCelebrate(){const award=lifeAwardPending;if(!award)return;lifeAwardPending=null;if(state.view!==award.id)return;lifeSync();const stage=lifeStage();if(!stage)return;
+root.querySelector('[data-life-toast]')?.remove();clearTimeout(lifeToastTimer);const toast=document.createElement('div');toast.className='ql-toast';toast.dataset.lifeToast='';toast.setAttribute('role','status');toast.innerHTML='<span class="ql-toast-star" aria-hidden="true">✦</span><span>'+lifeStories[award.id][award.level]+'<small>'+award.total+' / 75 огней · '+(award.total===75?'Праздник начинается!':award.level===3?'Место ожило!':'Следующий уровень открыт')+'</small></span>';stage.appendChild(toast);lifeAnimate(toast,[{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}]);
+const effect=document.createElement('div');effect.className='ql-burst';effect.setAttribute('aria-hidden','true');for(let i=0;i<12;i++){const dot=document.createElement('i');dot.style.setProperty('--ql-x',Math.round(Math.cos(i*Math.PI/6)*75)+'px');dot.style.setProperty('--ql-y',Math.round(Math.sin(i*Math.PI/6)*58)+'px');dot.style.setProperty('--ql-delay',(i%3)*25+'ms');effect.appendChild(dot);}stage.appendChild(effect);effect.addEventListener('animationend',()=>effect.remove(),{once:true});if(lifeReduced())effect.remove();
+lifeAnimate(q(award.level<3?'[data-level-next]':'[data-home]'),[{boxShadow:'0 0 0 0 #f0ce7877'},{boxShadow:'0 0 0 9px #f0ce7800'}],{duration:700});lifeToastTimer=setTimeout(()=>{toast.remove();effect.remove();},4200);
+}
+function lifeSync(){root.dataset.lifeLights=lifeTotal();let count=q('[data-life-count]');if(!count){count=document.createElement('span');count.className='ql-count';count.dataset.lifeCount='';q('[data-heading]').after(count);}count.hidden=state.view!=='map';count.textContent='✦ '+lifeTotal()+'/75';count.setAttribute('aria-label','Зажжено огней: '+lifeTotal()+' из 75');
+const key=state.view+':'+(state.progress[state.view]?.level??'');if(key!==lifeView){lifeView=key;root.querySelector('[data-life-toast]')?.remove();all('.ql-burst').forEach(e=>e.remove());clearTimeout(lifeToastTimer);lifeAnimate(lifeStage(),[{opacity:.6,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:190});}
+if(state.view==='map'){const next=lifeNext();all('[data-enter]').forEach(b=>{b.classList.toggle('ql-next',b.dataset.enter===next);b.setAttribute('aria-label',titles[b.dataset.enter]+', пройдено '+state.progress[b.dataset.enter].cleared+' из 3'+(b.dataset.enter===next?', следующий адрес почтальона':''));});if(!hintRequested){q('[data-guide]').hidden=false;q('[data-guide]').textContent=lifeTotal()===75?'Все огни горят. Квартал празднует!':lifeChapter()+'. '+(lifeTotal()?'Почтальон ждёт у «'+titles[next]+'».':'Решай задачи — зажигай огни. Начни с кафе.');}lifeMapResidents();}}
+function lifeMapDecorate(ctx,x,y,id){const n=state.progress[id].cleared;ctx.fillStyle='rgba(10,23,31,'+(n===3?.02:n===0?.20:.10)+')';ctx.fillRect(x,y,186,114);for(let k=0;k<3;k++){const px=x+144+k*11,py=y+12;ctx.fillStyle='#263e3a';ctx.fillRect(px+2,py+6,2,7);ctx.fillStyle=k<n?'#f3d58b':'#586f65';ctx.fillRect(px,py,6,7);if(k<n){ctx.fillStyle='#fff0b1';ctx.fillRect(px+1,py+1,2,2);ctx.fillStyle='#f0d48922';ctx.fillRect(px-3,py-3,12,13);}}if(n===3){ctx.fillStyle='#d1b982';ctx.fillRect(x+149,y+78,7,7);ctx.fillStyle='#8cbbb0';ctx.fillRect(x+148,y+85,9,10);ctx.fillStyle='#b5a17b';ctx.fillRect(x+149,y+95,3,5);ctx.fillRect(x+154,y+95,3,5);}}
+function lifeMapResidents(){const map=q('[data-view=map]');map.querySelector('[data-life-residents]')?.remove();const ids=Object.keys(levels),next=lifeNext(),i=next?ids.indexOf(next):0,canvas=q('[data-map-art]'),columns=canvas.width/192,rows=canvas.height/120;const layer=document.createElement('div');layer.className='ql-residents';layer.dataset.lifeResidents='';layer.setAttribute('aria-hidden','true');for(let k=0;k<3;k++){const tile=(i+k*7)%ids.length,node=document.createElement('i');node.className='ql-resident '+(k===0?'ql-postman':k===1?'ql-cat':'ql-bird');node.style.left=((tile%columns+.82)/columns*100)+'%';node.style.top=((Math.floor(tile/columns)+.64)/rows*100)+'%';node.style.setProperty('--ql-walk',k===0?'7px':'4px');layer.appendChild(node);}map.appendChild(layer);}
+function lifeMotion(node,positions,w){if(!node||positions.length<2)return;const cell=node.closest('.ad-cell,.sk-cell'),size=cell?.getBoundingClientRect();if(!size)return;const gridStyle=getComputedStyle(cell.parentElement),gapX=parseFloat(gridStyle.columnGap)||0,gapY=parseFloat(gridStyle.rowGap)||0;const last=positions.at(-1),frames=positions.map(p=>({transform:'translate('+((p%w-last%w)*(size.width+gapX))+'px,'+((Math.floor(p/w)-Math.floor(last/w))*(size.height+gapY))+'px)'}));lifeAnimate(node,frames,{duration:Math.min(950,Math.max(180,(positions.length-1)*110)),easing:'linear'});}
+const lifeClicks=new WeakMap();
+root.addEventListener('click',e=>{const button=e.target.closest('button');if(!button||button.disabled||state.view==='map')return;const id=state.view,before=state[id]?clone(state[id]):null,level=state.progress[id].level;const action=button.dataset.adAction;
+if(button.matches('[data-home],[data-level-next],[data-hint-toggle],[data-undo],[data-extra-reset],[data-reset],[data-again]'))return;
+lifeClicks.set(e,{id,before,level,action});},true);
+function installLifeFeedback(){root.addEventListener('click',e=>{const snapshot=lifeClicks.get(e);if(!snapshot)return;const {id,before,level,action}=snapshot;
+queueMicrotask(()=>{if(state.view!==id||state.progress[id].level!==level||!before)return;const after=state[id];if(!after)return;
+if((id==='repair'||id==='program')&&action==='run')lifeMotion(q('[data-extra] .ad-person'),after.trace,adBoard(cfg(id)).w);
+else if(id==='ice'&&before.pos!==after.pos)lifeMotion(q('[data-extra] .ad-person'),[before.pos,after.pos],adBoard(cfg(id)).w);
+else if(id==='twins'&&action==='direction')all('.ad-worlds .ad-person').forEach((node,i)=>lifeMotion(node,[before.positions[i],after.positions[i]],adBoard(cfg(id)).w));
+else if(id==='sokoban'&&before.player!==after.player){const c=warehouseLayout(),path=warehouseReach(before.player,before.boxes,c).get(after.player)||[after.player];lifeMotion(q('.sk-person'),[before.player,...path],c.w);const from=before.boxes.find(p=>!after.boxes.includes(p)),to=after.boxes.find(p=>!before.boxes.includes(p));if(from!==undefined&&to!==undefined)lifeMotion(q('[data-cell="'+to+'"] .sk-crate'),[from,to],c.w);}
+const meaningful=a=>JSON.stringify(a,(k,v)=>['message','revision','selected','person','answer','choice','project','reason'].includes(k)?undefined:v);const changed=meaningful(before)!==meaningful(after);if(!changed)return;
+const stage=lifeStage();if(after.failed&&!before.failed||(id==='program'||id==='repair')&&action==='run'&&after.error!==null)lifeAnimate(stage,[{transform:'translateX(0)'},{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:190});else if(!after.solved)lifeAnimate(stage,[{borderColor:'#a7d5b5'},{borderColor:'#405670'}],{duration:280});
+if(id==='lights'||id==='experiment'||id==='creator')all('.qx-lamp.on,.ad-lamp.on,.ad-lamps').slice(0,16).forEach(node=>lifeAnimate(node,[{filter:'brightness(1.4)'},{filter:'brightness(1)'}],{duration:240}));
+if(id==='trade'&&action==='recipe')lifeAnimate(q('[data-extra] .ad-card'),[{transform:'scale(.96)',filter:'brightness(1.4)'},{transform:'scale(1)',filter:'brightness(1)'}],{duration:230});
+});});}

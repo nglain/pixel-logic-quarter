@@ -231,6 +231,75 @@
 }
 @media(max-width:600px){#logic-quarter .qt-header{gap:6px}#logic-quarter .qt-level-name{display:none}#logic-quarter:not([data-place="map"]) .qt-catalog-link{display:none}#logic-quarter [data-undo]{padding:4px;min-width:29px}}
 
+#logic-quarter .ad-scene{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:20px;min-height:300px;box-sizing:border-box;background:repeating-linear-gradient(0deg,transparent 0 31px,#ffffff04 32px),#263e3d;position:relative}
+#logic-quarter .ad-stack{display:flex;flex-direction:column;gap:10px;width:min(100%,420px)}
+#logic-quarter .ad-row{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+#logic-quarter .ad-card{background:#304c48;border:2px solid #6e9680;padding:12px;color:#f3e5bc;box-shadow:4px 4px #142e2e;line-height:1.5}
+#logic-quarter .ad-scene button{border-radius:0;min-height:42px;white-space:normal}
+#logic-quarter [data-ad-action][aria-pressed=true]{outline:2px solid #f4cc79;outline-offset:2px;background:#5b6550}
+#logic-quarter .ad-person{display:inline-block;width:20px;height:27px;margin:0 6px;position:relative;background:linear-gradient(#f0cd99 0 35%,#7ca7a0 35% 76%,transparent 76%);box-shadow:inset 5px 0 #203e3d}
+#logic-quarter .ad-person:after{content:'';position:absolute;bottom:0;left:4px;width:5px;height:8px;background:#d6bc8c;box-shadow:9px 0 #d6bc8c}
+#logic-quarter .ad-board{display:grid;gap:2px;width:min(100%,300px);aspect-ratio:1;background:#183030;padding:5px;border:3px solid #6e8e7a;box-sizing:border-box}
+#logic-quarter .ad-board .ad-cell{display:flex;align-items:center;justify-content:center;background:#668b80;min-width:0;min-height:0;position:relative;color:#ffe099;font-size:22px;padding:0;aspect-ratio:1;border:0}
+#logic-quarter .ad-board .ad-wall{background:#233b3c;box-shadow:inset 0 4px #395554}
+#logic-quarter .ad-board.ad-ice .ad-cell:not(.ad-wall){background:#a5c7c7;color:#715524}
+#logic-quarter .ad-board .ad-trace{box-shadow:inset 0 0 0 4px #c6b873}
+#logic-quarter .ad-board .ad-lamp{background:#263b41;box-shadow:inset 0 0 0 5px #1c3035}
+#logic-quarter .ad-board .ad-lamp.on{background:#f1ce75;box-shadow:inset 0 0 0 5px #b19a61;color:#263b41}
+#logic-quarter .ad-worlds{display:flex;gap:10px;width:100%;max-width:500px;align-items:center}
+#logic-quarter .ad-worlds .ad-board{width:50%}
+#logic-quarter .ad-graph{width:100%;height:160px;overflow:visible;image-rendering:pixelated}
+#logic-quarter .ad-graph line{stroke:#d6bc8c;stroke-width:4;stroke-linecap:square}
+#logic-quarter .ad-graph circle{fill:#83ae9d;stroke:#304641;stroke-width:4}
+#logic-quarter .ad-blueprint{width:28%;max-width:150px;padding:8px;box-sizing:border-box}
+#logic-quarter .ad-blueprint svg{height:110px}
+#logic-quarter .ad-lamps{font-size:32px;letter-spacing:8px;color:#f4d27f}
+#logic-quarter .ad-off{color:#607e75}
+#logic-quarter .ad-room{width:min(100%,420px);min-height:240px;border:8px solid #6f7d64;box-shadow:inset 0 -25px #6b624c;background:#304f53;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-around;gap:18px}
+#logic-quarter .ad-window{display:inline-block;width:24px;height:32px;background:linear-gradient(90deg,transparent 44%,#8b9f8c 44% 55%,transparent 55%),linear-gradient(transparent 44%,#8b9f8c 44% 55%,transparent 55%),#b1ccd0;border:4px solid #7e8c78;margin:4px}
+#logic-quarter .ad-clock{width:100px;min-height:125px;background:#d6bd83!important;color:#263c3a!important;border:6px solid #977d57!important;clip-path:polygon(0 0,100% 0,100% 12%,65% 50%,100% 88%,100% 100%,0 100%,0 88%,35% 50%,0 12%);padding:15px 5px!important}
+#logic-quarter .ad-clock b{display:block;font-size:25px}
+#logic-quarter .ad-plan{width:100%;max-width:420px;height:240px;position:relative;background:#294c4c}
+#logic-quarter .ad-plan svg{position:absolute;inset:0;width:100%;height:100%}
+#logic-quarter .ad-plan button{position:absolute;transform:translate(-50%,-50%);min-width:42px;z-index:1}
+#logic-quarter .ad-plan .ad-slot{min-width:30px;min-height:30px;background:#45675e;font-size:12px;padding:3px}
+#logic-quarter .ad-share{width:100%;box-sizing:border-box;min-height:70px;background:#1d3436;color:#e9dbaa;border:1px solid #71937f;font:12px monospace;padding:8px}
+#logic-quarter .ad-caption{font-size:12px;color:#d0d9be;line-height:1.5;text-align:center}
+#logic-quarter .ad-command{font-size:22px;min-width:40px}
+#logic-quarter .ad-command.ad-error{border-color:#ec9b7c;background:#684b43}
+@media(max-width:520px){#logic-quarter .ad-scene{padding:12px;gap:10px;min-height:260px}#logic-quarter [data-extra].ad-layout{display:flex;flex-direction:column}#logic-quarter .ad-layout .qt-panel{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:10px}#logic-quarter .ad-layout .qt-status{width:100%;min-height:0}#logic-quarter .ad-layout .qt-stage{min-height:260px;width:100%}#logic-quarter .ad-blueprint{padding:4px}#logic-quarter .ad-blueprint svg{height:80px}#logic-quarter .ad-caption{font-size:11px}}
+#logic-quarter .qt-place span{white-space:nowrap;font-size:12px;padding:3px 5px}
+#logic-quarter .qt-place.done span:after{content:none}
+#logic-quarter .qt-place.done:after{content:'★';position:absolute;right:2px;top:2px;color:var(--qgold);font-size:12px;background:#203b36;padding:0 2px}
+@media(max-width:600px){#logic-quarter .qt-map .qt-place span{font-size:9.5px;padding:2px 3px}}
+@media(max-width:520px){#logic-quarter .ad-layout .qt-panel{width:100%}}
+
+#logic-quarter .ql-count{color:var(--qgold);font-size:11px;white-space:nowrap}
+#logic-quarter .qt-place.ql-next:before{content:'';position:absolute;inset:0;border:1px dashed #d9c38388;pointer-events:none}
+#logic-quarter .qt-place.ql-next span{color:var(--qgold)}
+#logic-quarter .ql-residents{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#logic-quarter .ql-resident{position:absolute;width:10px;height:15px;image-rendering:pixelated;animation:ql-walk 1.8s steps(4) infinite alternate;pointer-events:none;background:linear-gradient(transparent 0 15%,#e5c38a 15% 43%,#98bcae 43% 78%,transparent 78%);filter:drop-shadow(2px 2px 0 #1b302d)}
+#logic-quarter .ql-resident:after{content:'';position:absolute;left:0;top:12px;width:3px;height:3px;background:#d5b680;box-shadow:7px 0 #d5b680}
+#logic-quarter .ql-postman:before{content:'';position:absolute;width:12px;height:3px;top:0;left:-1px;background:#d4ab65;box-shadow:7px 8px 0 0 #eddaaa}
+#logic-quarter .ql-cat{height:7px;width:12px;background:#c5a57a;animation-duration:2.8s}
+#logic-quarter .ql-cat:before{content:'';position:absolute;top:-3px;right:0;width:3px;height:3px;background:#d5b48b;box-shadow:-5px 0 #d5b48b,-12px 6px #d5b48b}
+#logic-quarter .ql-cat:after{top:6px}
+#logic-quarter .ql-bird{width:7px;height:4px;background:#c5d6c5;animation-duration:3.2s}
+#logic-quarter .ql-bird:before{content:'';position:absolute;left:2px;top:-2px;width:2px;height:7px;background:#799e95}
+#logic-quarter .ql-bird:after{display:none}
+#logic-quarter .ql-toast{position:absolute;top:8px;left:8px;right:8px;max-width:360px;display:flex;align-items:center;gap:9px;background:#1c3936f5;color:#f2e6be;border:1px solid #9db792;padding:9px 11px;font-size:12px;line-height:1.5;z-index:4;pointer-events:none;box-shadow:3px 3px #172d2d}
+#logic-quarter .ql-toast small{display:block;font-size:11px;color:#b7d2b8}
+#logic-quarter .ql-toast-star{font-size:28px;color:#f1ce7e}
+#logic-quarter .ql-burst{position:absolute;left:50%;top:42%;width:0;height:0;pointer-events:none;z-index:3}
+#logic-quarter .ql-burst i{position:absolute;width:4px;height:4px;background:#efd28b;animation:ql-spark 650ms steps(9) var(--ql-delay) both}
+@keyframes ql-walk{from{transform:translateX(0)}to{transform:translateX(var(--ql-walk,6px))}}
+@keyframes ql-spark{0%{opacity:1;transform:translate(0,0) scale(1.5)}100%{opacity:0;transform:translate(var(--ql-x),var(--ql-y)) scale(.5)}}
+@media(max-width:600px){#logic-quarter .ql-toast{font-size:11px;padding:7px;max-width:300px}#logic-quarter .ql-resident{transform:scale(.8)}#logic-quarter .ql-count{font-size:11px}}
+@media(prefers-reduced-motion:reduce){#logic-quarter .ql-resident{animation:none}#logic-quarter .ql-burst{display:none}}
+#logic-quarter .qx-lamps{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;padding:5%;grid-auto-rows:minmax(0,1fr)}
+#logic-quarter .qx-lamp{aspect-ratio:auto;min-height:0}
+#logic-quarter .ad-person,#logic-quarter .sk-person,#logic-quarter .sk-crate{z-index:1}
+
 </style>
 <script>
 (()=>{
@@ -254,27 +323,27 @@ bridge:[{times:[1,2],limit:2,name:'Вдвоём'},{times:[1,2,5],limit:8,name:'�
 lights:[{n:2,press:[0],name:'Четыре лампы'},{n:3,press:[0,4,8],name:'Девять ламп'},{n:4,press:[0,3,5,10,12],name:'Шестнадцать ламп'}]
 });
 function toggleLights(cells,n,i){for(const j of [i,i-n,i+n,...(i%n?[i-1]:[]),...(i%n<n-1?[i+1]:[])])if(j>=0&&j<cells.length)cells[j]=1-cells[j];}
-function newExtra(id,level=0){const c=levels[id][level];if(id==='sokoban')return newWarehouse(level);const base={solved:false,failed:false,message:'',moves:0};
+function newExtra(id,level=0){const c=levels[id][level];if(adventureIds.includes(id))return newAdventure(id,level);if(id==='sokoban')return newWarehouse(level);const base={solved:false,failed:false,message:'',moves:0};
 if(id==='hanoi')return {...base,rods:[Array.from({length:c.disks},(_,i)=>c.disks-i),[],[]],selected:null};
 if(id==='jugs')return {...base,amounts:[0,0],selected:0};
 if(id==='bridge')return {...base,sides:c.times.map(()=>0),torch:0,selected:[],elapsed:0};
 const cells=Array(c.n*c.n).fill(0);for(const i of c.press)toggleLights(cells,c.n,i);return {...base,cells};}
-function extraValid(s){return extraIds.every(id=>{const p=s.progress[id],a=s[id];if(!p||!a||!Number.isInteger(p.level)||p.level<0||p.level>2||!Number.isInteger(p.cleared)||p.cleared<p.level||p.cleared>3)return false;const c=levels[id][p.level];if(id==='sokoban')return warehouseValid(a,p.level);
+function extraValid(s){return extraIds.every(id=>{const p=s.progress[id],a=s[id];if(!p||!a||!Number.isInteger(p.level)||p.level<0||p.level>2||!Number.isInteger(p.cleared)||p.cleared<p.level||p.cleared>3)return false;const c=levels[id][p.level];if(adventureIds.includes(id))return adventureValid(a,id,p.level);if(id==='sokoban')return warehouseValid(a,p.level);
 if(id==='hanoi')return a.rods?.length===3&&a.rods.every(r=>Array.isArray(r)&&r.every((x,i)=>Number.isInteger(x)&&x>=1&&x<=c.disks&&(i===0||r[i-1]>x)))&&a.rods.flat().length===c.disks&&new Set(a.rods.flat()).size===c.disks&&[null,0,1,2].includes(a.selected);
 if(id==='jugs')return a.amounts?.length===2&&a.amounts.every((x,i)=>Number.isInteger(x)&&x>=0&&x<=c.caps[i])&&[0,1].includes(a.selected);
 if(id==='bridge')return a.sides?.length===c.times.length&&a.sides.every(x=>x===0||x===1)&&[0,1].includes(a.torch)&&Array.isArray(a.selected)&&a.selected.length<=2&&a.selected.every(i=>Number.isInteger(i)&&i>=0&&i<c.times.length)&&Number.isFinite(a.elapsed)&&a.elapsed>=0;
 return a.cells?.length===c.n*c.n&&a.cells.every(x=>x===0||x===1);});}
-function extraGuide(id){if(id==='sokoban')return 'Поставь ящики на золотые метки. Нажми пол, чтобы подойти, и соседний ящик, чтобы толкнуть. Тянуть нельзя; ↶ отменяет ход.';const c=cfg(id);return id==='hanoi'?`Перенеси ${c.disks} диска на правую стойку. Нажми стойку с диском, затем стойку назначения. Большой диск нельзя класть на маленький.`:id==='jugs'?`Получи ровно ${c.target} л в одном кувшине. Объёмы: ${c.caps.join(' и ')} л. Выбери кувшин, затем наполни, опустоши или перелей в другой до полного.`:id==='bridge'?`Переведи всех через мост за ${c.limit} мин. Выбери одного или двух на берегу с фонарём, затем «Идти». Время перехода — скорость медленного. Фонарь нужно переносить обратно.`:'Погаси все лампы. Нажатие переключает саму лампу и её соседей сверху, снизу, слева и справа. По диагонали лампы не меняются.';}
+function extraGuide(id){if(adventureIds.includes(id))return adventures[id].goal+' '+adventures[id].controls+' '+adventures[id].rules.join(' ');if(id==='sokoban')return 'Поставь ящики на золотые метки. Нажми пол, чтобы подойти, и соседний ящик, чтобы толкнуть. Тянуть нельзя; ↶ отменяет ход.';const c=cfg(id);return id==='hanoi'?`Перенеси ${c.disks} диска на правую стойку. Нажми стойку с диском, затем стойку назначения. Большой диск нельзя класть на маленький.`:id==='jugs'?`Получи ровно ${c.target} л в одном кувшине. Объёмы: ${c.caps.join(' и ')} л. Выбери кувшин, затем наполни, опустоши или перелей в другой до полного.`:id==='bridge'?`Переведи всех через мост за ${c.limit} мин. Выбери одного или двух на берегу с фонарём, затем «Идти». Время перехода — скорость медленного. Фонарь нужно переносить обратно.`:'Погаси все лампы. Нажатие переключает саму лампу и её соседей сверху, снизу, слева и справа. По диагонали лампы не меняются.';}
 function findPath(initial,goal,neighbors){const queue=[[initial,[]]],seen=new Set([JSON.stringify(initial)]);for(let head=0;head<queue.length;head++){const [s,path]=queue[head];if(goal(s))return path;for(const [next,action] of neighbors(s)){const key=JSON.stringify(next);if(!seen.has(key)){seen.add(key);queue.push([next,[...path,action]]);}}}return [];}
 function hanoiPath(rods,n){return findPath(rods,r=>r[2].length===n,r=>{const out=[];for(let from=0;from<3;from++)for(let to=0;to<3;to++)if(from!==to&&r[from].length&&(!r[to].length||r[from].at(-1)<r[to].at(-1))){const next=clone(r);next[to].push(next[from].pop());out.push([next,{from,to}]);}return out;});}
 function jugPath(amounts,c){return findPath(amounts,a=>a.includes(c.target),a=>{const out=[];for(let from=0;from<2;from++)for(const action of ['fill','empty','pour']){const next=a.slice(),to=1-from;if(action==='fill')next[from]=c.caps[from];if(action==='empty')next[from]=0;if(action==='pour'){const n=Math.min(next[from],c.caps[to]-next[to]);next[from]-=n;next[to]+=n;}if(next.some((x,i)=>x!==a[i]))out.push([next,{from,action}]);}return out;});}
-function extraTutorial(id){const s=state[id],c=cfg(id);if(id==='sokoban')return warehouseHint();
+function extraTutorial(id){if(adventureIds.includes(id))return adventureHint();const s=state[id],c=cfg(id);if(id==='sokoban')return warehouseHint();
 if(id==='hanoi'){const step=hanoiPath(s.rods,c.disks)[0];if(!step)return null;if(s.selected===null)return {target:`[data-rod="${step.from}"]`,text:'Перенеси башню направо. Нажми подсвеченную стойку, чтобы взять верхний диск.'};if(s.selected!==step.from)return {target:`[data-rod="${s.selected}"]`,text:'Нажми выбранную стойку ещё раз, чтобы отпустить диск.'};return {target:`[data-rod="${step.to}"]`,text:'Теперь нажми подсвеченную стойку — диск переместится на неё.'};}
 if(id==='jugs'){const step=jugPath(s.amounts,c)[0];if(!step)return null;if(s.selected!==step.from)return {target:`[data-jug="${step.from}"]`,text:`Нужно получить ${c.target} л. Выбери кувшин ${c.caps[step.from]} л.`};return {target:`[data-jug-action="${step.action}"]`,text:step.action==='fill'?`Наполни выбранный кувшин до ${c.caps[step.from]} л.`:step.action==='empty'?'Вылей воду из выбранного кувшина.':'Перелей воду в другой кувшин. Когда он заполнится, лишняя вода останется в первом.'};}
 if(id==='bridge'){const i=[0,1].find(x=>!s.selected.includes(x));return i===undefined?{target:'[data-bridge-cross]',text:'Оба выбраны. Нажми «Идти»: вместе они пройдут за 2 минуты.'}:{target:`[data-person="${i}"]`,text:s.selected.length?'Выбери второго: по мосту можно идти вдвоём.':'Переведи обоих за 2 минуты. Нажми первого путешественника.'};}
 return {target:'[data-lamp="0"]',text:'Погаси все лампы. Нажми верхнюю левую: переключатся она сама и соседние лампы.'};}
 function extraMap(){rects(q('[data-map-art]'),r=>{r(0,0,384,240,'#294b40');for(let i=0;i<60;i++)r((i*97)%384,(i*43)%240,3,2,'#3b624b');r(0,114,384,15,'#b4a17c');r(183,0,17,240,'#b4a17c');building(r,52,24,83,'#917a80','#bda99a');r(61,80,64,4,'#d0b47c');for(let i=0;i<3;i++)r(73+i*20,45,3,37,'#f0d89b');r(62,74,25,5,'#90bab0');r(65,68,19,5,'#dbad74');r(69,62,11,5,'#a6b9d1');building(r,247,24,83,'#688f98','#abc6c1');r(260,52,19,28,'#264456');r(290,45,24,35,'#31576c');r(262,63,15,15,'#6eafc5');r(292,55,20,23,'#82bfd0');r(40,145,107,62,'#326f88');r(42,146,17,61,'#709154');r(130,146,17,61,'#709154');r(58,173,72,8,'#b99563');for(let i=0;i<7;i++)r(58+i*11,173,2,8,'#6e6550');r(57,164,3,10,'#ebcf7b');r(54,159,9,6,'#ffe3a0');building(r,247,145,83,'#6c7c91','#adbcbb');for(let i=0;i<4;i++){r(265+i%2*22,170+Math.floor(i/2)*16,16,12,i===2?'#263a50':'#f5d177');r(269+i%2*22,172+Math.floor(i/2)*16,4,3,'#fff0ab');}});}
-function extraRender(){const id=state.view,s=state[id],c=cfg(id),closed=s.solved||s.failed;
+function extraRender(){q('[data-extra]').classList.remove('ad-layout');if(adventureIds.includes(state.view)){adventureRender();return;}const id=state.view,s=state[id],c=cfg(id),closed=s.solved||s.failed;
 let art='',controls='';q('[data-extra]').classList.toggle('qt-warehouse-layout',id==='sokoban');
 if(id==='sokoban'){art=warehouseArt();controls='<span class="qt-small">Целей: '+s.boxes.filter(p=>warehouseLayout().goals.has(p)).length+' / '+s.boxes.length+'</span><span class="qt-small">Ходов: '+s.moves+'</span><span class="qt-small">Толчков: '+s.pushes+'</span>';}
 if(id==='hanoi'){art=`<div class="qx-rods">${s.rods.map((rod,i)=>`<button class="qx-rod" data-rod="${i}" aria-label="Стойка ${i+1}, диски ${rod.join(',')||'нет'}" aria-pressed="${s.selected===i}" ${closed?'disabled':''}><span class="qx-pole"></span>${rod.map((d,k)=>`<span class="qx-disk" style="width:${24+d*14}%;bottom:${8+k*12}%;background:${['','#9bcab3','#edc180','#8faaca','#c598ae'][d]}"></span>`).join('')}<span class="qx-rod-name">${i===2?'Цель':'Ⅰ'.repeat(i+1)}</span></button>`).join('')}</div>`;controls=`<span class="qt-small">Ходов: ${s.moves}</span>`;}
@@ -286,6 +355,7 @@ if(id==='bridge')rects(q('[data-bridge-art]'),r=>{r(0,0,288,224,'#24384c');r(77,
 }
 function extraAction(b){const id=state.view;if(!extraIds.includes(id))return false;const s=state[id],c=cfg(id);
 if(b.hasAttribute('data-extra-reset')){clearUndo(id);state[id]=newExtra(id,state.progress[id].level);render();persist();return true;}
+if(adventureIds.includes(id))return adventureAction(b);
 if(s.solved||s.failed)return false;
 let handled=false;if(b.hasAttribute('data-cell')){handled=true;warehouseClick(Number(b.dataset.cell));}
 if(b.hasAttribute('data-rod')){handled=true;const to=Number(b.dataset.rod);if(s.selected===null){if(s.rods[to].length)s.selected=to;else s.message='Эта стойка пуста.';}else if(s.selected===to)s.selected=null;else{const disk=s.rods[s.selected].at(-1);if(s.rods[to].length&&s.rods[to].at(-1)<disk)s.message='Большой диск нельзя класть на маленький.';else{recordUndo(id);s.rods[to].push(s.rods[s.selected].pop());s.selected=null;s.moves++;s.message='';s.solved=s.rods[2].length===c.disks;}}}
@@ -338,16 +408,1525 @@ function warehouseClick(to){const s=state.sokoban,c=warehouseLayout();if(s.solve
 }else{const path=warehouseReach(s.player,s.boxes,c).get(to);if(!path){s.message='Сюда нет свободного пути.';return false;}if(!path.length)return false;recordUndo('sokoban');s.player=to;s.moves+=path.length;s.message='';}
 s.solved=s.boxes.every(p=>c.goals.has(p));return true;}
 
+const adventures={
+  "detective": {
+    "title": "Детективное бюро",
+    "map": "Детектив",
+    "group": "deduction",
+    "summary": "Найди посетителя по уликам и укажи доказательства.",
+    "goal": "Выбрать персонажа и набор осмотренных улик, который однозначно его определяет.",
+    "rules": [
+      "Все сведения на карточках персонажей верны.",
+      "Улику сначала нужно осмотреть, затем включить в доказательство.",
+      "Правильного имени без достаточного доказательства недостаточно."
+    ],
+    "controls": "Осматривай улики, включай нужные в доказательство, выбери персонажа и проверь.",
+    "levels": [
+      {
+        "name": "Одна улика",
+        "people": [
+          [
+            "Лиса",
+            "красные ботинки · зонт"
+          ],
+          [
+            "Бобр",
+            "синие ботинки · фонарь"
+          ],
+          [
+            "Сова",
+            "синие ботинки · зонт"
+          ]
+        ],
+        "clues": [
+          {
+            "title": "Фонарь",
+            "text": "Посетитель оставил свой фонарь.",
+            "allows": [
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Пересечение улик",
+        "people": [
+          [
+            "Лиса",
+            "красные ботинки · зонт"
+          ],
+          [
+            "Бобр",
+            "синие ботинки · фонарь"
+          ],
+          [
+            "Сова",
+            "синие ботинки · зонт"
+          ]
+        ],
+        "clues": [
+          {
+            "title": "Следы",
+            "text": "У посетителя были синие ботинки.",
+            "allows": [
+              1,
+              2
+            ]
+          },
+          {
+            "title": "Зонт",
+            "text": "Посетитель принёс зонт.",
+            "allows": [
+              0,
+              2
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Полное доказательство",
+        "people": [
+          [
+            "Лиса",
+            "красные ботинки · зонт"
+          ],
+          [
+            "Бобр",
+            "синие ботинки · фонарь"
+          ],
+          [
+            "Сова",
+            "синие ботинки · зонт"
+          ],
+          [
+            "Крот",
+            "красные ботинки · фонарь"
+          ]
+        ],
+        "clues": [
+          {
+            "title": "Следы",
+            "text": "След оставлен синим ботинком.",
+            "allows": [
+              1,
+              2
+            ]
+          },
+          {
+            "title": "Фонарь",
+            "text": "Посетитель пользовался своим фонарём.",
+            "allows": [
+              1,
+              3
+            ]
+          },
+          {
+            "title": "Время",
+            "text": "Крот был в другом месте в это время.",
+            "allows": [
+              0,
+              1,
+              2
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "experiment": {
+    "title": "Лаборатория рычагов",
+    "map": "Рычаги",
+    "group": "systems",
+    "summary": "Исследуй рычаги и получи заданное состояние механизма.",
+    "goal": "Зажечь ровно показанный узор ламп и проверить результат.",
+    "rules": [
+      "Рычаг переключает одну или несколько ламп.",
+      "Связи выясняются экспериментом.",
+      "Изменения видны сразу; проверка цели отдельная."
+    ],
+    "controls": "Нажимай рычаги, наблюдай лампы и сравнивай с образцом.",
+    "levels": [
+      {
+        "name": "Два рычага",
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "target": [
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Связанные выходы",
+        "matrix": [
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "target": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "Зависимый механизм",
+        "matrix": [
+          [
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            1
+          ]
+        ],
+        "target": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  "prediction": {
+    "title": "Предсказание",
+    "map": "Прогноз",
+    "group": "connections",
+    "summary": "Сначала укажи выход луча, затем запусти его и проверь себя.",
+    "goal": "Правильно предсказать сторону выхода луча по видимым зеркалам.",
+    "rules": [
+      "Луч движется прямо, зеркало отражает его под прямым углом.",
+      "Все зеркала видны до запуска.",
+      "Выход нужно выбрать до проверки."
+    ],
+    "controls": "Выбери сторону выхода и нажми «Запустить».",
+    "levels": [
+      {
+        "name": "Одно отражение",
+        "w": 5,
+        "h": 5,
+        "start": 10,
+        "dir": 1,
+        "mirrors": [
+          [
+            12,
+            "/"
+          ]
+        ]
+      },
+      {
+        "name": "Два отражения",
+        "w": 5,
+        "h": 5,
+        "start": 10,
+        "dir": 1,
+        "mirrors": [
+          [
+            12,
+            "\\"
+          ],
+          [
+            22,
+            "/"
+          ]
+        ]
+      },
+      {
+        "name": "Поворот у края",
+        "w": 5,
+        "h": 5,
+        "start": 10,
+        "dir": 1,
+        "mirrors": [
+          [
+            11,
+            "/"
+          ],
+          [
+            1,
+            "\\"
+          ]
+        ]
+      }
+    ]
+  },
+  "repair": {
+    "title": "Ремонт программы",
+    "map": "Ремонт",
+    "group": "systems",
+    "summary": "Исправь одну команду в готовой программе робота.",
+    "goal": "Довести робота до звезды, изменив ровно одну позицию программы.",
+    "rules": [
+      "Команда сдвигает робота на одну клетку.",
+      "Стены непроходимы.",
+      "Менять можно одну позицию; её направление можно выбирать несколько раз."
+    ],
+    "controls": "Нажимай команду для смены направления, затем «Запустить».",
+    "levels": [
+      {
+        "name": "Одна ошибка",
+        "board": [
+          "#####",
+          "#@  #",
+          "#   #",
+          "#  .#",
+          "#####"
+        ],
+        "code": [
+          1,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "name": "Ошибка поворота",
+        "board": [
+          "######",
+          "#@   #",
+          "#    #",
+          "#    #",
+          "#   .#",
+          "######"
+        ],
+        "code": [
+          1,
+          1,
+          0,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "name": "Обход стены",
+        "board": [
+          "#######",
+          "#@  # #",
+          "### # #",
+          "#     #",
+          "# ### #",
+          "#    .#",
+          "#######"
+        ],
+        "code": [
+          1,
+          1,
+          2,
+          2,
+          1,
+          3,
+          2,
+          2
+        ]
+      }
+    ]
+  },
+  "program": {
+    "title": "Мастерская роботов",
+    "map": "Робот",
+    "group": "systems",
+    "summary": "Собери короткую программу и проверь маршрут робота.",
+    "goal": "Довести робота до звезды в пределах длины программы.",
+    "rules": [
+      "Команды исполняются по порядку.",
+      "При столкновении выполнение останавливается.",
+      "Каждый запуск начинается со старта."
+    ],
+    "controls": "Добавляй стрелки, удаляй ненужные команды нажатием на них и запускай.",
+    "levels": [
+      {
+        "name": "Четыре команды",
+        "board": [
+          "#####",
+          "#@  #",
+          "#   #",
+          "#  .#",
+          "#####"
+        ],
+        "limit": 4
+      },
+      {
+        "name": "Путь длиннее",
+        "board": [
+          "######",
+          "#@   #",
+          "#    #",
+          "#    #",
+          "#   .#",
+          "######"
+        ],
+        "limit": 6
+      },
+      {
+        "name": "Повороты в коридоре",
+        "board": [
+          "#######",
+          "#@  # #",
+          "### # #",
+          "#     #",
+          "# ### #",
+          "#    .#",
+          "#######"
+        ],
+        "limit": 8
+      }
+    ]
+  },
+  "escape": {
+    "title": "Часовая комната",
+    "map": "Побег",
+    "group": "deduction",
+    "summary": "Найди подсказку, открой ящик и достань ключ от выхода.",
+    "goal": "Открыть дверь найденным в комнате ключом.",
+    "rules": [
+      "Все сведения для кода находятся в комнате.",
+      "Ключ лежит в закрытом ящике.",
+      "Дверь открывается только после получения ключа."
+    ],
+    "controls": "Осматривай предметы, меняй цифры на ящике, затем используй ключ на двери.",
+    "levels": [
+      {
+        "name": "Записка",
+        "digits": 2,
+        "note": "На записке: 2 → 4.",
+        "code": [
+          2,
+          4
+        ],
+        "windows": 1,
+        "lamps": 1
+      },
+      {
+        "name": "Считаем предметы",
+        "digits": 2,
+        "note": "Сначала число окон, потом число ламп.",
+        "code": [
+          3,
+          2
+        ],
+        "windows": 3,
+        "lamps": 2
+      },
+      {
+        "name": "Зеркальная запись",
+        "digits": 3,
+        "note": "На записке: 1 4 2. Прочти её в зеркале справа налево.",
+        "code": [
+          2,
+          4,
+          1
+        ],
+        "windows": 2,
+        "lamps": 2
+      }
+    ]
+  },
+  "clock": {
+    "title": "Часовая мастерская",
+    "map": "Часы",
+    "group": "planning",
+    "summary": "Отмерь точный интервал песочными часами без делений.",
+    "goal": "Начать и закончить замер ровно через целевое число минут.",
+    "rules": [
+      "Время идёт только при нажатии «До события».",
+      "Событие — опустошение ближайших работающих часов.",
+      "Переворот работающих часов меняет остаток на дополнение до полного."
+    ],
+    "controls": "Переворачивай часы, переходи к событию, отмечай начало и конец замера.",
+    "levels": [
+      {
+        "name": "Одна минута",
+        "caps": [
+          2,
+          3
+        ],
+        "target": 1
+      },
+      {
+        "name": "Четыре минуты",
+        "caps": [
+          3,
+          5
+        ],
+        "target": 4
+      },
+      {
+        "name": "Пять минут",
+        "caps": [
+          4,
+          7
+        ],
+        "target": 5
+      }
+    ]
+  },
+  "ice": {
+    "title": "Ледяной пруд",
+    "map": "Лёд",
+    "group": "planning",
+    "summary": "Скользи до препятствия и остановись на звезде.",
+    "goal": "Остановить посылку на целевой клетке.",
+    "rules": [
+      "Посылка скользит до стены.",
+      "Пролететь над звездой недостаточно.",
+      "Направление без движения не расходует ход."
+    ],
+    "controls": "Нажимай стрелки; ↶ возвращает предыдущее положение.",
+    "levels": [
+      {
+        "name": "Два скольжения",
+        "board": [
+          "#####",
+          "#@  #",
+          "#   #",
+          "#   #",
+          "#####"
+        ]
+      },
+      {
+        "name": "Островки льда",
+        "board": [
+          "#######",
+          "#@    #",
+          "#  #  #",
+          "# #   #",
+          "#     #",
+          "#   # #",
+          "#######"
+        ]
+      },
+      {
+        "name": "Путь между стенами",
+        "board": [
+          "#######",
+          "#@ #  #",
+          "#     #",
+          "# # # #",
+          "#     #",
+          "#  #  #",
+          "#######"
+        ]
+      }
+    ]
+  },
+  "twins": {
+    "title": "Зеркальный двор",
+    "map": "Двойники",
+    "group": "systems",
+    "summary": "Управляй двумя героями одной командой.",
+    "goal": "Одновременно поставить обоих героев на их звёзды.",
+    "rules": [
+      "Правый герой зеркально меняет горизонтальное направление.",
+      "Стена останавливает только того, кто в неё упёрся.",
+      "Одна команда действует на оба мира."
+    ],
+    "controls": "Нажимай общие стрелки и наблюдай оба поля.",
+    "levels": [
+      {
+        "name": "Вместе к целям",
+        "board": [
+          "#####",
+          "#   #",
+          "#   #",
+          "#   #",
+          "#####"
+        ],
+        "starts": [
+          6,
+          8
+        ],
+        "route": [
+          1,
+          2
+        ]
+      },
+      {
+        "name": "Одна стена",
+        "board": [
+          "#####",
+          "#   #",
+          "# # #",
+          "#   #",
+          "#####"
+        ],
+        "starts": [
+          6,
+          8
+        ],
+        "route": [
+          2,
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "name": "Разные остановки",
+        "board": [
+          "######",
+          "#    #",
+          "# #  #",
+          "#    #",
+          "#  # #",
+          "######"
+        ],
+        "starts": [
+          7,
+          10
+        ],
+        "route": [
+          2,
+          1,
+          2,
+          1,
+          2,
+          3
+        ]
+      }
+    ]
+  },
+  "observation": {
+    "title": "Комната за окном",
+    "map": "Окно",
+    "group": "deduction",
+    "summary": "Выбери, куда посмотреть, прежде чем назвать скрытую комнату.",
+    "goal": "Однозначно определить комнату в пределах числа осмотров.",
+    "rules": [
+      "Возможные комнаты перечислены заранее.",
+      "Окно открывает один признак и расходует осмотр.",
+      "Ответ засчитывается только при достаточной информации."
+    ],
+    "controls": "Открывай участки сцены, сопоставляй признаки с вариантами и выбирай ответ.",
+    "levels": [
+      {
+        "name": "Один полезный взгляд",
+        "budget": 1,
+        "actual": 1,
+        "models": [
+          [
+            "красная лампа",
+            "один ящик",
+            "дверь открыта"
+          ],
+          [
+            "синяя лампа",
+            "один ящик",
+            "дверь открыта"
+          ]
+        ]
+      },
+      {
+        "name": "Два признака",
+        "budget": 2,
+        "actual": 2,
+        "models": [
+          [
+            "красная лампа",
+            "один ящик",
+            "дверь открыта"
+          ],
+          [
+            "красная лампа",
+            "два ящика",
+            "дверь открыта"
+          ],
+          [
+            "синяя лампа",
+            "один ящик",
+            "дверь открыта"
+          ],
+          [
+            "синяя лампа",
+            "два ящика",
+            "дверь открыта"
+          ]
+        ]
+      },
+      {
+        "name": "Что стоит проверить?",
+        "budget": 2,
+        "actual": 3,
+        "models": [
+          [
+            "красная лампа",
+            "один ящик",
+            "дверь открыта"
+          ],
+          [
+            "красная лампа",
+            "два ящика",
+            "дверь закрыта"
+          ],
+          [
+            "синяя лампа",
+            "один ящик",
+            "дверь закрыта"
+          ],
+          [
+            "синяя лампа",
+            "два ящика",
+            "дверь открыта"
+          ]
+        ]
+      }
+    ]
+  },
+  "information": {
+    "title": "Два свидетеля",
+    "map": "Свидетели",
+    "group": "deduction",
+    "summary": "Объедини сведения людей, каждый из которых видит лишь часть предмета.",
+    "goal": "Определить предмет по ответам свидетелей.",
+    "rules": [
+      "Первый свидетель видит цвет и место, второй — форму.",
+      "Нужно выбирать вопросы, различающие оставшиеся варианты.",
+      "Доступны два вопроса; повторное чтение ответа бесплатно."
+    ],
+    "controls": "Выбери вопросы свидетелям, затем назови предмет.",
+    "levels": [
+      {
+        "name": "Один ответ помогает",
+        "budget": 2,
+        "actual": 1,
+        "models": [
+          [
+            "красный",
+            "круг",
+            "полка"
+          ],
+          [
+            "синий",
+            "квадрат",
+            "полка"
+          ]
+        ]
+      },
+      {
+        "name": "Соединяем знания",
+        "budget": 2,
+        "actual": 2,
+        "models": [
+          [
+            "красный",
+            "круг",
+            "полка"
+          ],
+          [
+            "красный",
+            "квадрат",
+            "полка"
+          ],
+          [
+            "синий",
+            "круг",
+            "полка"
+          ],
+          [
+            "синий",
+            "квадрат",
+            "полка"
+          ]
+        ]
+      },
+      {
+        "name": "Выбираем вопросы",
+        "budget": 2,
+        "actual": 5,
+        "models": [
+          [
+            "красный",
+            "круг",
+            "полка"
+          ],
+          [
+            "красный",
+            "квадрат",
+            "полка"
+          ],
+          [
+            "синий",
+            "круг",
+            "полка"
+          ],
+          [
+            "синий",
+            "квадрат",
+            "полка"
+          ],
+          [
+            "зелёный",
+            "круг",
+            "полка"
+          ],
+          [
+            "зелёный",
+            "квадрат",
+            "полка"
+          ]
+        ]
+      }
+    ]
+  },
+  "trade": {
+    "title": "Лавка обменов",
+    "map": "Обмены",
+    "group": "planning",
+    "summary": "Получи нужную вещь через цепочку обменов.",
+    "goal": "Собрать целевой предмет, сохранив нужные ресурсы.",
+    "rules": [
+      "Обмен расходует указанные предметы целиком.",
+      "При нехватке ресурсов ничего не расходуется.",
+      "Все рецепты открыты, скрытых курсов нет."
+    ],
+    "controls": "Нажимай доступные рецепты. ↶ отменяет обмен.",
+    "levels": [
+      {
+        "name": "Один обмен",
+        "start": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "goal": [
+          1,
+          1
+        ],
+        "recipes": [
+          [
+            [
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "Собрать ключ",
+        "start": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "goal": [
+          3,
+          1
+        ],
+        "recipes": [
+          [
+            [
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              3,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "Смешанный платёж",
+        "start": [
+          3,
+          1,
+          0,
+          0
+        ],
+        "goal": [
+          3,
+          1
+        ],
+        "recipes": [
+          [
+            [
+              2,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              1,
+              0
+            ],
+            [
+              1,
+              0,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              2,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ]
+          ]
+        ]
+      }
+    ]
+  },
+  "timeline": {
+    "title": "Следы событий",
+    "map": "События",
+    "group": "constraints",
+    "summary": "Восстанови порядок событий по найденным связям.",
+    "goal": "Расставить события так, чтобы выполнялись все подсказки.",
+    "rules": [
+      "Можно менять местами две карточки.",
+      "«Раньше» не значит «непосредственно перед».",
+      "Проверка учитывает все условия одновременно."
+    ],
+    "controls": "Нажми две карточки для обмена, затем проверь.",
+    "levels": [
+      {
+        "name": "Причина и следствие",
+        "labels": [
+          "Найти ключ",
+          "Открыть дверь",
+          "Зажечь свет"
+        ],
+        "order": [
+          2,
+          0,
+          1
+        ],
+        "links": [
+          [
+            0,
+            1,
+            "before"
+          ],
+          [
+            1,
+            2,
+            "before"
+          ]
+        ]
+      },
+      {
+        "name": "Четыре события",
+        "labels": [
+          "Получить письмо",
+          "Взять посылку",
+          "Выйти из дома",
+          "Прийти на почту"
+        ],
+        "order": [
+          3,
+          1,
+          0,
+          2
+        ],
+        "links": [
+          [
+            0,
+            1,
+            "before"
+          ],
+          [
+            1,
+            2,
+            "before"
+          ],
+          [
+            2,
+            3,
+            "next"
+          ]
+        ]
+      },
+      {
+        "name": "Точное соседство",
+        "labels": [
+          "Найти записку",
+          "Открыть ящик",
+          "Прочесть код",
+          "Взять ключ",
+          "Открыть выход"
+        ],
+        "order": [
+          4,
+          1,
+          3,
+          0,
+          2
+        ],
+        "links": [
+          [
+            0,
+            2,
+            "before"
+          ],
+          [
+            2,
+            1,
+            "before"
+          ],
+          [
+            1,
+            3,
+            "next"
+          ],
+          [
+            3,
+            4,
+            "before"
+          ]
+        ]
+      }
+    ]
+  },
+  "impossible": {
+    "title": "Бюро проектов",
+    "map": "Проекты",
+    "group": "deduction",
+    "summary": "Найди невыполнимый проект и докажи причину.",
+    "goal": "Выбрать невозможный проект и правильное объяснение.",
+    "rules": [
+      "Условие видно до выбора.",
+      "Нужно назвать и проект, и нарушенное правило.",
+      "Добавлять или удалять линии нельзя."
+    ],
+    "controls": "Выбери чертёж, причину и нажми «Обосновать».",
+    "levels": [
+      {
+        "name": "Разорванная сеть",
+        "kind": "connected",
+        "goal": "Все острова должны быть соединены.",
+        "graphs": [
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "Без пересечений",
+        "kind": "crossing",
+        "goal": "Мосты не должны пересекаться между островами.",
+        "graphs": [
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "Каждый мост один раз",
+        "kind": "euler",
+        "goal": "Нужно пройти каждый мост ровно один раз. Начало и конец могут различаться.",
+        "graphs": [
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              3,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        ]
+      }
+    ]
+  },
+  "tool": {
+    "title": "Одна лестница",
+    "map": "Лестница",
+    "group": "planning",
+    "summary": "Переноси одну лестницу и используй её повторно.",
+    "goal": "Добраться до выхода с одной переносной лестницей.",
+    "rules": [
+      "Обычные дорожки доступны без инструмента.",
+      "Лестница устанавливается через разрыв с любого его конца.",
+      "Забрать её можно только у одного из концов."
+    ],
+    "controls": "Нажми разрыв для установки, место для перехода и «Забрать», чтобы перенести лестницу.",
+    "levels": [
+      {
+        "name": "Один разрыв",
+        "nodes": [
+          [
+            25,
+            55
+          ],
+          [
+            75,
+            55
+          ]
+        ],
+        "roads": [],
+        "slots": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "name": "Сначала подойти",
+        "nodes": [
+          [
+            15,
+            70
+          ],
+          [
+            45,
+            35
+          ],
+          [
+            80,
+            60
+          ]
+        ],
+        "roads": [
+          [
+            0,
+            1
+          ]
+        ],
+        "slots": [
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "name": "Использовать снова",
+        "nodes": [
+          [
+            15,
+            65
+          ],
+          [
+            40,
+            65
+          ],
+          [
+            60,
+            30
+          ],
+          [
+            85,
+            30
+          ]
+        ],
+        "roads": [
+          [
+            1,
+            2
+          ]
+        ],
+        "slots": [
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      }
+    ]
+  },
+  "creator": {
+    "title": "Мастерская загадок",
+    "map": "Мастер",
+    "group": "systems",
+    "summary": "Создай задачу с лампами, проверь её и передай код другому игроку.",
+    "goal": "Собрать нетривиальное решаемое поле и пройти собственную загадку.",
+    "rules": [
+      "В редакторе клетки включаются независимо.",
+      "До игры решатель проверяет, что все лампы можно погасить.",
+      "Код содержит только размер и клетки; загрузка доступна для подходящего уровня."
+    ],
+    "controls": "Отредактируй поле, проверь решаемость и нажми «Играть». Для передачи используй код задачи.",
+    "levels": [
+      {
+        "name": "Свои четыре лампы",
+        "n": 2,
+        "press": [
+          0
+        ]
+      },
+      {
+        "name": "Свои девять ламп",
+        "n": 3,
+        "press": [
+          0,
+          4,
+          8
+        ]
+      },
+      {
+        "name": "Свои шестнадцать ламп",
+        "n": 4,
+        "press": [
+          0,
+          3,
+          5,
+          10,
+          12
+        ]
+      }
+    ]
+  }
+}
+;
+const adventureIds=Object.keys(adventures);
+q('[data-view=map]').insertAdjacentHTML('beforeend',adventureIds.map(id=>'<button class="qt-place" data-enter="'+id+'"><span>'+adventures[id].map+'</span></button>').join(''));
+for(const id of adventureIds){extraIds.push(id);titles[id]=adventures[id].title;levels[id]=adventures[id].levels;}
+const adUndoIds=['experiment','repair','program','escape','clock','ice','twins','trade','timeline','tool','creator'];
+const adDirs=[[0,-1],[1,0],[0,1],[-1,0]],adArrows=['↑','→','↓','←'],adItemNames=['яблоки','монеты','шестерни','ключ'];
+const adBoardCache=new WeakMap();
+const adEsc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function adTarget(action,value){return '[data-ad-action="'+action+'"]'+(value===undefined?'':'[data-ad-value="'+value+'"]');}
+function adButton(action,value,label,disabled=false,pressed=false,cls=''){return '<button class="'+cls+'" aria-label="'+adEsc(action==='creator-cell'?'Лампа '+(Number(value)+1):String(label).replace(/<[^>]*>/g,''))+'" data-ad-action="'+action+'"'+(value===undefined?'':' data-ad-value="'+value+'"')+' '+(disabled?'disabled ':'')+'aria-pressed="'+pressed+'">'+label+'</button>';}
+function adBoard(c){if(adBoardCache.has(c))return adBoardCache.get(c);const w=c.board[0].length,h=c.board.length,walls=new Set();let start=0,goal=null;c.board.forEach((row,y)=>[...row].forEach((v,x)=>{const p=y*w+x;if(v==='#')walls.add(p);if(v==='@')start=p;if(v==='.')goal=p;}));const b={w,h,walls,start,goal};adBoardCache.set(c,b);return b;}
+function adStep(pos,dir,b){const x=pos%b.w+adDirs[dir][0],y=Math.floor(pos/b.w)+adDirs[dir][1];return x<0||y<0||x>=b.w||y>=b.h||b.walls.has(y*b.w+x)?pos:y*b.w+x;}
+function adSlide(pos,dir,b){let next;while((next=adStep(pos,dir,b))!==pos)pos=next;return pos;}
+function adIceGoal(c){const b=adBoard(c),queue=[b.start],seen=new Set(queue);for(let i=0;i<queue.length;i++)for(let d=0;d<4;d++){const p=adSlide(queue[i],d,b);if(!seen.has(p)){seen.add(p);queue.push(p);}}return queue.at(-1);}
+function adTwinsNext(p,d,b){return [adStep(p[0],d,b),adStep(p[1],d===1?3:d===3?1:d,b)];}
+function adTwinsGoal(c){let p=c.starts.slice();for(const d of c.route)p=adTwinsNext(p,d,adBoard(c));return p;}
+function adGridPath(start,goal,b,slide=false){return findPath(start,p=>p===goal,p=>adDirs.flatMap((_,d)=>{const n=slide?adSlide(p,d,b):adStep(p,d,b);return n===p?[]:[[n,d]];}));}
+function adRobotRun(code,c){const b=adBoard(c),trace=[b.start];let pos=b.start,error=null;for(let i=0;i<code.length;i++){const n=adStep(pos,code[i],b);if(n===pos){error=i;break;}pos=n;trace.push(pos);}return {pos,trace,error,goal:error===null&&pos===b.goal};}
+function adRepairCode(c){for(let i=0;i<c.code.length;i++)for(let d=0;d<4;d++)if(d!==c.code[i]){const code=c.code.slice();code[i]=d;if(adRobotRun(code,c).goal)return code;}return null;}
+function adRay(c){let p=c.start,d=c.dir;const path=[],seen=new Set(),mirrors=new Map(c.mirrors);while(!seen.has(p+':'+d)){seen.add(p+':'+d);path.push(p);if(mirrors.has(p))d=(mirrors.get(p)==='/'?[1,0,3,2]:[3,2,1,0])[d];const x=p%c.w+adDirs[d][0],y=Math.floor(p/c.w)+adDirs[d][1];if(y<0)return {exit:0,path};if(x>=c.w)return {exit:1,path};if(y>=c.h)return {exit:2,path};if(x<0)return {exit:3,path};p=y*c.w+x;}return {exit:null,path};}
+function adClockActions(a,c){const out=[];for(let i=0;i<2;i++){const rem=a.rem.slice();rem[i]=c.caps[i]-rem[i];if(rem[i]!==a.rem[i])out.push([{rem,measured:a.measured},{action:'flip',value:i}]);}const active=a.rem.filter(v=>v>0);if(active.length){const dt=Math.min(...active),measured=a.measured===null?null:a.measured+dt;if(measured===null||measured<=c.target)out.push([{rem:a.rem.map(v=>Math.max(0,v-dt)),measured},{action:'wait'}]);}if(a.measured!==0)out.push([{rem:a.rem.slice(),measured:0},{action:'mark'}]);return out;}
+function adClockPath(s,c){if(s.measured>c.target)return [{action:'mark'}];return findPath({rem:s.rem,measured:s.measured},a=>a.measured===c.target,a=>adClockActions(a,c));}
+function adTradePath(s,c){return findPath(s.inventory,a=>a[c.goal[0]]>=c.goal[1],a=>c.recipes.flatMap(([cost,gain],i)=>cost.every((v,k)=>a[k]>=v)?[[a.map((v,k)=>v-cost[k]+gain[k]),i]]:[]));}
+function adTimelineOkay(order,c){return c.links.every(([a,b,kind])=>kind==='next'?order.indexOf(b)===order.indexOf(a)+1:order.indexOf(a)<order.indexOf(b));}
+function adTimelineSolutions(c){const out=[];function visit(a){if(a.length===c.labels.length){if(adTimelineOkay(a,c))out.push(a);return;}for(let i=0;i<c.labels.length;i++)if(!a.includes(i))visit([...a,i]);}visit([]);return out;}
+function adToolPath(s,c){return findPath([s.pos,s.ladder],a=>a[0]===c.nodes.length-1,a=>{const [pos,ladder]=a,out=[];for(const edge of c.roads)if(edge.includes(pos))out.push([[edge.find(x=>x!==pos),ladder],{action:'node',value:edge.find(x=>x!==pos)}]);if(ladder>=0&&c.slots[ladder].includes(pos)){out.push([[pos,-1],{action:'pickup'}]);const to=c.slots[ladder].find(x=>x!==pos);out.push([[to,ladder],{action:'node',value:to}]);}if(ladder<0)c.slots.forEach((edge,i)=>{if(edge.includes(pos))out.push([[pos,i],{action:'slot',value:i}]);});return out;});}
+function adGraphPossible(edges,kind){if(kind==='connected'){const reach=new Set([0]);for(let k=0;k<4;k++)for(const [a,b] of edges){if(reach.has(a))reach.add(b);if(reach.has(b))reach.add(a);}return reach.size===4;}if(kind==='crossing')return !(edges.some(e=>e.includes(0)&&e.includes(3))&&edges.some(e=>e.includes(1)&&e.includes(2)));function trail(pos,used){if(used===((1<<edges.length)-1))return true;return edges.some(([a,b],i)=>!(used&(1<<i))&&(a===pos||b===pos)&&trail(a===pos?b:a,used|(1<<i)));}return [0,1,2,3].some(p=>trail(p,0));}
+function adCandidates(s,c){return c.models.flatMap((model,i)=>Object.entries(s.answers).every(([key,value])=>model[Number(key)]===value)?[i]:[]);}
+function adDeductionTarget(c){return c.people.flatMap((_,i)=>c.clues.every(clue=>clue.allows.includes(i))?[i]:[]);}
+function newAdventure(id,level=0){const c=levels[id][level],base={solved:false,failed:false,message:'',moves:0};
+if(id==='detective')return {...base,seen:[],proof:[],person:null};
+if(id==='experiment')return {...base,switches:c.matrix.map(()=>0),outputs:c.target.map(()=>0),seen:{[c.matrix.map(()=>0).join('')]:c.target.map(()=>0)}};
+if(id==='prediction')return {...base,answer:null,launched:false};
+if(id==='repair'||id==='program')return {...base,code:id==='repair'?c.code.slice():[],pos:adBoard(c).start,trace:[],error:null};
+if(id==='escape')return {...base,seen:false,digits:Array(c.digits).fill(0),key:false};
+if(id==='clock')return {...base,rem:[0,0],elapsed:0,measured:null};
+if(id==='ice')return {...base,pos:adBoard(c).start};
+if(id==='twins')return {...base,positions:c.starts.slice()};
+if(id==='observation'||id==='information')return {...base,answers:{},choice:null};
+if(id==='trade')return {...base,inventory:c.start.slice()};
+if(id==='timeline')return {...base,order:c.order.slice(),selected:null};
+if(id==='impossible')return {...base,project:null,reason:null};
+if(id==='tool')return {...base,pos:0,ladder:-1};
+return {...base,mode:'edit',cells:Array(c.n*c.n).fill(0),design:null,qualified:false,share:false};}
+function adventureValid(s,id,level){const c=levels[id][level];if(!s||typeof s.solved!=='boolean'||!Number.isInteger(s.moves)||s.moves<0)return false;const ints=(a,n,max)=>Array.isArray(a)&&a.length===n&&a.every(x=>Number.isInteger(x)&&x>=0&&x<=max);
+if(id==='detective')return Array.isArray(s.seen)&&Array.isArray(s.proof)&&[null,...c.people.map((_,i)=>i)].includes(s.person);
+if(id==='experiment')return ints(s.switches,c.matrix.length,1)&&ints(s.outputs,c.target.length,1)&&s.seen&&typeof s.seen==='object';
+if(id==='prediction')return [null,0,1,2,3].includes(s.answer);
+if(id==='repair'||id==='program')return Array.isArray(s.code)&&s.code.length<=(c.limit||c.code.length)&&s.code.every(x=>[0,1,2,3].includes(x))&&Number.isInteger(s.pos)&&Array.isArray(s.trace);
+if(id==='escape')return ints(s.digits,c.digits,5)&&typeof s.seen==='boolean'&&typeof s.key==='boolean';
+if(id==='clock')return ints(s.rem,2,Math.max(...c.caps))&&s.rem.every((x,i)=>x<=c.caps[i])&&Number.isFinite(s.elapsed)&&s.elapsed>=0&&(s.measured===null||Number.isFinite(s.measured)&&s.measured>=0);
+if(id==='ice')return Number.isInteger(s.pos)&&!adBoard(c).walls.has(s.pos)&&s.pos>=0&&s.pos<adBoard(c).w*adBoard(c).h;
+if(id==='twins')return ints(s.positions,2,adBoard(c).w*adBoard(c).h-1)&&s.positions.every(p=>!adBoard(c).walls.has(p));
+if(id==='observation'||id==='information')return s.answers&&typeof s.answers==='object'&&Object.keys(s.answers).length<=c.budget&&Object.entries(s.answers).every(([k,v])=>[0,1,2].includes(Number(k))&&v===c.models[c.actual][Number(k)])&&[null,...c.models.map((_,i)=>i)].includes(s.choice);
+if(id==='trade')return ints(s.inventory,4,12);
+if(id==='timeline')return ints(s.order,c.labels.length,c.labels.length-1)&&new Set(s.order).size===c.labels.length&&[null,...s.order].includes(s.selected);
+if(id==='impossible')return [null,0,1,2].includes(s.project)&&[null,0,1,2].includes(s.reason);
+if(id==='tool')return Number.isInteger(s.pos)&&s.pos>=0&&s.pos<c.nodes.length&&Number.isInteger(s.ladder)&&s.ladder>=-1&&s.ladder<c.slots.length;
+return ['edit','play'].includes(s.mode)&&ints(s.cells,c.n*c.n,1)&&(s.design===null||ints(s.design,c.n*c.n,1));}
+function adventureHint(){const id=state.view,s=state[id],c=cfg(id),step=(action,value,text)=>({target:adTarget(action,value),text});
+if(id==='detective'){const unseen=c.clues.findIndex((_,i)=>!s.seen.includes(i));if(unseen>=0)return step('clue',unseen,'Осмотри подсвеченную улику: содержание пока неизвестно.');const actual=adDeductionTarget(c)[0],pool=c.people.flatMap((_,i)=>s.proof.every(k=>c.clues[k].allows.includes(i))?[i]:[]);if(pool.length!==1){const clue=c.clues.findIndex((a,i)=>!s.proof.includes(i)&&a.allows.includes(actual)&&pool.some(p=>!a.allows.includes(p)));return step('proof',clue,'Добавь эту улику в доказательство: она исключит часть оставшихся персонажей.');}if(s.person!==pool[0])return step('person',pool[0],'Теперь улики указывают на одного персонажа. Выбери его.');return step('check',undefined,'Проверь имя вместе с выбранными доказательствами.');}
+if(id==='experiment'){if(s.outputs.every((v,i)=>v===c.target[i]))return step('check',undefined,'Узор совпадает с образцом. Проверь механизм.');let code=Object.keys(s.seen).find(k=>s.seen[k].every((v,i)=>v===c.target[i]));if(!code){const untested=Array.from({length:2**s.switches.length},(_,i)=>i.toString(2).padStart(s.switches.length,'0')).filter(k=>!s.seen[k]);untested.sort((a,b)=>[...a].filter((v,i)=>Number(v)!==s.switches[i]).length-[...b].filter((v,i)=>Number(v)!==s.switches[i]).length);code=untested[0];}const i=[...code].findIndex((v,i)=>Number(v)!==s.switches[i]);return step('lever',i,'Переключи этот рычаг и сравни лампы: так мы проверим ещё одно состояние механизма.');}
+if(id==='prediction'){const exit=adRay(c).exit;if(s.answer!==exit)return step('port',exit,'Проследи отражения от старта. Луч выходит через подсвеченную сторону.');return step('check',undefined,'Предсказание выбрано. Теперь запусти луч и сравни результат.');}
+if(id==='repair'||id==='program'){const code=id==='repair'?adRepairCode(c):adGridPath(adBoard(c).start,adBoard(c).goal,adBoard(c));if(id==='repair'){const i=code.findIndex((v,i)=>v!==s.code[i]);return i<0?step('run',undefined,'Изменена нужная команда. Запусти робота.'):step('command',i,'Меняй эту команду до направления '+adArrows[code[i]]+'. Остальные позиции оставь как были.');}const wrong=s.code.findIndex((v,i)=>v!==code[i]);if(wrong>=0)return step('command',wrong,'Удали эту команду: она уводит от короткого пути.');if(s.code.length<code.length)return step('append',code[s.code.length],'Добавь следующую команду '+adArrows[code[s.code.length]]+'.');return step('run',undefined,'Программа собрана. Запусти её.');}
+if(id==='escape'){if(!s.seen)return step('note',undefined,'Осмотри записку: нужный код выводится из неё и предметов комнаты.');if(!s.key){const i=c.code.findIndex((v,i)=>v!==s.digits[i]);return i<0?step('drawer',undefined,'Код соответствует записке. Открой ящик и возьми ключ.'):step('escape-digit',i,'По подсказке комнаты код '+c.code.join(' ')+'. Меняй подсвеченную цифру до '+c.code[i]+'.');}return step('door',undefined,'Ключ у тебя. Нажми на выход.');}
+if(id==='clock'){if(s.measured===c.target)return step('finish',undefined,'Отмерено ровно '+c.target+' мин. Заверши замер.');const a=adClockPath(s,c)[0];if(!a)return step('mark',undefined,'Начни новый замер из текущего события.');return step(a.action,a.value,a.action==='flip'?'Переверни часы '+c.caps[a.value]+' мин.':a.action==='wait'?'Перейди к ближайшему опустошению часов.':'Отметь начало измеряемого интервала.');}
+if(id==='ice')return step('direction',adGridPath(s.pos,adIceGoal(c),adBoard(c),true)[0],'Скользи в этом направлении до стены. Звезда засчитывается только при остановке.');
+if(id==='twins'){const goal=adTwinsGoal(c),path=findPath(s.positions,a=>a.every((v,i)=>v===goal[i]),a=>adDirs.flatMap((_,d)=>{const n=adTwinsNext(a,d,adBoard(c));return n.every((v,i)=>v===a[i])?[]:[[n,d]];}));return step('direction',path[0],'Эта команда сдвинет оба мира. Стена может остановить одного героя и пропустить другого.');}
+if(id==='observation'||id==='information'){const pool=adCandidates(s,c);if(pool.length===1)return s.choice===pool[0]?step('check',undefined,'Полученных ответов достаточно. Подтверди вывод.'):step('model',pool[0],'С открытыми признаками совместим только этот вариант.');if(Object.keys(s.answers).length>=c.budget)return {target:'[data-extra-reset]',text:'Лимит проверок исчерпан, а вариантов несколько. Повтори и выбирай различающие вопросы.'};let best=-1,score=Infinity;for(let k=0;k<3;k++)if(!(k in s.answers)){const values=[...new Set(pool.map(i=>c.models[i][k]))],worst=Math.max(...values.map(v=>pool.filter(i=>c.models[i][k]===v).length));if(worst<score){score=worst;best=k;}}return step(id==='observation'?'peek':'ask',best,'Проверь этот признак: он лучше разделяет оставшиеся варианты.');}
+if(id==='trade'){const path=adTradePath(s,c);return path.length?step('recipe',path[0],'Этот обмен сохраняет возможность получить цель. Посмотри, что расходуется и что выдаётся.'):{target:'[data-extra-reset]',text:'Из этих ресурсов цель уже не собрать. Отмени обмен или начни заново.'};}
+if(id==='timeline'){const goal=adTimelineSolutions(c)[0],i=s.order.findIndex((v,i)=>v!==goal[i]);if(i<0)return step('check',undefined,'Все отношения порядка соблюдены. Проверь.');const j=s.order.indexOf(goal[i]);if(s.selected===null)return step('event',i,'Выбери эту карточку для перестановки.');if(s.selected!==i)return step('event',s.selected,'Сними текущий выбор, чтобы поменять нужную пару.');return step('event',j,'Поменяй местами выбранную и подсвеченную карточки.');}
+if(id==='impossible'){const i=c.graphs.findIndex(g=>!adGraphPossible(g,c.kind)),reason=['connected','crossing','euler'].indexOf(c.kind);if(s.project!==i)return step('project',i,'У этого проекта нарушено показанное условие. Выбери его и проверь связи.');if(s.reason!==reason)return step('reason',reason,'Выбери причину, которая соответствует нарушению.');return step('check',undefined,'Проект и причина выбраны. Обоснуй ответ.');}
+if(id==='tool'){const a=adToolPath(s,c)[0];return step(a.action,a.value,a.action==='pickup'?'Забери лестницу: она понадобится у следующего разрыва.':a.action==='slot'?'Установи лестницу через подсвеченный разрыв.':'Перейди на подсвеченную площадку.');}
+if(s.mode==='edit'){if(s.cells.some(Boolean)&&lightSolution(s.cells,c.n)!==null)return step(s.qualified?'play':'qualify',undefined,s.qualified?'Решаемость проверена. Нажми «Играть» и реши собственную задачу.':'Проверь решаемость перед запуском своей задачи.');const desired=Array(c.n*c.n).fill(0);for(const i of c.press)toggleLights(desired,c.n,i);return step('creator-cell',desired.findIndex((v,i)=>v!==s.cells[i]),'В редакторе задай узор. Эта клетка поможет собрать решаемую задачу.');}
+const path=lightSolution(s.cells,c.n);return step('creator-cell',path?.[0],'Погаси свою загадку: эта лампа входит в решение.');}
+function adBoardArt(c,pos,goal,trace=[],ice=false){const b=adBoard(c);return '<div class="ad-board '+(ice?'ad-ice':'')+'" style="grid-template-columns:repeat('+b.w+',1fr)">'+Array.from({length:b.w*b.h},(_,i)=>'<span class="ad-cell '+(b.walls.has(i)?'ad-wall':'')+' '+(trace.includes(i)?'ad-trace':'')+'">'+(i===pos?'<i class="ad-person"></i>':i===goal?'★':'')+'</span>').join('')+'</div>';}
+function adGraphArt(edges){const xy=[[20,20],[80,20],[20,80],[80,80]];return '<svg class="ad-graph" viewBox="0 0 100 100" aria-hidden="true">'+edges.map(([a,b])=>'<line x1="'+xy[a][0]+'" y1="'+xy[a][1]+'" x2="'+xy[b][0]+'" y2="'+xy[b][1]+'"/>').join('')+xy.map(([x,y])=>'<circle cx="'+x+'" cy="'+y+'" r="7"/>').join('')+'</svg>';}
+function adInventory(a){return a.flatMap((v,i)=>v?[v+' '+adItemNames[i]]:[]).join(' · ')||'пусто';}
+function adventureRender(){const id=state.view,s=state[id],c=cfg(id),closed=s.solved;let art='',controls='';const btn=(a,v,label,disabled=false,pressed=false,cls='')=>adButton(a,v,label,disabled||closed,pressed,cls),row=x=>'<div class="ad-row">'+x+'</div>',caption=x=>'<div class="ad-caption">'+x+'</div>';
+if(id==='detective'){art='<div class="ad-stack">'+row(c.clues.map((clue,i)=>btn('clue',i,s.seen.includes(i)?adEsc(clue.text):'▣ '+clue.title)).join(''))+c.people.map(([name,desc],i)=>btn('person',i,'<i class="ad-person"></i>'+name+'<small> · '+desc+'</small>',false,s.person===i)).join('')+'</div>';controls='<span class="qt-small">Доказательства</span>'+c.clues.map((clue,i)=>btn('proof',i,clue.title,!s.seen.includes(i),s.proof.includes(i))).join('')+btn('check',undefined,'Проверить');}
+if(id==='experiment'){const lamps=a=>a.map(v=>'<span class="'+(v?'':'ad-off')+'">'+(v?'▣':'□')+'</span>').join('');art='<div class="ad-stack">'+caption('Нужно получить')+row('<div class="ad-lamps">'+lamps(c.target)+'</div>')+caption('Сейчас')+row('<div class="ad-lamps">'+lamps(s.outputs)+'</div>')+row(s.switches.map((v,i)=>btn('lever',i,(v?'╱':'╲')+' '+(i+1),false,!!v,'ad-command')).join(''))+'</div>';controls=btn('check',undefined,'Проверить')+'<span class="qt-small">Опытов: '+s.moves+'</span>';}
+if(id==='prediction'){const ray=adRay(c);art='<div class="ad-stack">'+row(btn('port',0,'Выход ↑',false,s.answer===0))+row(btn('port',3,'←',false,s.answer===3)+'<div class="ad-board" style="width:200px;grid-template-columns:repeat('+c.w+',1fr)">'+Array.from({length:c.w*c.h},(_,i)=>'<span class="ad-cell '+(s.launched&&ray.path.includes(i)?'ad-trace':'')+'">'+(i===c.start?'→':(c.mirrors.find(m=>m[0]===i)?.[1]||''))+'</span>').join('')+'</div>'+btn('port',1,'→',false,s.answer===1))+row(btn('port',2,'Выход ↓',false,s.answer===2))+'</div>';controls=btn('check',undefined,'Запустить',s.answer===null);}
+if(id==='repair'||id==='program'){art='<div class="ad-stack">'+row(adBoardArt(c,s.pos,adBoard(c).goal,s.trace))+row(s.code.map((d,i)=>btn('command',i,adArrows[d],false,false,'ad-command '+(s.error===i?'ad-error':''))).join(''))+(id==='program'?row(adArrows.map((v,i)=>btn('append',i,v,s.code.length>=c.limit,false,'ad-command')).join('')):'')+'</div>';controls=caption(id==='repair'?'Измени ровно одну команду':'Команд: '+s.code.length+' / '+c.limit)+btn('run',undefined,'Запустить');}
+if(id==='escape'){art='<div class="ad-room">'+row(Array(c.windows).fill('<span class="ad-window"></span>').join(''))+row(Array(c.lamps).fill('<span class="ad-lamps">▣</span>').join(''))+row(btn('note',undefined,s.seen?adEsc(c.note):'▤ Записка'))+row(s.digits.map((v,i)=>btn('escape-digit',i,v,false,false,'ad-command')).join('')+btn('drawer',undefined,s.key?'Ящик открыт · ⚿':'▣ Ящик'))+row(btn('door',undefined,'▥ Выход'))+'</div>';controls=caption(s.key?'Ключ найден':'Найди ключ от двери');}
+if(id==='clock'){art='<div class="ad-stack">'+caption('Отмерь '+c.target+' мин')+row(c.caps.map((cap,i)=>btn('flip',i,'<b>'+cap+'</b>мин<br>осталось '+s.rem[i],false,false,'ad-clock')).join(''))+caption('Время: '+s.elapsed+' · замер: '+(s.measured===null?'не начат':s.measured+' мин'))+'</div>';controls=btn('wait',undefined,'До события',!s.rem.some(Boolean))+btn('mark',undefined,s.measured===null?'Начать замер':'Новый замер')+btn('finish',undefined,'Завершить замер',s.measured===null);}
+if(id==='ice'){art=adBoardArt(c,s.pos,adIceGoal(c),[],true);controls=row(adArrows.map((v,i)=>btn('direction',i,v,false,false,'ad-command')).join(''));}
+if(id==='twins'){const goals=adTwinsGoal(c);art='<div class="ad-worlds">'+s.positions.map((p,i)=>adBoardArt(c,p,goals[i])).join('')+'</div>';controls=row(adArrows.map((v,i)=>btn('direction',i,v,false,false,'ad-command')).join(''))+caption('Правый мир отражает ← →');}
+if(id==='observation'||id==='information'){const labels=id==='observation'?['Лампа','Ящики','Дверь']:['Свидетель А: цвет','Свидетель Б: форма','Свидетель А: место'];art='<div class="ad-stack">'+row(labels.map((v,i)=>btn(id==='observation'?'peek':'ask',i,i in s.answers?adEsc(s.answers[i]):v,!(i in s.answers)&&Object.keys(s.answers).length>=c.budget)).join(''))+c.models.map((m,i)=>btn('model',i,(i+1)+'. '+m.map(adEsc).join(' · '),false,s.choice===i)).join('')+'</div>';controls=caption('Проверок: '+Object.keys(s.answers).length+' / '+c.budget)+btn('check',undefined,'Назвать',s.choice===null);}
+if(id==='trade'){art='<div class="ad-stack">'+caption('У тебя')+'<div class="ad-card">'+adInventory(s.inventory)+'</div>'+caption('Нужно: '+c.goal[1]+' '+adItemNames[c.goal[0]])+c.recipes.map(([cost,gain],i)=>btn('recipe',i,adInventory(cost)+' → '+adInventory(gain),!cost.every((v,k)=>s.inventory[k]>=v))).join('')+'</div>';controls=caption('Обменов: '+s.moves);}
+if(id==='timeline'){art='<div class="ad-stack">'+s.order.map((v,i)=>btn('event',i,(i+1)+'. '+adEsc(c.labels[v]),false,s.selected===i)).join('')+'</div>';controls=c.links.map(([a,b,k])=>caption(c.labels[a]+(k==='next'?' непосредственно перед ':' раньше, чем ')+c.labels[b])).join('')+btn('check',undefined,'Проверить');}
+if(id==='impossible'){art='<div class="ad-stack">'+caption(c.goal)+row(c.graphs.map((g,i)=>btn('project',i,adGraphArt(g)+'Проект '+(i+1),false,s.project===i,'ad-blueprint')).join(''))+'</div>';controls=['Сеть разорвана','Линии пересекаются','Нет пути по всем мостам один раз'].map((v,i)=>btn('reason',i,v,false,s.reason===i)).join('')+btn('check',undefined,'Обосновать');}
+if(id==='tool'){const line=(edge,slot=false,i=0)=>{const [a,b]=edge;return '<line x1="'+c.nodes[a][0]+'" y1="'+c.nodes[a][1]+'" x2="'+c.nodes[b][0]+'" y2="'+c.nodes[b][1]+'" '+(slot?'stroke-dasharray="'+(s.ladder===i?'0':'3 3')+'"':'')+' style="stroke:'+(slot&&s.ladder===i?'#f0cd75':'#7fa392')+';stroke-width:3"/>';};art='<div class="ad-plan"><svg viewBox="0 0 100 100" preserveAspectRatio="none">'+c.roads.map(e=>line(e)).join('')+c.slots.map((e,i)=>line(e,true,i)).join('')+'</svg>'+c.slots.map(([a,b],i)=>adButton('slot',i,s.ladder===i?'═':'⋯',closed||s.ladder>=0||![a,b].includes(s.pos),false,'ad-slot').replace('<button ','<button style="left:'+((c.nodes[a][0]+c.nodes[b][0])/2)+'%;top:'+((c.nodes[a][1]+c.nodes[b][1])/2)+'%" ')).join('')+c.nodes.map(([x,y],i)=>btn('node',i,s.pos===i?'♟':i===c.nodes.length-1?'★':i+1,false,s.pos===i).replace('<button ','<button style="left:'+x+'%;top:'+y+'%" ')).join('')+'</div>';controls=caption(s.ladder<0?'Лестница с собой':'Лестница установлена')+btn('pickup',undefined,'Забрать лестницу',s.ladder<0||!c.slots[s.ladder].includes(s.pos));}
+if(id==='creator'){art='<div class="ad-stack">'+caption(s.mode==='edit'?'Нарисуй начальный узор':'Погаси все лампы')+row('<div class="ad-board" style="max-width:280px;grid-template-columns:repeat('+c.n+',1fr)">'+s.cells.map((v,i)=>btn('creator-cell',i,'',false,!!v,'ad-cell ad-lamp '+(v?'on':''))).join('')+'</div>')+(s.share?'<textarea class="ad-share" data-ad-code aria-label="Код своей задачи">'+adEsc(JSON.stringify({v:1,n:c.n,cells:s.design||s.cells}))+'</textarea>'+row(btn('import',undefined,'Загрузить код')):'')+'</div>';controls=s.mode==='edit'?btn('qualify',undefined,'Проверить решаемость')+btn('play',undefined,'Играть',!s.qualified):btn('edit',undefined,'В редактор');controls+=btn('share',undefined,'Код задачи',!s.qualified)+caption(s.mode==='edit'?(s.qualified?'Решаемость подтверждена':'Код можно загрузить и проверить'):'Ходов: '+s.moves);if(!s.share)controls+=btn('load-field',undefined,'Загрузить задачу');}
+q('[data-extra]').classList.remove('qt-warehouse-layout');q('[data-extra]').classList.add('ad-layout');q('[data-extra]').innerHTML='<div class="qt-stage ad-scene">'+art+'</div><aside class="qt-panel">'+controls+'<div class="qt-status" data-extra-status role="status" aria-live="polite">'+(s.solved?'Решено!':adEsc(s.message||''))+'</div><button class="qt-reset" data-extra-reset aria-label="Начать уровень заново">↻</button></aside>';}
+function adventureAction(b){const id=state.view,s=state[id],c=cfg(id);if(!b.hasAttribute('data-ad-action'))return false;const a=b.dataset.adAction,v=Number(b.dataset.adValue);if(s.solved)return true;const previous=clone(s);s.message='';let counted=true;
+if(id==='detective'){if(a==='clue'&&!s.seen.includes(v))s.seen.push(v);if(a==='proof'&&s.seen.includes(v))s.proof=s.proof.includes(v)?s.proof.filter(x=>x!==v):[...s.proof,v];if(a==='person')s.person=v;if(a==='check'){const pool=c.people.flatMap((_,i)=>s.proof.every(k=>c.clues[k].allows.includes(i))?[i]:[]);s.solved=pool.length===1&&pool[0]===s.person&&adDeductionTarget(c).includes(s.person);if(!s.solved)s.message='Нужно имя и достаточные доказательства.';}}
+if(id==='experiment'){if(a==='lever'){s.switches[v]^=1;s.outputs=c.target.map((_,k)=>c.matrix.reduce((n,row,i)=>n^(row[k]&s.switches[i]),0));s.seen[s.switches.join('')]=s.outputs.slice();}if(a==='check'){s.solved=s.outputs.every((x,i)=>x===c.target[i]);if(!s.solved)s.message='Узор пока отличается от образца.';}}
+if(id==='prediction'){if(a==='port'){s.answer=v;s.launched=false;}if(a==='check'){s.launched=true;s.solved=s.answer===adRay(c).exit;if(!s.solved)s.message='Луч вышел иначе. Проследи линию и выбери снова.';}}
+if(id==='repair'||id==='program'){if(a==='command'){if(id==='repair')s.code[v]=(s.code[v]+1)%4;else s.code.splice(v,1);s.trace=[];s.error=null;s.pos=adBoard(c).start;}if(a==='append'&&s.code.length<c.limit){s.code.push(v);s.trace=[];s.error=null;s.pos=adBoard(c).start;}if(a==='run'){const run=adRobotRun(s.code,c);Object.assign(s,{pos:run.pos,trace:run.trace,error:run.error});const changes=id==='repair'?s.code.filter((d,i)=>d!==c.code[i]).length:0;s.solved=run.goal&&(id!=='repair'||changes===1);if(!s.solved)s.message=run.error!==null?'Столкновение на команде '+(run.error+1)+'.':id==='repair'&&changes!==1?'Нужно изменить ровно одну позицию.':'Робот ещё не на звезде.';}}
+if(id==='escape'){if(a==='note')s.seen=true;if(a==='escape-digit')s.digits[v]=(s.digits[v]+1)%6;if(a==='drawer'){if(!s.seen)s.message='Сначала осмотри записку.';else if(s.digits.every((d,i)=>d===c.code[i]))s.key=true;else s.message='Ящик не открылся. Сверь код с комнатой.';}if(a==='door'){s.solved=s.key;if(!s.key)s.message='Дверь заперта. Ключ в ящике.';}}
+if(id==='clock'){if(a==='flip')s.rem[v]=c.caps[v]-s.rem[v];if(a==='wait'&&s.rem.some(Boolean)){const dt=Math.min(...s.rem.filter(x=>x>0));s.elapsed+=dt;if(s.measured!==null)s.measured+=dt;s.rem=s.rem.map(x=>Math.max(0,x-dt));}if(a==='mark')s.measured=0;if(a==='finish'){s.solved=s.measured===c.target;if(!s.solved)s.message='Нужен интервал ровно '+c.target+' мин. Можно начать новый замер.';}}
+if(id==='ice'&&a==='direction'){s.pos=adSlide(s.pos,v,adBoard(c));s.solved=s.pos===adIceGoal(c);}
+if(id==='twins'&&a==='direction'){s.positions=adTwinsNext(s.positions,v,adBoard(c));s.solved=s.positions.every((p,i)=>p===adTwinsGoal(c)[i]);}
+if(id==='observation'||id==='information'){if((a==='peek'||a==='ask')&&(!(v in s.answers))&&Object.keys(s.answers).length<c.budget)s.answers[v]=c.models[c.actual][v];if(a==='model')s.choice=v;if(a==='check'){const pool=adCandidates(s,c);s.solved=pool.length===1&&pool[0]===s.choice;if(!s.solved)s.message=pool.length>1?'Информации пока недостаточно для однозначного ответа.':'Выбранный вариант противоречит ответам.';}}
+if(id==='trade'&&a==='recipe'){const [cost,gain]=c.recipes[v];if(cost.every((x,i)=>s.inventory[i]>=x)){s.inventory=s.inventory.map((x,i)=>x-cost[i]+gain[i]);s.solved=s.inventory[c.goal[0]]>=c.goal[1];}else s.message='Не хватает предметов.';}
+if(id==='timeline'){if(a==='event'){if(s.selected===null)s.selected=v;else if(s.selected===v)s.selected=null;else{[s.order[s.selected],s.order[v]]=[s.order[v],s.order[s.selected]];s.selected=null;}}if(a==='check'){s.solved=adTimelineOkay(s.order,c);if(!s.solved)s.message='Не все связи соблюдены. Сравни порядок с условиями.';}}
+if(id==='impossible'){if(a==='project')s.project=v;if(a==='reason')s.reason=v;if(a==='check'){s.solved=s.project!==null&&!adGraphPossible(c.graphs[s.project],c.kind)&&s.reason===['connected','crossing','euler'].indexOf(c.kind);if(!s.solved)s.message='Проверь и проект, и объяснение.';}}
+if(id==='tool'){if(a==='slot'&&s.ladder<0&&c.slots[v]?.includes(s.pos))s.ladder=v;if(a==='pickup'&&s.ladder>=0&&c.slots[s.ladder].includes(s.pos))s.ladder=-1;if(a==='node'&&v!==s.pos){const can=[...c.roads,...(s.ladder>=0?[c.slots[s.ladder]]:[])].some(e=>e.includes(v)&&e.includes(s.pos));if(can)s.pos=v;else s.message='Нет прохода: подойди к разрыву и установи лестницу.';}s.solved=s.pos===c.nodes.length-1;}
+if(id==='creator'){if(a==='creator-cell'){if(s.mode==='edit'){s.cells[v]^=1;s.qualified=false;s.design=null;}else{toggleLights(s.cells,c.n,v);s.solved=s.cells.every(x=>!x);}}if(a==='qualify'){s.qualified=s.cells.some(Boolean)&&lightSolution(s.cells,c.n)!==null;if(s.qualified){s.design=s.cells.slice();s.message='Решение существует. Можно играть и передавать код.';}else s.message=s.cells.some(Boolean)?'Этот узор не решается. Измени клетки.':'Добавь хотя бы одну горящую лампу.';}if(a==='play'&&s.qualified){s.design=s.cells.slice();s.mode='play';s.moves=0;}if(a==='edit'){s.mode='edit';s.cells=(s.design||s.cells).slice();s.qualified=false;s.share=false;}if(a==='share'&&s.qualified||a==='load-field')s.share=true;if(a==='import'){let imported;try{const raw=q('[data-ad-code]').value;if(raw.length>4096)throw Error();imported=JSON.parse(raw);if(imported.v!==1||imported.n!==c.n||!Array.isArray(imported.cells)||imported.cells.length!==c.n*c.n||!imported.cells.every(x=>x===0||x===1)||!imported.cells.some(Boolean)||lightSolution(imported.cells,c.n)===null)throw Error();s.cells=imported.cells.slice();s.design=imported.cells.slice();s.mode='edit';s.qualified=true;s.message='Код загружен и проверен.';}catch{s.message='Код не принят: проверь размер, клетки и решаемость.';}}}
+const meaningful=a=>{const x=clone(a);delete x.message;delete x.moves;if(id==='timeline')delete x.selected;return JSON.stringify(x);};const changed=meaningful(previous)!==meaningful(s);if(changed){state[id]=previous;recordUndo(id);state[id]=s;if(counted)s.moves++;}if(s.solved)complete(id);render();persist();return true;}
+function adMapArt(ctx,x,y,id){const k=adventureIds.indexOf(id),r=(a,b,w,h,color)=>{ctx.fillStyle=color;ctx.fillRect(x+a,y+b,w,h);},cream='#edce92',ink='#29434a',mint='#93bda8';r(0,0,192,120,'#294b40');for(let i=0;i<8;i++)r((i*37+k*11)%180,(i*19)%105,3,2,'#3c624b');r(0,114,192,6,'#b4a17c');r(186,0,6,120,'#b4a17c');r(55,29,82,57,['#778d84','#827887','#718b9a','#997f64'][k%4]);r(50,23,92,10,cream);r(61,38,70,42,ink);r(54,84,84,7,'#bcaa85');
+if(['repair','program','twins'].includes(id)){for(let j=0;j<(id==='twins'?2:1);j++){const a=80+j*22;r(a,45,17,16,mint);r(a+3,49,3,3,ink);r(a+11,49,3,3,ink);r(a-3,63,23,11,cream);}}
+else if(id==='clock'){r(81,43,26,5,cream);r(85,48,18,8,mint);r(90,56,8,7,mint);r(85,63,18,9,cream);r(81,72,26,4,cream);}
+else if(id==='ice'){r(68,48,58,28,'#aacfd0');r(91,52,12,12,cream);r(75,67,11,5,mint);}
+else if(id==='prediction'){r(67,57,52,3,cream);for(let j=0;j<6;j++)r(91+j*3,43+j*3,3,3,mint);}
+else if(id==='tool'){for(let j=0;j<2;j++)r(79+j*24,43,4,35,cream);for(let j=0;j<4;j++)r(79,46+j*8,28,3,cream);}
+else if(id==='creator'){for(let j=0;j<4;j++)r(72+j%2*16,46+Math.floor(j/2)*16,11,11,j%2?mint:cream);for(let j=0;j<6;j++)r(109+j*2,69-j*4,4,5,'#dcb579');r(107,73,5,4,cream);}
+else if(id==='information'){for(const x of [74,104]){r(x,46,14,14,cream);r(x-3,61,20,14,mint);r(x+3,50,3,3,ink);r(x+9,50,3,3,ink);}r(87,40,12,4,cream);}
+else if(id==='observation'){r(76,43,40,32,cream);r(80,47,32,24,mint);r(94,47,4,24,ink);r(80,57,32,4,ink);r(69,45,5,28,mint);r(118,45,5,28,mint);}
+else if(id==='experiment'){for(let j=0;j<6;j++)r(74+j%3*16,45+Math.floor(j/3)*16,10,10,j%2?mint:cream);}
+else if(id==='trade'){r(71,56,16,16,'#db9b74');r(92,51,16,16,cream);r(112,58,8,13,mint);}
+else if(id==='escape'||id==='observation'){r(74,44,20,28,mint);r(100,44,18,35,cream);r(111,59,3,3,ink);}
+else if(id==='timeline'){for(let j=0;j<3;j++){r(71+j*17,48,13,23,cream);r(74+j*17,53,7,3,ink);}}
+else if(id==='impossible'){r(73,46,9,9,mint);r(109,65,9,9,mint);for(let j=0;j<9;j++)r(79+j*4,50+j*2,4,3,cream);}
+else{r(77,45,23,23,cream);r(81,49,15,15,ink);for(let j=0;j<5;j++)r(97+j*3,65+j*2,4,4,cream);}}
+
 const hintPlansCache={};
 function hintPlans(n){if(hintPlansCache[n])return hintPlansCache[n];const out=[];for(let mask=1;mask<3**n;mask++){let k=mask,left=[],right=[];for(let i=0;i<n;i++){const v=k%3;k=Math.floor(k/3);if(v===1)left.push(i);if(v===2)right.push(i);}if(left.length&&left.length===right.length&&left[0]<right[0])out.push({left,right});}return hintPlansCache[n]=out;}
 function lightSolution(cells,n){const count=cells.length,rows=Array.from({length:count},(_,i)=>{const row=Array(count+1).fill(0);for(let j=0;j<count;j++)if(i===j||Math.abs(Math.floor(i/n)-Math.floor(j/n))+Math.abs(i%n-j%n)===1)row[j]=1;row[count]=cells[i];return row;});let pivot=0;const cols=[];for(let col=0;col<count;col++){const found=rows.findIndex((r,i)=>i>=pivot&&r[col]);if(found<0)continue;[rows[found],rows[pivot]]=[rows[pivot],rows[found]];for(let i=0;i<count;i++)if(i!==pivot&&rows[i][col])for(let j=col;j<=count;j++)rows[i][j]^=rows[pivot][j];cols.push(col);pivot++;}for(let i=pivot;i<count;i++)if(!rows[i].slice(0,count).some(Boolean)&&rows[i][count])return null;const answer=Array(count).fill(0);cols.forEach((col,i)=>answer[col]=rows[i][count]);return answer.flatMap((v,i)=>v?[i]:[]);}
 function bridgePath(s,c){const queue=[{sides:s.sides.slice(),torch:s.torch,cost:0,path:[]}],best=new Map();while(queue.length){queue.sort((a,b)=>a.cost-b.cost);const item=queue.shift(),key=item.sides.join('')+':'+item.torch;if(best.has(key)&&best.get(key)<=item.cost)continue;best.set(key,item.cost);if(item.sides.every(v=>v===1))return item;const available=item.sides.flatMap((v,i)=>v===item.torch?[i]:[]),groups=available.map(i=>[i]);for(let i=0;i<available.length;i++)for(let j=i+1;j<available.length;j++)groups.push([available[i],available[j]]);for(const group of groups){const sides=item.sides.slice(),torch=1-item.torch;for(const i of group)sides[i]=torch;queue.push({sides,torch,cost:item.cost+Math.max(...group.map(i=>c.times[i])),path:[...item.path,group]});}}return null;}
 function riverPath(s,c){return findPath(s.sides,a=>[0,...c.active].every(i=>a[i]===1),a=>{const out=[];for(const passenger of [null,...c.active.filter(i=>a[i]===a[0])]){const next=a.slice();next[0]=1-next[0];if(passenger)next[passenger]=next[0];if(c.active.includes(1)&&next[1]===next[2]&&next[1]!==next[0])continue;if(next[2]===next[3]&&next[2]!==next[0])continue;out.push([next,passenger]);}return out;});}
 function generalHint(){const id=state.view;
-if(id==='map'){const next=Object.keys(levels).find(key=>state.progress[key].cleared<3)||'cafe';return {target:`[data-enter="${next}"]`,text:`Нажми «${titles[next]}». Реши текущий уровень — откроется следующий.`};}
+if(id==='map'){const next=lifeNext()||'cafe';return {target:`[data-enter="${next}"]`,text:`Нажми «${titles[next]}». Реши текущий уровень — откроется следующий.`};}
 const s=state[id],c=cfg(id);
 if(s?.solved)return state.progress[id].level<2?{target:'[data-level-next]',text:'Уровень решён. Нажми «Дальше».'}:{target:'[data-home]',text:'Все уровни этого места пройдены. Вернись на карту.'};
 if(s?.failed)return {target:extraIds.includes(id)?'[data-extra-reset]':`[data-reset="${id}"]`,text:'Попытка закончилась. Нажми ↻ и начни уровень заново.'};
+if(adventureIds.includes(id))return adventureHint();
 if(id==='sokoban')return warehouseHint();
 if(id==='hanoi'||id==='jugs')return extraTutorial(id);
 if(id==='lights'){const path=lightSolution(s.cells,c.n);return path?.length?{target:`[data-lamp="${path[0]}"]`,text:'Эта лампа входит в решение. Нажми её; подсказка пересчитается для нового положения.'}:{target:'[data-extra-reset]',text:'Начни сетку заново, чтобы попробовать другой путь.'};}
@@ -367,13 +1946,76 @@ function unifiedMap(){
   canvas.width=384;canvas.height=240;mapArt();const first=copy();extraMap();const second=copy();
   const warehouse=document.createElement('canvas');warehouse.width=192;warehouse.height=120;
   rects(warehouse,r=>{r(0,0,192,120,'#294b40');r(0,114,192,6,'#b4a17c');r(183,0,9,120,'#b4a17c');building(r,52,24,83,'#916f53','#d0b386');for(const [x,y] of [[69,54],[93,54],[81,31]]){r(x,y,22,22,'#614b35');r(x+2,y+2,18,18,'#ad8152');r(x+3,y+3,16,3,'#e0ba7b');r(x+3,y+14,16,3,'#e0ba7b');r(x+9,y+3,3,14,'#d2a56a');}});
-  const narrow=root.getBoundingClientRect().width<480,columns=narrow?2:3,rows=Math.ceil(9/columns);
+  const width=root.getBoundingClientRect().width,columns=width<400?3:width<650?4:5,rows=Math.ceil(Object.keys(levels).length/columns);
   canvas.width=192*columns;canvas.height=120*rows;const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.fillStyle='#294b40';ctx.fillRect(0,0,canvas.width,canvas.height);
   all('[data-enter]').forEach((el,i)=>{const x=i%columns*192,y=Math.floor(i/columns)*120;
-    if(i===8)ctx.drawImage(warehouse,x,y);else{const source=i<4?first:second,k=i%4;ctx.drawImage(source,k%2*192,Math.floor(k/2)*120,192,120,x,y,192,120);}
+    if(i>=9){adMapArt(ctx,x,y,adventureIds[i-9]);}else if(i===8)ctx.drawImage(warehouse,x,y);else{const source=i<4?first:second,k=i%4;ctx.drawImage(source,k%2*192,Math.floor(k/2)*120,192,120,x,y,192,120);}
+    lifeMapDecorate(ctx,x,y,el.dataset.enter);
     el.hidden=false;el.style.left=(i%columns+.12)*100/columns+'%';el.style.top=(Math.floor(i/columns)+.16)*100/rows+'%';el.style.width=76/columns+'%';el.style.height=78/rows+'%';
   });
 }
+
+// Presentation follows confirmed progress; it never grants or delays a game result.
+const lifeStories={
+cafe:['Бариста ждёт правильные подписи.','В кафе подали первый горячий чай.','У стойки больше не путают заказы.','Кафе принимает ночных гостей.'],
+safe:['У смотрителя потерялся код.','Смотритель достал ключ от улицы.','В сейфе нашлась карта квартала.','Все тайники смотрителя открыты.'],
+scales:['Монетчик проверяет сдачу.','Честные монеты вернулись в кассу.','Лавки могут выдавать сдачу.','Монетчик закончил ночную проверку.'],
+river:['Паромщик собирает пассажиров.','Первая компания добралась домой.','Все пассажиры в безопасности.','Последний паром успел до ночи.'],
+hanoi:['Строитель собирает новую башню.','У башни появился первый этаж.','Строитель поднял материалы выше.','На башне зажёгся маяк.'],
+jugs:['Садовнику нужна точная порция воды.','Первые цветы получили воду.','Садовник полил дальние клумбы.','Весь сад готов к празднику.'],
+bridge:['Путешественники ждут у моста.','Первые гости перешли мост.','На другом берегу стало люднее.','Все гости успели на праздник.'],
+lights:['Фонарщик готовит ночное небо.','Один двор готов к тихой ночи.','Фонарщик проверил соседнюю улицу.','Все фонари слушаются мастера.'],
+sokoban:['Кладовщик освобождает проход.','Первый груз доставлен на место.','Проход к лавкам свободен.','Все праздничные припасы на месте.'],
+detective:['Детектив ищет ночного посетителя.','Посетитель найден по улике.','Улики сложились в одну историю.','Детектив закрыл последнее дело.'],
+experiment:['Механик настраивает вывеску.','Первая вывеска заработала.','Связанные лампы загорелись как нужно.','Механик запустил всю вывеску.'],
+prediction:['Сигнальщик направляет луч.','Первый сигнал достиг нужной стороны.','Луч прошёл через два зеркала.','Сигнальная линия готова к ночи.'],
+repair:['У робота перепутана команда.','Первый робот снова на маршруте.','Почтовый робот добрался до цели.','Все сломанные программы починены.'],
+program:['Почтальону нужен маршрут робота.','Робот доставил первую посылку.','Дальний адрес получил посылку.','Робот знает сложный маршрут.'],
+escape:['Смотритель заперт в комнате.','Ключ нашёлся, дверь открыта.','Смотритель разгадал комнатный код.','Последняя дверь квартала открыта.'],
+clock:['Часовщик готовит точный сигнал.','Часовщик отмерил первую минуту.','Сигнал прозвучит точно вовремя.','Часы готовы открыть праздник.'],
+ice:['Курьер везёт посылку по льду.','Посылка остановилась у адресата.','Курьер обогнул ледяные преграды.','Последний ледяной маршрут пройден.'],
+twins:['Близнецам нужно встретиться у звёзд.','Оба близнеца дошли до своих звёзд.','Даже стены не помешали встрече.','Зеркальный двор ожил.'],
+observation:['Сосед ищет нужное окно.','Нужная комната найдена.','Два наблюдения сложились в ответ.','Все окна квартала знакомы.'],
+information:['Свидетели видели разные детали.','Первый предмет опознан.','Два рассказа дали точный ответ.','Свидетели восстановили всю картину.'],
+trade:['Лавочник собирает полезный обмен.','Первый обмен состоялся.','Нужный ключ появился в лавке.','Лавочник приготовил всё к празднику.'],
+timeline:['Архивариус перепутал события.','Первая история восстановлена.','События снова идут по порядку.','Летопись квартала закончена.'],
+impossible:['Архитектор выбирает рабочий проект.','Нерабочий проект отложен.','Архитектор заметил пересечение.','Все проекты прошли проверку.'],
+tool:['Мастер переносит единственную лестницу.','Первый разрыв позади.','Мастер дошёл до дальней площадки.','Одна лестница связала весь маршрут.'],
+creator:['Изобретатель ждёт твою загадку.','Первая авторская загадка решена.','В мастерской появилась новая идея.','Твоя мастерская готова принимать гостей.']};
+let lifeView='',lifeAwardPending=null,lifeToastTimer=0;
+const lifeReduced=()=>window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+function lifeTotal(){return Object.values(state.progress).reduce((n,p)=>n+p.cleared,0);}
+function lifeNext(){const ids=Object.keys(levels),min=Math.min(...ids.map(id=>state.progress[id].cleared));return min===3?null:ids.find(id=>state.progress[id].cleared===min);}
+function lifeChapter(){const n=Math.min(...Object.values(state.progress).map(p=>p.cleared));return ['Первые огни','Мастерские просыпаются','Готовим ночной праздник','Праздник в квартале'][n];}
+function lifeStage(){return state.view==='cafe'?q('.lm-scene'):extraIds.includes(state.view)?q('[data-extra] .qt-stage'):q('[data-view="'+state.view+'"] .qt-stage');}
+function lifeAnimate(node,frames,options={}){if(!node||lifeReduced()||typeof node.animate!=='function')return;try{return node.animate(frames,{duration:220,easing:'ease-out',...options});}catch{}}
+function lifeAward(id){lifeAwardPending={id,level:state.progress[id].cleared,total:lifeTotal()};queueMicrotask(lifeCelebrate);}
+function lifeCelebrate(){const award=lifeAwardPending;if(!award)return;lifeAwardPending=null;if(state.view!==award.id)return;lifeSync();const stage=lifeStage();if(!stage)return;
+root.querySelector('[data-life-toast]')?.remove();clearTimeout(lifeToastTimer);const toast=document.createElement('div');toast.className='ql-toast';toast.dataset.lifeToast='';toast.setAttribute('role','status');toast.innerHTML='<span class="ql-toast-star" aria-hidden="true">✦</span><span>'+lifeStories[award.id][award.level]+'<small>'+award.total+' / 75 огней · '+(award.total===75?'Праздник начинается!':award.level===3?'Место ожило!':'Следующий уровень открыт')+'</small></span>';stage.appendChild(toast);lifeAnimate(toast,[{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}]);
+const effect=document.createElement('div');effect.className='ql-burst';effect.setAttribute('aria-hidden','true');for(let i=0;i<12;i++){const dot=document.createElement('i');dot.style.setProperty('--ql-x',Math.round(Math.cos(i*Math.PI/6)*75)+'px');dot.style.setProperty('--ql-y',Math.round(Math.sin(i*Math.PI/6)*58)+'px');dot.style.setProperty('--ql-delay',(i%3)*25+'ms');effect.appendChild(dot);}stage.appendChild(effect);effect.addEventListener('animationend',()=>effect.remove(),{once:true});if(lifeReduced())effect.remove();
+lifeAnimate(q(award.level<3?'[data-level-next]':'[data-home]'),[{boxShadow:'0 0 0 0 #f0ce7877'},{boxShadow:'0 0 0 9px #f0ce7800'}],{duration:700});lifeToastTimer=setTimeout(()=>{toast.remove();effect.remove();},4200);
+}
+function lifeSync(){root.dataset.lifeLights=lifeTotal();let count=q('[data-life-count]');if(!count){count=document.createElement('span');count.className='ql-count';count.dataset.lifeCount='';q('[data-heading]').after(count);}count.hidden=state.view!=='map';count.textContent='✦ '+lifeTotal()+'/75';count.setAttribute('aria-label','Зажжено огней: '+lifeTotal()+' из 75');
+const key=state.view+':'+(state.progress[state.view]?.level??'');if(key!==lifeView){lifeView=key;root.querySelector('[data-life-toast]')?.remove();all('.ql-burst').forEach(e=>e.remove());clearTimeout(lifeToastTimer);lifeAnimate(lifeStage(),[{opacity:.6,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:190});}
+if(state.view==='map'){const next=lifeNext();all('[data-enter]').forEach(b=>{b.classList.toggle('ql-next',b.dataset.enter===next);b.setAttribute('aria-label',titles[b.dataset.enter]+', пройдено '+state.progress[b.dataset.enter].cleared+' из 3'+(b.dataset.enter===next?', следующий адрес почтальона':''));});if(!hintRequested){q('[data-guide]').hidden=false;q('[data-guide]').textContent=lifeTotal()===75?'Все огни горят. Квартал празднует!':lifeChapter()+'. '+(lifeTotal()?'Почтальон ждёт у «'+titles[next]+'».':'Решай задачи — зажигай огни. Начни с кафе.');}lifeMapResidents();}}
+function lifeMapDecorate(ctx,x,y,id){const n=state.progress[id].cleared;ctx.fillStyle='rgba(10,23,31,'+(n===3?.02:n===0?.20:.10)+')';ctx.fillRect(x,y,186,114);for(let k=0;k<3;k++){const px=x+144+k*11,py=y+12;ctx.fillStyle='#263e3a';ctx.fillRect(px+2,py+6,2,7);ctx.fillStyle=k<n?'#f3d58b':'#586f65';ctx.fillRect(px,py,6,7);if(k<n){ctx.fillStyle='#fff0b1';ctx.fillRect(px+1,py+1,2,2);ctx.fillStyle='#f0d48922';ctx.fillRect(px-3,py-3,12,13);}}if(n===3){ctx.fillStyle='#d1b982';ctx.fillRect(x+149,y+78,7,7);ctx.fillStyle='#8cbbb0';ctx.fillRect(x+148,y+85,9,10);ctx.fillStyle='#b5a17b';ctx.fillRect(x+149,y+95,3,5);ctx.fillRect(x+154,y+95,3,5);}}
+function lifeMapResidents(){const map=q('[data-view=map]');map.querySelector('[data-life-residents]')?.remove();const ids=Object.keys(levels),next=lifeNext(),i=next?ids.indexOf(next):0,canvas=q('[data-map-art]'),columns=canvas.width/192,rows=canvas.height/120;const layer=document.createElement('div');layer.className='ql-residents';layer.dataset.lifeResidents='';layer.setAttribute('aria-hidden','true');for(let k=0;k<3;k++){const tile=(i+k*7)%ids.length,node=document.createElement('i');node.className='ql-resident '+(k===0?'ql-postman':k===1?'ql-cat':'ql-bird');node.style.left=((tile%columns+.82)/columns*100)+'%';node.style.top=((Math.floor(tile/columns)+.64)/rows*100)+'%';node.style.setProperty('--ql-walk',k===0?'7px':'4px');layer.appendChild(node);}map.appendChild(layer);}
+function lifeMotion(node,positions,w){if(!node||positions.length<2)return;const cell=node.closest('.ad-cell,.sk-cell'),size=cell?.getBoundingClientRect();if(!size)return;const gridStyle=getComputedStyle(cell.parentElement),gapX=parseFloat(gridStyle.columnGap)||0,gapY=parseFloat(gridStyle.rowGap)||0;const last=positions.at(-1),frames=positions.map(p=>({transform:'translate('+((p%w-last%w)*(size.width+gapX))+'px,'+((Math.floor(p/w)-Math.floor(last/w))*(size.height+gapY))+'px)'}));lifeAnimate(node,frames,{duration:Math.min(950,Math.max(180,(positions.length-1)*110)),easing:'linear'});}
+const lifeClicks=new WeakMap();
+root.addEventListener('click',e=>{const button=e.target.closest('button');if(!button||button.disabled||state.view==='map')return;const id=state.view,before=state[id]?clone(state[id]):null,level=state.progress[id].level;const action=button.dataset.adAction;
+if(button.matches('[data-home],[data-level-next],[data-hint-toggle],[data-undo],[data-extra-reset],[data-reset],[data-again]'))return;
+lifeClicks.set(e,{id,before,level,action});},true);
+function installLifeFeedback(){root.addEventListener('click',e=>{const snapshot=lifeClicks.get(e);if(!snapshot)return;const {id,before,level,action}=snapshot;
+queueMicrotask(()=>{if(state.view!==id||state.progress[id].level!==level||!before)return;const after=state[id];if(!after)return;
+if((id==='repair'||id==='program')&&action==='run')lifeMotion(q('[data-extra] .ad-person'),after.trace,adBoard(cfg(id)).w);
+else if(id==='ice'&&before.pos!==after.pos)lifeMotion(q('[data-extra] .ad-person'),[before.pos,after.pos],adBoard(cfg(id)).w);
+else if(id==='twins'&&action==='direction')all('.ad-worlds .ad-person').forEach((node,i)=>lifeMotion(node,[before.positions[i],after.positions[i]],adBoard(cfg(id)).w));
+else if(id==='sokoban'&&before.player!==after.player){const c=warehouseLayout(),path=warehouseReach(before.player,before.boxes,c).get(after.player)||[after.player];lifeMotion(q('.sk-person'),[before.player,...path],c.w);const from=before.boxes.find(p=>!after.boxes.includes(p)),to=after.boxes.find(p=>!before.boxes.includes(p));if(from!==undefined&&to!==undefined)lifeMotion(q('[data-cell="'+to+'"] .sk-crate'),[from,to],c.w);}
+const meaningful=a=>JSON.stringify(a,(k,v)=>['message','revision','selected','person','answer','choice','project','reason'].includes(k)?undefined:v);const changed=meaningful(before)!==meaningful(after);if(!changed)return;
+const stage=lifeStage();if(after.failed&&!before.failed||(id==='program'||id==='repair')&&action==='run'&&after.error!==null)lifeAnimate(stage,[{transform:'translateX(0)'},{transform:'translateX(-3px)'},{transform:'translateX(3px)'},{transform:'translateX(0)'}],{duration:190});else if(!after.solved)lifeAnimate(stage,[{borderColor:'#a7d5b5'},{borderColor:'#405670'}],{duration:280});
+if(id==='lights'||id==='experiment'||id==='creator')all('.qx-lamp.on,.ad-lamp.on,.ad-lamps').slice(0,16).forEach(node=>lifeAnimate(node,[{filter:'brightness(1.4)'},{filter:'brightness(1)'}],{duration:240}));
+if(id==='trade'&&action==='recipe')lifeAnimate(q('[data-extra] .ad-card'),[{transform:'scale(.96)',filter:'brightness(1.4)'},{transform:'scale(1)',filter:'brightness(1)'}],{duration:230});
+});});}
 
 function newSafe(level=0){const c=levels.safe[level],a=Array.from({length:c.max+1},(_,i)=>i);for(let i=a.length-1;i>0;i--){const j=pick(i+1);[a[i],a[j]]=[a[j],a[i]];}return {secret:a.slice(0,c.digits),digits:a.slice(0,c.digits).map((_,i)=>i),log:[],solved:false,failed:false,message:''};}
 function newScale(level=0){const c=levels.scales[level];return {heavy:pick(c.coins),delta:c.unknown?(pick(2)?1:-1):1,places:Array(c.coins).fill(0),tray:-1,log:[],answerMode:false,solved:false,failed:false,message:'Выбери чашу и монеты.'};}
@@ -385,15 +2027,15 @@ const saved=rawSaved?clone(rawSaved):null;
 if(saved?.version===2&&saved.progress){for(const id of extraIds){if(!saved.progress[id])saved.progress[id]={level:0,cleared:0};if(!saved[id])saved[id]=newExtra(id,saved.progress[id].level);}saved.mapPage=saved.mapPage===1?1:0;}
 let hintRequested=false;
 let state=valid(saved)?clone(saved):fresh();
-state.undo=Array.isArray(state.undo)?state.undo.filter(a=>a&&['river','hanoi','jugs','bridge','lights','sokoban'].includes(a.id)&&Number.isInteger(a.level)&&a.before&&typeof a.before==='object').slice(-24):[];
+state.undo=Array.isArray(state.undo)?state.undo.filter(a=>a&&['river','hanoi','jugs','bridge','lights','sokoban',...adUndoIds].includes(a.id)&&Number.isInteger(a.level)&&a.before&&typeof a.before==='object').slice(-24):[];
 const requestedPlace=location.hash.slice(1);if(requestedPlace!=='map'&&Object.hasOwn(titles,requestedPlace))state.view=requestedPlace;
 if(saved?.version===1){state.legacy=clone(saved);state.revision=saved.revision||0;for(const id of ['cafe','safe','scales','river'])if(saved.done?.includes(id)||saved[id]?.solved){state.progress[id]={level:1,cleared:1};if(id==='safe')state.safe=newSafe(1);if(id==='scales')state.scales=newScale(1);}}
 const oldCafe=window.openai?.widgetState?.privateContent?.lyingMachines;
 if(!saved&&oldCafe?.solved)state.progress.cafe={level:1,cleared:1};
 function cfg(id=state.view){return levels[id][state.progress[id].level];}
 function persist(){state.revision++;while(state.undo.length&&new TextEncoder().encode(JSON.stringify(state)).length>14000)state.undo.shift();try{Promise.resolve(window.openai?.setWidgetState?.({modelContent:{game:'Квартал загадок',place:titles[state.view],levels:state.progress,solved:state.done,attempts:state.safe.log.length,weighings:state.scales.log.length,trips:state.river.trips},privateContent:{quarter:clone(state)}})).catch(()=>{});}catch{}}
-function complete(id){const p=state.progress[id];p.cleared=Math.max(p.cleared,p.level+1);if(p.cleared===3&&!state.done.includes(id))state.done.push(id);}
-const undoPlaces=['river','hanoi','jugs','bridge','lights','sokoban'];
+function complete(id){const p=state.progress[id],before=p.cleared;p.cleared=Math.max(p.cleared,p.level+1);if(p.cleared===3&&!state.done.includes(id))state.done.push(id);if(p.cleared>before)lifeAward(id);}
+const undoPlaces=['river','hanoi','jugs','bridge','lights','sokoban',...adUndoIds];
 function canUndo(id){return undoPlaces.includes(id)&&state.undo.some(a=>a.id===id&&a.level===state.progress[id].level);}
 function clearUndo(id){state.undo=state.undo.filter(a=>a.id!==id);}
 function recordUndo(id){if(!undoPlaces.includes(id))return;state.undo.push({id,level:state.progress[id].level,before:clone(state[id])});if(state.undo.length>24)state.undo.shift();}
@@ -437,7 +2079,7 @@ if(s.passenger)return {target:'[data-cross]',text:'Пассажир выбран
 if(s.sides[0]===1)return {target:'[data-cross]',text:'Теперь верни фермера одного. Нажми на пустую лодку.'};
 const actor=cfg('river').active.find(i=>s.sides[i]===0);return {target:`[data-actor="${actor}"]`,text:s.trips?'Остался второй пассажир. Нажми на него, затем на лодку.':'Перевези козу и капусту. Нажми на козу: она сядет в лодку.'};
 }
-function syncGuide(){q('[data-level]').innerHTML=state.view==='map'?'':(state.progress[state.view].level+1)+' / 3<span class="qt-level-name"> · '+cfg().name+'</span>';q('[data-level-next]').hidden=state.view==='map'||state.progress[state.view]?.cleared<=state.progress[state.view]?.level||state.progress[state.view]?.level>=2;q('[data-help]').textContent=state.view==='map'?help.map:guide()+(state.view==='river'?' Без фермера нельзя оставлять козу с капустой или волка с козой. Можно плыть одному.':state.view==='scales'?' Нажатие на уже выбранную монету снимает её с чаши. Ответ даётся кнопкой «Назвать монету».':'');all('.qt-teach').forEach(el=>{el.classList.remove('qt-teach');el.removeAttribute('data-tutorial-target');});q('[data-hint-toggle]').textContent='Подсказка';q('[data-hint-toggle]').setAttribute('aria-label',hintRequested?'Скрыть подсказку':'Показать подсказку');q('[data-hint-toggle]').setAttribute('aria-pressed',String(hintRequested));q('[data-undo]').hidden=!undoPlaces.includes(state.view);q('[data-undo]').disabled=!canUndo(state.view);const step=hintRequested?generalHint():tutorial();q('[data-guide]').hidden=!step;q('[data-guide]').textContent=step?.text||'';if(step){const target=q(step.target);if(target&&!target.disabled){target.classList.add('qt-teach');target.setAttribute('data-tutorial-target','');}}}
+function syncGuide(){q('[data-level]').innerHTML=state.view==='map'?'':(state.progress[state.view].level+1)+' / 3<span class="qt-level-name"> · '+cfg().name+'</span>';q('[data-level-next]').hidden=state.view==='map'||state.progress[state.view]?.cleared<=state.progress[state.view]?.level||state.progress[state.view]?.level>=2;q('[data-help]').textContent=state.view==='map'?help.map:guide()+(state.view==='river'?' Без фермера нельзя оставлять козу с капустой или волка с козой. Можно плыть одному.':state.view==='scales'?' Нажатие на уже выбранную монету снимает её с чаши. Ответ даётся кнопкой «Назвать монету».':'');all('.qt-teach').forEach(el=>{el.classList.remove('qt-teach');el.removeAttribute('data-tutorial-target');});q('[data-hint-toggle]').textContent='Подсказка';q('[data-hint-toggle]').setAttribute('aria-label',hintRequested?'Скрыть подсказку':'Показать подсказку');q('[data-hint-toggle]').setAttribute('aria-pressed',String(hintRequested));q('[data-undo]').hidden=!undoPlaces.includes(state.view);q('[data-undo]').disabled=!canUndo(state.view);const step=hintRequested?generalHint():tutorial();q('[data-guide]').hidden=!step;q('[data-guide]').textContent=step?.text||'';if(step){const target=q(step.target);if(target&&!target.disabled){target.classList.add('qt-teach');target.setAttribute('data-tutorial-target','');}}lifeSync();}
 root._townApi={readCafe:()=>state.cafe,cafeConfig:()=>[cfg('cafe').mode,cfg('cafe').budget],saveCafe:s=>{state.cafe=clone(s.privateContent.lyingMachines);if(state.cafe.solved)complete('cafe');syncGuide();persist();}};
 function rects(canvas,fn){const c=canvas.getContext('2d');if(!c)return; c.clearRect(0,0,canvas.width,canvas.height);c.imageSmoothingEnabled=false;fn((x,y,w,h,color)=>{c.fillStyle=color;c.fillRect(x,y,w,h);},c);}
 function building(r,x,y,w,color,roof){r(x+4,y+66,w,5,'#172c2c');r(x,y+17,w,50,color);r(x-4,y+12,w+8,9,roof);r(x+3,y+21,w-6,3,'#e0bb83');for(let k=0;k<2;k++){r(x+10+k*35,y+30,20,20,'#183340');r(x+12+k*35,y+32,16,15,'#efce80');r(x+19+k*35,y+31,2,18,'#815e4b');}r(x+w/2-7,y+48,14,19,'#233744');}
@@ -446,7 +2088,7 @@ function safeArt(){rects(q('[data-safe-art]'),r=>{r(0,0,288,224,'#23364b');r(43,
 function scaleArt(){const s=state.scales,last=s.log.at(-1),tilt=last?last.result:0;rects(q('[data-scale-art]'),r=>{r(0,0,288,224,'#263a4c');r(10,190,268,20,'#5c5148');r(132,82,24,89,'#ceb777');r(116,168,56,9,'#e9cf86');r(140,61,8,30,'#f1daa0');for(let i=0;i<18;i++)r(55+i*10,84+Math.round((i-8.5)*tilt/1.2),11,5,'#dfc68a');r(56,88-tilt*7,2,41,'#b7bdba');r(99,88-tilt*7,2,41,'#b7bdba');r(46,130-tilt*7,65,7,'#e7cf90');r(187,88+tilt*7,2,41,'#b7bdba');r(230,88+tilt*7,2,41,'#b7bdba');r(177,130+tilt*7,65,7,'#e7cf90');});}
 function actorArt(canvas,kind){rects(canvas,r=>{if(kind===1){r(5,19,28,12,'#9ba8ad');r(24,12,13,15,'#bac4c1');r(24,8,4,7,'#bac4c1');r(33,8,4,7,'#bac4c1');r(34,18,3,3,'#1c2c3b');r(9,29,4,7,'#83949b');r(27,29,4,7,'#83949b');r(1,15,10,5,'#8fa1a6');}else if(kind===2){r(8,20,24,12,'#e8d9b4');r(26,13,10,13,'#f4e9cb');r(26,7,3,8,'#bba37b');r(34,7,3,8,'#bba37b');r(33,17,2,2,'#21343e');r(12,30,3,6,'#c4b68e');r(28,30,3,6,'#c4b68e');}else{r(10,16,25,18,'#8dbb6a');r(6,21,9,10,'#628e59');r(15,12,15,8,'#b2cd7b');r(22,17,3,16,'#4b7d50');r(12,24,20,2,'#c3d991');}});}
 function riverArt(){rects(q('[data-river-art]'),r=>{r(0,0,288,224,'#46814e');r(75,0,138,224,'#316f88');r(69,0,7,224,'#a2ac71');r(213,0,7,224,'#a2ac71');for(let i=0;i<40;i++)r(82+(i*31)%123,(i*29)%224,11,2,i%2?'#4c92a3':'#3c829a');r(46,121,35,18,'#a48862');r(207,121,35,18,'#a48862');for(let i=0;i<4;i++){r(47+i*9,121,2,18,'#5e6650');r(208+i*9,121,2,18,'#5e6650');}});rects(q('[data-boat-art]'),r=>{r(1,25,64,9,'#a57a4d');r(8,34,51,5,'#795c42');r(8,22,51,4,'#dfb879');r(27,8,10,10,'#edd7ac');r(25,5,14,4,'#d9ad62');r(26,18,12,10,'#a7bccc');r(39,20,22,3,'#dab679');});}
-function render(){root.dataset.place=state.view;try{const hash=state.view==='map'?'':'#'+state.view;if(location.hash!==hash)history.replaceState(null,'',location.pathname+location.search+hash);}catch{}all('[data-view]').forEach(el=>el.hidden=el.dataset.view!==state.view);q('[data-heading]').textContent=titles[state.view];q('[data-home]').hidden=state.view==='map';q('[data-help]').textContent=help[state.view];all('[data-enter]').forEach(el=>{el.classList.toggle('done',state.done.includes(el.dataset.enter));el.querySelector('span').textContent=({hanoi:'Башня',bridge:'Мост',lights:'Лампы'}[el.dataset.enter]||titles[el.dataset.enter])+' '+state.progress[el.dataset.enter].cleared+'/3';});q('[data-extra]').hidden=!extraIds.includes(state.view);if(extraIds.includes(state.view))extraRender();if(state.view==='map')unifiedMap();if(state.view==='safe')renderSafe();if(state.view==='scales')renderScale();if(state.view==='river')renderRiver();if(state.view==='cafe')q('#lying-machines')._setCafeLevel?.(...root._townApi.cafeConfig(),false);syncGuide();}
+function render(){root.dataset.place=state.view;try{const hash=state.view==='map'?'':'#'+state.view;if(location.hash!==hash)history.replaceState(null,'',location.pathname+location.search+hash);}catch{}all('[data-view]').forEach(el=>el.hidden=el.dataset.view!==state.view);q('[data-heading]').textContent=titles[state.view];q('[data-home]').hidden=state.view==='map';q('[data-help]').textContent=help[state.view];all('[data-enter]').forEach(el=>{el.classList.toggle('done',state.done.includes(el.dataset.enter));el.querySelector('span').textContent=({hanoi:'Башня',bridge:'Мост',lights:'Лампы'}[el.dataset.enter]||adventures[el.dataset.enter]?.map||titles[el.dataset.enter])+' '+state.progress[el.dataset.enter].cleared+'/3';});q('[data-extra]').hidden=!extraIds.includes(state.view);if(extraIds.includes(state.view))extraRender();if(state.view==='map')unifiedMap();if(state.view==='safe')renderSafe();if(state.view==='scales')renderScale();if(state.view==='river')renderRiver();if(state.view==='cafe')q('#lying-machines')._setCafeLevel?.(...root._townApi.cafeConfig(),false);syncGuide();}
 function renderSafe(){const s=state.safe,c=cfg('safe');safeArt();q('[data-dials]').innerHTML=s.digits.map((v,i)=>`<button data-digit="${i}" aria-label="Цифра ${i+1}: ${v}. Нажать, чтобы изменить" ${s.solved||s.failed?'disabled':''}>${v}</button>`).join('');q('[data-safe-count]').textContent=`Попытки ${s.log.length} / ${c.limit}`;q('[data-safe-check]').disabled=s.solved||s.failed;q('[data-safe-log]').innerHTML=s.log.map(a=>`<div class="qt-attempt"><span>${a.code.join(' ')}</span><span class="qt-feedback" aria-label="На месте ${a.bulls}, не на месте ${a.cows}">${'●'.repeat(a.bulls)}${'○'.repeat(a.cows)}${!a.bulls&&!a.cows?'—':''}</span></div>`).join('');q('[data-safe-status]').textContent=s.solved?'Сейф открыт!':s.failed?`Код был ${s.secret.join(' ')}. Ещё раз?`:s.message||'● на месте · ○ есть';q('[data-safe-light]').classList.toggle('open',s.solved);syncGuide();}
 function renderScale(){const s=state.scales,c=cfg('scales');scaleArt();q('[data-scale-count]').textContent=`Взвешивания ${s.log.length} / ${c.limit}`;all('[data-tray]').forEach(b=>{b.setAttribute('aria-pressed',String(Number(b.dataset.tray)===s.tray&&!s.answerMode));b.disabled=s.solved||s.failed||s.log.length>=cfg('scales').limit;});q('[data-weigh]').disabled=s.log.length>=cfg('scales').limit||s.solved||s.failed;q('[data-accuse]').disabled=s.solved||s.failed;q('[data-accuse]').setAttribute('aria-pressed',String(s.answerMode));q('[data-coins]').innerHTML=s.places.map((v,i)=>{let x,y;const index=s.places.slice(0,i).filter(a=>a===v).length;if(v===0){x=9+(index%5)*18;y=69+Math.floor(index/5)*14;}else{x=(v===-1?10:56)+(index%3)*13;y=46-Math.floor(index/3)*14;}return `<button class="qt-coin ${s.solved&&s.heavy===i?'suspect':''}" style="left:${x}%;top:${y}%" data-coin="${i}" aria-label="Монета ${i+1}${v===-1?', левая чаша':v===1?', правая чаша':''}" ${s.solved||s.failed?'disabled':''}>${i+1}</button>`;}).join('');q('[data-scale-log]').innerHTML=s.log.map(a=>`<div>${a.left.map(x=>x+1).join('')} ${a.result<0?'&gt;':a.result>0?'&lt;':'='} ${a.right.map(x=>x+1).join('')}</div>`).join('');q('[data-scale-status]').textContent=s.solved?`Верно: монета ${s.heavy+1}!`:s.failed?`Фальшивая — ${s.heavy+1}. Ещё раз?`:s.answerMode?'Нажми на фальшивую монету.':s.message;syncGuide();}
 function renderRiver(){const s=state.river,names=['','Волк','Коза','Капуста'];riverArt();q('[data-river-actors]').innerHTML=cfg('river').active.map(i=>{const selected=s.passenger===i,side=s.sides[i],x=selected?(side===0?25:49):(side===0?2:71),y=selected?38:6+(i-1)*27;return `<button class="qt-actor ${selected?'selected':''}" data-actor="${i}" style="left:${x}%;top:${y}%" ${s.solved||s.failed||s.sides[i]!==s.sides[0]?'disabled':''} aria-label="${names[i]}${selected?', в лодке':''}"><canvas width="44" height="38" data-actor-art="${i}" aria-hidden="true"></canvas><span>${names[i]}</span></button>`;}).join('');all('[data-actor-art]').forEach(c=>actorArt(c,Number(c.dataset.actorArt)));q('[data-cross]').style.left=s.sides[0]===0?'24%':'51%';q('[data-cross]').disabled=s.solved||s.failed;q('[data-cross] span').textContent=s.sides[0]===0?'Плыть →':'← Плыть';q('[data-river-count]').textContent=`Переправ: ${s.trips}${cfg('river').limit?' / '+cfg('river').limit:''}`;q('[data-passenger]').textContent=s.passenger?`В лодке: ${names[s.passenger].toLowerCase()}`:'В лодке: фермер';q('[data-river-status]').textContent=s.solved?'Все на другом берегу!':s.failed?s.message:s.message||'Выбери пассажира.';syncGuide();}
@@ -467,12 +2109,13 @@ if(b.hasAttribute('data-weigh')){const s=state.scales;if(s.solved||s.failed||s.l
 if(b.hasAttribute('data-actor')){const s=state.river,i=Number(b.dataset.actor);if(s.solved||s.failed||s.sides[i]!==s.sides[0])return;s.passenger=s.passenger===i?null:i;s.message='';renderRiver();persist();}
 if(b.hasAttribute('data-cross')){const s=state.river;if(s.solved||s.failed)return;recordUndo('river');s.sides[0]=1-s.sides[0];if(s.passenger)s.sides[s.passenger]=s.sides[0];s.passenger=null;s.trips++;if(cfg('river').active.includes(1)&&s.sides[1]===s.sides[2]&&s.sides[1]!==s.sides[0]){s.failed=true;s.message='Волк съел козу.';}else if(s.sides[2]===s.sides[3]&&s.sides[2]!==s.sides[0]){s.failed=true;s.message='Коза съела капусту.';}else if([0,...cfg('river').active].every(i=>s.sides[i]===1)){s.solved=true;complete('river');}if(!s.solved&&!s.failed&&cfg('river').limit&&s.trips>=cfg('river').limit){s.failed=true;s.message='Лимит рейсов исчерпан.';}s.message=s.failed?s.message:'';renderRiver();persist();}
 });
+installLifeFeedback();
 window.addEventListener('openai:set_globals',e=>{const s=e.detail?.globals?.widgetState?.privateContent?.quarter;if(valid(s)&&s.revision>state.revision){state=clone(s);render();}});
 window.addEventListener('resize',()=>{if(state.view==='map')unifiedMap();});
 render();
 })();
-</script>
-<script>
+
+
 (()=>{
 const root=document.getElementById('lying-machines'),q=s=>root.querySelector(s),bridge=root.closest('#logic-quarter')._townApi;
 const names=['Чай','Кофе','Случайный'],short=['ЧАЙ','КОФЕ','ЧАЙ / КОФЕ'],letters=['А','Б','В'];
